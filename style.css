@@ -32,11 +32,23 @@ body {
   z-index: 100;
   border-bottom: 1px solid #333;
 }
+/* --- CẬP NHẬT LOGO HÌNH ẢNH --- */
 .logo {
-  font-size: 26px;
-  font-weight: bold;
-  color: var(--primary-color);
+  display: flex;
+  align-items: center;
   text-decoration: none;
+  gap: 10px; /* Khoảng cách giữa logo và chữ (nếu có) */
+}
+
+.logo img {
+  height: 45px; /* Giới hạn chiều cao để không làm phình Header */
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05); /* Phóng to nhẹ khi di chuột vào */
 }
 .search-bar {
   display: flex;
