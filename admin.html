@@ -7,10 +7,57 @@
     <link rel="stylesheet" href="style.css" />
     <style>
       .admin-container {
-        max-width: 900px;
+        max-width: 1000px;
         margin: 30px auto;
         padding: 0 15px;
       }
+
+      /* --- HỆ THỐNG TAB --- */
+      .tab-menu {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+      }
+      .tab-btn {
+        background: var(--card-bg);
+        color: var(--text-gray);
+        border: 1px solid #444;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      .tab-btn:hover {
+        background: #333;
+      }
+      .tab-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Lưới Sản phẩm */
       .admin-grid {
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -20,6 +67,37 @@
         .admin-grid {
           grid-template-columns: 1fr;
         }
+      }
+
+      /* --- FIX LỖI Ô NHẬP LIỆU BỊ TRẮNG VÀ BÉ --- */
+      .form-container {
+        background: var(--card-bg);
+        padding: 25px;
+        border-radius: 8px;
+        border: 1px solid #333;
+      }
+      .form-container input {
+        width: 100% !important;
+        padding: 12px 15px !important;
+        margin-bottom: 15px !important;
+        background: #222 !important;
+        border: 1px solid #444 !important;
+        color: white !important;
+        border-radius: 5px !important;
+        box-sizing: border-box !important;
+        font-size: 14px;
+      }
+      .form-container input:focus {
+        border-color: var(--primary-color) !important;
+        outline: none;
+      }
+
+      /* Input bị khóa (readonly) */
+      input[readonly] {
+        background: #111 !important;
+        color: #888 !important;
+        cursor: not-allowed;
+        border-style: dashed !important;
       }
 
       table {
@@ -62,7 +140,6 @@
       .btn-danger:hover {
         background-color: #d32f2f;
       }
-      /* Thêm style cho nút sửa */
       .btn-edit {
         background-color: #4caf50;
         color: white;
@@ -70,11 +147,57 @@
         padding: 6px 12px;
         border-radius: 4px;
         cursor: pointer;
-        transition: 0.2s;
         margin-right: 5px;
+        transition: 0.2s;
       }
       .btn-edit:hover {
         background-color: #45a049;
+      }
+      .role-badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .role-admin {
+        background: #4caf50;
+        color: white;
+      }
+      .role-customer {
+        background: #2196f3;
+        color: white;
+      }
+
+      /* MODAL CẬP NHẬT USER */
+      .user-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 10000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+      }
+      .user-modal {
+        background: var(--card-bg);
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid var(--primary-color);
+        width: 400px;
+        max-width: 90%;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(233, 30, 99, 0.4);
+      }
+      .user-modal label {
+        color: #aaa;
+        font-size: 13px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
       }
     </style>
   </head>
@@ -88,91 +211,176 @@
     </header>
 
     <div class="admin-container">
-      <h2
-        style="
-          margin-bottom: 20px;
-          border-left: 4px solid var(--primary-color);
-          padding-left: 10px;
-        "
-      >
-        Quản Lý Sản Phẩm
-      </h2>
+      <div class="tab-menu">
+        <button class="tab-btn active" onclick="switchTab('tab-products')">
+          📦 Quản lý Sản Phẩm
+        </button>
+        <button class="tab-btn" onclick="switchTab('tab-users')">
+          👥 Quản lý Người Dùng
+        </button>
+      </div>
 
-      <div class="admin-grid">
-        <div class="form-container" style="margin: 0; max-width: 100%">
-          <h3
-            id="form-title"
-            style="color: var(--primary-color); margin-bottom: 15px"
-          >
-            + Thêm Mặt Hàng Mới
-          </h3>
-          <input type="text" id="p-name" placeholder="Tên sản phẩm" required />
-          <input
-            type="number"
-            id="p-old-price"
-            placeholder="Giá gốc (VNĐ) - Sẽ bị gạch ngang"
-          />
-          <input
-            type="number"
-            id="p-price"
-            placeholder="Giá bán khuyến mãi (VNĐ)"
-            required
-          />
-          <input type="text" id="p-img" placeholder="Link ảnh (Chỉ nhập URL)" />
-          <input
-            type="text"
-            id="p-cat"
-            placeholder="Danh mục (Ví dụ: Mẫu Website)"
-            required
-          />
-          <button
-            id="submit-btn"
-            class="btn-primary"
-            style="width: 100%; margin-top: 10px"
-            onclick="handleSaveProduct()"
-          >
-            Đưa lên trang chủ
-          </button>
-          <button
-            id="cancel-btn"
-            style="
-              width: 100%;
-              margin-top: 10px;
-              padding: 8px;
-              border-radius: 5px;
-              cursor: pointer;
-              display: none;
-              background: #555;
-              color: white;
-              border: none;
-            "
-            onclick="cancelEdit()"
-          >
-            Hủy chỉnh sửa
-          </button>
+      <div id="tab-products" class="tab-content active">
+        <div class="admin-grid">
+          <div class="form-container" style="margin: 0; max-width: 100%">
+            <h3
+              id="form-title"
+              style="color: var(--primary-color); margin-bottom: 20px"
+            >
+              + Thêm Mặt Hàng Mới
+            </h3>
+            <input
+              type="text"
+              id="p-name"
+              placeholder="Tên sản phẩm"
+              required
+            />
+            <input
+              type="number"
+              id="p-old-price"
+              placeholder="Giá gốc (VNĐ) - Sẽ bị gạch ngang"
+            />
+            <input
+              type="number"
+              id="p-price"
+              placeholder="Giá bán khuyến mãi (VNĐ)"
+              required
+            />
+            <input
+              type="text"
+              id="p-img"
+              placeholder="Link ảnh (Chỉ nhập URL)"
+            />
+            <input
+              type="text"
+              id="p-cat"
+              placeholder="Danh mục (Ví dụ: Mẫu Website)"
+              required
+            />
+
+            <button
+              id="submit-btn"
+              class="btn-primary"
+              style="width: 100%; margin-top: 10px"
+              onclick="handleSaveProduct()"
+            >
+              Đưa lên trang chủ
+            </button>
+            <button
+              id="cancel-btn"
+              style="
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                display: none;
+                background: #555;
+                color: white;
+                border: none;
+              "
+              onclick="cancelEdit()"
+            >
+              Hủy chỉnh sửa
+            </button>
+          </div>
+
+          <div style="overflow-x: auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ảnh</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Giá bán</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="product-table-body"></tbody>
+            </table>
+          </div>
         </div>
+      </div>
 
+      <div id="tab-users" class="tab-content">
+        <h3 style="color: var(--primary-color); margin-bottom: 15px">
+          Danh sách Tài khoản Hệ thống
+        </h3>
         <div style="overflow-x: auto">
           <table>
             <thead>
               <tr>
-                <th>Ảnh</th>
-                <th>Tên sản phẩm</th>
-                <th>Giá (VNĐ)</th>
-                <th>Danh mục</th>
+                <th>STT</th>
+                <th>Tên đăng nhập</th>
+                <th>Mật khẩu</th>
+                <th>Quyền hạn</th>
                 <th>Hành động</th>
               </tr>
             </thead>
-            <tbody id="product-table-body"></tbody>
+            <tbody id="user-table-body"></tbody>
           </table>
         </div>
       </div>
     </div>
 
+    <div id="edit-user-modal" class="user-modal-overlay">
+      <div class="user-modal form-container">
+        <button
+          onclick="closeUserModal()"
+          style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+          "
+        >
+          ✕
+        </button>
+        <h2
+          style="
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+          "
+        >
+          Cập Nhật Khách Hàng
+        </h2>
+
+        <label>Họ và tên thật (Chỉ xem)</label>
+        <input type="text" id="eu-fullname" readonly />
+
+        <label>Địa chỉ Email (Chỉ xem)</label>
+        <input type="text" id="eu-email" readonly />
+
+        <label>Tên đăng nhập (Chỉ xem)</label>
+        <input type="text" id="eu-username" readonly />
+
+        <label style="color: var(--primary-color)">Cấp mật khẩu mới</label>
+        <input
+          type="text"
+          id="eu-password"
+          placeholder="Nhập mật khẩu mới cho khách..."
+        />
+
+        <button
+          class="btn-primary"
+          style="width: 100%; padding: 12px; margin-top: 10px"
+          onclick="saveUserPassword()"
+        >
+          Lưu Mật Khẩu
+        </button>
+      </div>
+    </div>
+
+    <div id="toast-container"></div>
+
     <script src="script.js"></script>
     <script>
-      // Biến toàn cục để theo dõi xem mình đang ở chế độ THÊM hay SỬA
       let editingProductId = null;
+      let editingUsername = null;
 
       window.onload = function () {
         const user = getCurrentUser();
@@ -183,8 +391,24 @@
         }
         if (typeof updateHeader === "function") updateHeader();
         loadAdminTable();
+        loadUserTable();
       };
 
+      // --- HỆ THỐNG CHUYỂN TAB ---
+      function switchTab(tabId) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-content")
+          .forEach((tab) => tab.classList.remove("active"));
+        event.target.classList.add("active");
+        document.getElementById(tabId).classList.add("active");
+        if (tabId === "tab-products") loadAdminTable();
+        if (tabId === "tab-users") loadUserTable();
+      }
+
+      // --- TAB 1: QUẢN LÝ SẢN PHẨM ---
       function loadAdminTable() {
         const products = getProducts() || [];
         const tbody = document.getElementById("product-table-body");
@@ -192,22 +416,19 @@
 
         if (products.length === 0) {
           tbody.innerHTML =
-            '<tr><td colspan="5" style="text-align: center; color: #888;">Chưa có sản phẩm nào. Hãy thêm mới!</td></tr>';
+            '<tr><td colspan="4" style="text-align: center; color: #888;">Chưa có sản phẩm nào. Hãy thêm mới!</td></tr>';
           return;
         }
 
         products.forEach((p) => {
-          // Sửa lỗi hiển thị chữ alt nếu link ảnh bị lỗi
           let imgSrc = p.img.includes("<img")
             ? "https://via.placeholder.com/50?text=Lỗi+Link"
             : p.img;
-
           tbody.innerHTML += `
                     <tr>
                         <td><img src="${imgSrc}" class="img-preview" alt="ảnh"></td>
-                        <td><strong>${p.name}</strong></td>
+                        <td><strong>${p.name}</strong><br><span style="font-size: 12px; color: #888;">${p.category}</span></td>
                         <td style="color: var(--primary-color);">${p.price.toLocaleString("vi-VN")} đ</td>
-                        <td>${p.category}</td>
                         <td style="min-width: 130px;">
                             <button class="btn-edit" onclick="startEdit(${p.id})">Sửa</button>
                             <button class="btn-danger" onclick="handleDelete(${p.id})">Xóa</button>
@@ -217,107 +438,87 @@
         });
       }
 
-      // --- CHỨC NĂNG SỬA SẢN PHẨM ---
       function startEdit(productId) {
         const products = getProducts() || [];
         const product = products.find((p) => p.id === productId);
         if (!product) return;
 
-        // 1. Đưa dữ liệu ngược lên form
         document.getElementById("p-name").value = product.name;
+        document.getElementById("p-old-price").value = product.oldPrice || "";
         document.getElementById("p-price").value = product.price;
         document.getElementById("p-img").value = product.img;
         document.getElementById("p-cat").value = product.category;
 
-        // 2. Đổi giao diện form sang chế độ cập nhật
         editingProductId = productId;
         document.getElementById("form-title").innerText =
           "✏️ Chỉnh Sửa Sản Phẩm";
-
         const submitBtn = document.getElementById("submit-btn");
         submitBtn.innerText = "Cập nhật thay đổi";
-        submitBtn.style.backgroundColor = "#4CAF50"; // Màu xanh lá
-
-        document.getElementById("cancel-btn").style.display = "block"; // Hiện nút Hủy
+        submitBtn.style.backgroundColor = "#4CAF50";
+        document.getElementById("cancel-btn").style.display = "block";
       }
 
       function cancelEdit() {
         editingProductId = null;
         document.getElementById("form-title").innerText = "+ Thêm Mặt Hàng Mới";
-
         const submitBtn = document.getElementById("submit-btn");
         submitBtn.innerText = "Đưa lên trang chủ";
-        submitBtn.style.backgroundColor = "var(--primary-color)"; // Trả về màu hồng
+        submitBtn.style.backgroundColor = "var(--primary-color)";
+        document.getElementById("cancel-btn").style.display = "none";
 
-        document.getElementById("cancel-btn").style.display = "none"; // Ẩn nút Hủy
-
-        // Xóa trắng form
-        document.getElementById("p-name").value = "";
-        document.getElementById("p-price").value = "";
-        document.getElementById("p-img").value = "";
-        document.getElementById("p-cat").value = "";
+        document
+          .querySelectorAll("#tab-products input")
+          .forEach((input) => (input.value = ""));
       }
 
-      // --- GỘP CHUNG HÀM LƯU (CẢ THÊM MỚI VÀ CẬP NHẬT) ---
       function handleSaveProduct() {
         const name = document.getElementById("p-name").value.trim();
-        const oldPrice = document.getElementById("p-old-price").value.trim(); // Đã thêm bắt giá gốc
+        const oldPrice = document.getElementById("p-old-price").value.trim();
         const price = document.getElementById("p-price").value.trim();
         let img = document.getElementById("p-img").value.trim();
         const cat = document.getElementById("p-cat").value.trim() || "Khác";
 
-        if (!name || !price) {
-          return alert("Vui lòng nhập tên và giá sản phẩm!");
-        }
-
-        if (img.includes("<img")) {
-          return alert(
-            "Vui lòng chỉ nhập đường link của ảnh (Ví dụ: https://... hoặc ten-anh.jpg).",
-          );
-        }
+        if (!name || !price)
+          return showToast("Vui lòng nhập tên và giá sản phẩm!", "error");
+        if (img.includes("<img"))
+          return showToast("Vui lòng chỉ nhập link ảnh!", "error");
         if (!img) img = "https://via.placeholder.com/200?text=No+Image";
 
         let products = getProducts() || [];
-
-        // Xử lý giá gốc: Nếu bạn không nhập, hệ thống tự động cộng thêm 60% vào giá bán để làm giá ảo
         let finalOldPrice = oldPrice
           ? parseInt(oldPrice)
           : Math.round(parseInt(price) * 1.6);
 
         if (editingProductId !== null) {
-          // CHẾ ĐỘ SỬA
           const index = products.findIndex((p) => p.id === editingProductId);
           if (index !== -1) {
-            products[index].name = name;
-            products[index].oldPrice = finalOldPrice;
-            products[index].price = parseInt(price);
-            products[index].img = img;
-            products[index].category = cat;
+            products[index] = {
+              ...products[index],
+              name,
+              oldPrice: finalOldPrice,
+              price: parseInt(price),
+              img,
+              category: cat,
+            };
           }
-          alert("Đã cập nhật sản phẩm thành công!");
-          cancelEdit();
+          showToast("Đã cập nhật sản phẩm thành công!", "success");
         } else {
-          // CHẾ ĐỘ THÊM MỚI
-          const newProduct = {
+          products.push({
             id: Date.now(),
-            name: name,
+            name,
             oldPrice: finalOldPrice,
             price: parseInt(price),
-            img: img,
+            img,
             category: cat,
-          };
-          products.push(newProduct);
-          alert("Đã thêm lên trang chủ thành công!");
-
-          document.getElementById("p-name").value = "";
-          document.getElementById("p-old-price").value = "";
-          document.getElementById("p-price").value = "";
-          document.getElementById("p-img").value = "";
+          });
+          showToast("Đã thêm lên trang chủ!", "success");
         }
 
+        cancelEdit();
         setProducts(products);
         loadAdminTable();
       }
+
       function handleDelete(productId) {
         if (
           confirm("Bạn có chắc chắn muốn xóa mặt hàng này khỏi shop không?")
@@ -325,13 +526,98 @@
           let products = getProducts() || [];
           products = products.filter((p) => p.id !== productId);
           setProducts(products);
-
-          // Nếu đang sửa dở đúng cái mặt hàng vừa xóa thì hủy sửa luôn
-          if (editingProductId === productId) {
-            cancelEdit();
-          }
-
+          if (editingProductId === productId) cancelEdit();
           loadAdminTable();
+          showToast("Đã xóa sản phẩm!", "success");
+        }
+      }
+
+      // --- TAB 2: QUẢN LÝ NGƯỜI DÙNG ---
+      function loadUserTable() {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const tbody = document.getElementById("user-table-body");
+        tbody.innerHTML = "";
+
+        users.forEach((u, index) => {
+          let roleHtml =
+            u.role === "admin"
+              ? '<span class="role-badge role-admin">Admin</span>'
+              : '<span class="role-badge role-customer">Khách hàng</span>';
+
+          let actionBtns =
+            u.username === "admin"
+              ? '<span style="color:#888; font-size:12px;">Mặc định</span>'
+              : `<button class="btn-edit" style="background: #ff9800; margin-bottom: 5px;" onclick="openUserModal('${u.username}')">Cập nhật</button><br>
+                 <button class="btn-danger" onclick="deleteUser('${u.username}')">Xóa User</button>`;
+
+          tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td style="font-weight: bold; color: var(--text-light);">${u.username}</td>
+                        <td style="color: #888;">${u.password}</td>
+                        <td>${roleHtml}</td>
+                        <td style="min-width: 100px;">${actionBtns}</td>
+                    </tr>
+                `;
+        });
+      }
+
+      // MỞ MODAL SỬA MẬT KHẨU USER
+      function openUserModal(username) {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const user = users.find((u) => u.username === username);
+        if (!user) return;
+
+        editingUsername = username;
+
+        // Điền thông tin vào Modal (Họ tên, email, user bị khóa mờ)
+        document.getElementById("eu-fullname").value =
+          user.fullname || "Chưa cập nhật";
+        document.getElementById("eu-email").value =
+          user.email || "Chưa cập nhật";
+        document.getElementById("eu-username").value = user.username;
+        document.getElementById("eu-password").value = user.password; // Hiển thị pass cũ để dễ sửa
+
+        document.getElementById("edit-user-modal").style.display = "flex";
+      }
+
+      function closeUserModal() {
+        document.getElementById("edit-user-modal").style.display = "none";
+        editingUsername = null;
+      }
+
+      function saveUserPassword() {
+        const newPass = document.getElementById("eu-password").value.trim();
+        if (!newPass)
+          return showToast("Vui lòng không để trống mật khẩu!", "error");
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let userIndex = users.findIndex((u) => u.username === editingUsername);
+
+        if (userIndex !== -1) {
+          users[userIndex].password = newPass;
+          localStorage.setItem("users", JSON.stringify(users));
+
+          showToast(
+            `Đã đổi mật khẩu cho khách hàng "${editingUsername}"!`,
+            "success",
+          );
+          closeUserModal();
+          loadUserTable(); // Cập nhật lại bảng
+        }
+      }
+
+      function deleteUser(username) {
+        if (
+          confirm(
+            `Bạn có chắc muốn xóa tài khoản "${username}" không? Khách hàng này sẽ không thể đăng nhập nữa.`,
+          )
+        ) {
+          let users = JSON.parse(localStorage.getItem("users")) || [];
+          users = users.filter((u) => u.username !== username);
+          localStorage.setItem("users", JSON.stringify(users));
+          loadUserTable();
+          showToast(`Đã xóa tài khoản ${username}!`, "success");
         }
       }
     </script>

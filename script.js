@@ -2,7 +2,15 @@
 if (!localStorage.getItem("users")) {
   localStorage.setItem(
     "users",
-    JSON.stringify([{ username: "admin", password: "123", role: "admin" }]),
+    JSON.stringify([
+      {
+        fullname: "Boss Xuân Công",
+        email: "admin@xuancongshop.com",
+        username: "admin",
+        password: "123",
+        role: "admin",
+      },
+    ]),
   );
 }
 if (!localStorage.getItem("products")) {
@@ -20,10 +28,8 @@ if (!localStorage.getItem("products")) {
     ]),
   );
 }
-// Khởi tạo Giỏ hàng
-if (!localStorage.getItem("cart")) {
+if (!localStorage.getItem("cart"))
   localStorage.setItem("cart", JSON.stringify([]));
-}
 
 function getProducts() {
   return JSON.parse(localStorage.getItem("products"));
@@ -41,26 +47,21 @@ function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-// 2. Cập nhật Header & Đếm số lượng giỏ hàng
+// 2. Cập nhật Header & Bấm vào tên để xem thông tin
 function updateHeader() {
   const user = getCurrentUser();
   const nav = document.getElementById("nav-menu");
   if (!nav) return;
 
-  // Tính tổng số lượng sản phẩm trong giỏ
   const cart = getCart();
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-  // Nút giỏ hàng có chức năng mở Sidebar
   let cartIcon = `<button onclick="toggleCart()" style="background:none; border:none; color:white; cursor:pointer; font-size: 16px; position: relative;">
                     🛒 Giỏ hàng <span id="cart-count" style="background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; font-weight: bold;">${cartCount}</span>
                   </button>`;
 
   if (!user) {
-    nav.innerHTML = `
-      ${cartIcon}
-      <button class="btn-primary" style="margin-left: 15px;" onclick="window.location.href='login.html'">Đăng nhập</button>
-    `;
+    nav.innerHTML = `${cartIcon} <button class="btn-primary" style="margin-left: 15px;" onclick="window.location.href='login.html'">Đăng nhập</button>`;
   } else {
     let adminLink =
       user.role === "admin"
@@ -68,7 +69,9 @@ function updateHeader() {
         : "";
     nav.innerHTML = `
         ${cartIcon}
-        <span style="color: var(--text-light); border-left: 1px solid #444; padding-left: 15px; margin-left: 15px;">Chào, <b style="color:var(--primary-color)">${user.username}</b></span>
+        <span style="color: var(--text-light); border-left: 1px solid #444; padding-left: 15px; margin-left: 15px;">
+            Chào, <b style="color:var(--primary-color); cursor:pointer; text-decoration:underline;" onclick="showUserProfile()" title="Bấm để xem thông tin">${user.username}</b>
+        </span>
         ${adminLink}
         <button class="btn-primary" style="background: #333; margin-left: 10px;" onclick="logout()">Đăng xuất</button>
     `;
@@ -80,7 +83,39 @@ function logout() {
   window.location.href = "index.html";
 }
 
-// 3. Hệ thống Thông báo (Toast Message) xịn xò
+// 3. Hệ thống Popup Thông tin Cá Nhân
+function showUserProfile() {
+  const user = getCurrentUser();
+  if (!user) return;
+
+  let modal = document.getElementById("profile-modal-overlay");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "profile-modal-overlay";
+    modal.className = "profile-modal-overlay";
+    document.body.appendChild(modal);
+  }
+
+  // Giao diện hiển thị chi tiết khách hàng
+  modal.innerHTML = `
+        <div class="profile-modal">
+            <button class="close-profile" onclick="closeUserProfile()">✕</button>
+            <h2>Hồ Sơ Của Bạn</h2>
+            <p><span>👤 Họ và tên:</span> <b>${user.fullname || "Chưa cập nhật"}</b></p>
+            <p><span>📧 Gmail:</span> <b>${user.email || "Chưa cập nhật"}</b></p>
+            <p><span>🔑 Tên đăng nhập:</span> <b>${user.username}</b></p>
+            <p><span>🛡️ Quyền hạn:</span> <b style="color: ${user.role === "admin" ? "#4CAF50" : "#2196F3"}">${user.role === "admin" ? "Quản trị viên (Admin)" : "Khách hàng VIP"}</b></p>
+        </div>
+    `;
+  modal.style.display = "flex";
+}
+
+function closeUserProfile() {
+  const modal = document.getElementById("profile-modal-overlay");
+  if (modal) modal.style.display = "none";
+}
+
+// 4. Toast Message
 function showToast(message, type = "success") {
   let container = document.getElementById("toast-container");
   if (!container) {
@@ -88,52 +123,32 @@ function showToast(message, type = "success") {
     container.id = "toast-container";
     document.body.appendChild(container);
   }
-
   const toast = document.createElement("div");
   toast.className = `toast toast-${type}`;
   toast.innerHTML = message;
   container.appendChild(toast);
-
-  // Hiển thị
   setTimeout(() => toast.classList.add("show"), 10);
-  // Tự động ẩn sau 3 giây
   setTimeout(() => {
     toast.classList.remove("show");
-    setTimeout(() => toast.remove(), 300); // Đợi hiệu ứng mờ kết thúc rồi xóa
+    setTimeout(() => toast.remove(), 300);
   }, 3000);
 }
-// --- HIỆU ỨNG GỢN SÓNG (RIPPLE EFFECT) KHI CLICK NÚT ---
 
+// Hiệu ứng nút gợn sóng (giữ nguyên)
 document.addEventListener("click", function (e) {
-  // Kiểm tra xem phần tử bị click có mang class 'btn-primary' không
   if (e.target.classList.contains("btn-primary")) {
     const button = e.target;
-
-    // Tạo một thẻ <span> đại diện cho vòng tròn gợn sóng
     const circle = document.createElement("span");
     const diameter = Math.max(button.clientWidth, button.clientHeight);
     const radius = diameter / 2;
-
-    // Tính toán tọa độ chính xác của con trỏ chuột bên trong nút
     const rect = button.getBoundingClientRect();
     circle.style.width = circle.style.height = `${diameter}px`;
     circle.style.left = `${e.clientX - rect.left - radius}px`;
     circle.style.top = `${e.clientY - rect.top - radius}px`;
-
     circle.classList.add("ripple");
-
-    // Xóa các vòng tròn cũ nếu người dùng bấm liên tục quá nhanh
     const existingRipple = button.querySelector(".ripple");
-    if (existingRipple) {
-      existingRipple.remove();
-    }
-
-    // Gắn vòng tròn vào trong nút
+    if (existingRipple) existingRipple.remove();
     button.appendChild(circle);
-
-    // Dọn dẹp: tự động xóa vòng tròn HTML sau khi hiệu ứng kết thúc (600ms)
-    setTimeout(() => {
-      circle.remove();
-    }, 600);
+    setTimeout(() => circle.remove(), 600);
   }
 });
