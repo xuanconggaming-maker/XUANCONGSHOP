@@ -106,27 +106,23 @@
           >
             + Thêm Mặt Hàng Mới
           </h3>
+          <input type="text" id="p-name" placeholder="Tên sản phẩm" required />
           <input
-            type="text"
-            id="p-name"
-            placeholder="Tên sản phẩm (VD: Áo thun nam)"
-            required
+            type="number"
+            id="p-old-price"
+            placeholder="Giá gốc (VNĐ) - Sẽ bị gạch ngang"
           />
           <input
             type="number"
             id="p-price"
-            placeholder="Giá bán (VNĐ)"
+            placeholder="Giá bán khuyến mãi (VNĐ)"
             required
           />
-          <input
-            type="text"
-            id="p-img"
-            placeholder="Link ảnh (Chỉ nhập URL, VD: https...)"
-          />
+          <input type="text" id="p-img" placeholder="Link ảnh (Chỉ nhập URL)" />
           <input
             type="text"
             id="p-cat"
-            placeholder="Danh mục (VD: Quần áo, Phụ kiện...)"
+            placeholder="Danh mục (Ví dụ: Mẫu Website)"
             required
           />
           <button
@@ -265,6 +261,7 @@
       // --- GỘP CHUNG HÀM LƯU (CẢ THÊM MỚI VÀ CẬP NHẬT) ---
       function handleSaveProduct() {
         const name = document.getElementById("p-name").value.trim();
+        const oldPrice = document.getElementById("p-old-price").value.trim(); // Đã thêm bắt giá gốc
         const price = document.getElementById("p-price").value.trim();
         let img = document.getElementById("p-img").value.trim();
         const cat = document.getElementById("p-cat").value.trim() || "Khác";
@@ -273,50 +270,54 @@
           return alert("Vui lòng nhập tên và giá sản phẩm!");
         }
 
-        // Chặn lỗi nhập nhầm thẻ HTML vào ô link ảnh
         if (img.includes("<img")) {
           return alert(
-            "Vui lòng chỉ nhập đường link của ảnh (Ví dụ: https://... hoặc ten-anh.jpg). KHÔNG copy nguyên thẻ <img> nhé!",
+            "Vui lòng chỉ nhập đường link của ảnh (Ví dụ: https://... hoặc ten-anh.jpg).",
           );
         }
         if (!img) img = "https://via.placeholder.com/200?text=No+Image";
 
         let products = getProducts() || [];
 
+        // Xử lý giá gốc: Nếu bạn không nhập, hệ thống tự động cộng thêm 60% vào giá bán để làm giá ảo
+        let finalOldPrice = oldPrice
+          ? parseInt(oldPrice)
+          : Math.round(parseInt(price) * 1.6);
+
         if (editingProductId !== null) {
-          // NẾU ĐANG Ở CHẾ ĐỘ SỬA
+          // CHẾ ĐỘ SỬA
           const index = products.findIndex((p) => p.id === editingProductId);
           if (index !== -1) {
             products[index].name = name;
+            products[index].oldPrice = finalOldPrice;
             products[index].price = parseInt(price);
             products[index].img = img;
             products[index].category = cat;
           }
           alert("Đã cập nhật sản phẩm thành công!");
-          cancelEdit(); // Cập nhật xong thì trả form về trạng thái Thêm mới
+          cancelEdit();
         } else {
-          // NẾU ĐANG Ở CHẾ ĐỘ THÊM MỚI
+          // CHẾ ĐỘ THÊM MỚI
           const newProduct = {
             id: Date.now(),
             name: name,
+            oldPrice: finalOldPrice,
             price: parseInt(price),
             img: img,
             category: cat,
           };
           products.push(newProduct);
-          alert("Đã thêm thành công!");
+          alert("Đã thêm lên trang chủ thành công!");
 
-          // Xóa trắng form
           document.getElementById("p-name").value = "";
+          document.getElementById("p-old-price").value = "";
           document.getElementById("p-price").value = "";
           document.getElementById("p-img").value = "";
-          document.getElementById("p-cat").value = ""; // Không tự xóa mục danh mục để tiện nhập nhiều đồ cùng lúc
         }
 
         setProducts(products);
         loadAdminTable();
       }
-
       function handleDelete(productId) {
         if (
           confirm("Bạn có chắc chắn muốn xóa mặt hàng này khỏi shop không?")

@@ -3,49 +3,265 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Xuân Công Shop</title>
+    <title>Xuân Công Shop - Đỉnh Cao Công Nghệ</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header>
+    <header class="top-header">
       <a href="index.html" class="logo">Xuân Công Shop</a>
-      <nav id="nav-menu"></nav>
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm giao diện, sản phẩm..." />
+        <button>Tìm kiếm</button>
+      </div>
+      <div class="header-actions" id="nav-menu"></div>
     </header>
 
-    <div class="container" id="shop-content"></div>
+    <nav class="main-nav">
+      <a href="#">Trang Chủ</a>
+      <a href="#">Mẫu Website</a>
+      <a href="#">Theme & Plugin</a>
+      <a href="#">Hosting Dịch Vụ</a>
+      <a href="#">Liên Hệ</a>
+    </nav>
+
+    <section class="container">
+      <div class="flash-sale">
+        <h2>⚡ Flash Sale TẾT Siêu Rẻ! ⚡</h2>
+        <p style="margin-bottom: 15px; color: #ccc">
+          Sở hữu ngay hàng ngàn sản phẩm chất lượng. Nhanh tay lên, thời gian có
+          hạn!
+        </p>
+        <div class="countdown" id="countdown">Đang tải thời gian...</div>
+      </div>
+    </section>
+
+    <div class="container category-tags" id="category-tags"></div>
+
+    <div class="container" id="shop-content">
+      <div class="product-grid" id="grid"></div>
+    </div>
+
+    <footer>
+      <h2>Xuân Công Shop</h2>
+      <p style="margin-top: 10px">
+        Chuyên cung cấp các giải pháp trực tuyến & sản phẩm chất lượng cao.
+      </p>
+      <p style="margin-top: 10px; font-size: 13px">
+        © 2026 Bản quyền thuộc về Xuân Công Shop.
+      </p>
+    </footer>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+      <div class="cart-header">
+        <h2>🛒 Giỏ Hàng Của Bạn</h2>
+        <button class="close-cart" onclick="toggleCart()">✕</button>
+      </div>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Tổng tiền:</span>
+          <span id="cart-total-price" style="color: var(--primary-color)"
+            >0 đ</span
+          >
+        </div>
+        <button
+          class="btn-primary"
+          style="width: 100%; padding: 12px; font-size: 16px"
+          onclick="checkout()"
+        >
+          TIẾN HÀNH THANH TOÁN
+        </button>
+      </div>
+    </div>
 
     <script src="script.js"></script>
     <script>
       updateHeader();
       const products = getProducts();
-      const shopContent = document.getElementById("shop-content");
 
-      // Phân loại và hiển thị
-      const categories = [...new Set(products.map((p) => p.category))];
-      categories.forEach((cat) => {
-        const catProducts = products.filter((p) => p.category === cat);
-        let html = `<h2 style="margin: 20px 0 10px; border-left: 4px solid var(--primary-color); padding-left: 10px;">${cat}</h2><div class="product-grid">`;
-        catProducts.forEach((p) => {
-          html += `
-                    <div class="product-card">
-                        <img src="${p.img}" class="product-img" alt="${p.name}">
-                        <h4 class="product-name">${p.name}</h4>
-                        <div class="product-price">${p.price.toLocaleString("vi-VN")} đ</div>
-                        <button class="btn-primary" onclick="buyItem()">Mua Ngay</button>
-                    </div>`;
-        });
-        html += `</div>`;
-        shopContent.innerHTML += html;
+      // 1. Render Danh mục
+      const categories = [
+        "Tất cả",
+        ...new Set(products.map((p) => p.category)),
+      ];
+      const tagsContainer = document.getElementById("category-tags");
+      categories.forEach((cat, index) => {
+        tagsContainer.innerHTML += `<button class="tag-btn ${index === 0 ? "active" : ""}" onclick="filterCategory('${cat}')">${cat}</button>`;
       });
 
-      function buyItem() {
+      // 2. Render lưới sản phẩm
+      function renderShop(filterCat = "Tất cả") {
+        const grid = document.getElementById("grid");
+        grid.innerHTML = "";
+        let filteredProducts =
+          filterCat === "Tất cả"
+            ? products
+            : products.filter((p) => p.category === filterCat);
+
+        if (filteredProducts.length === 0) {
+          grid.innerHTML =
+            '<p style="text-align:center; width: 100%; color: #888;">Chưa có sản phẩm nào trong mục này.</p>';
+          return;
+        }
+
+        filteredProducts.forEach((p) => {
+          let oldPrice = p.oldPrice || Math.round(p.price * 1.6);
+          let discount = Math.round((1 - p.price / oldPrice) * 100);
+
+          grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="sale-badge">-${discount}%</div>
+                        <div class="img-wrapper"><img src="${p.img}" class="product-img" alt="Ảnh"></div>
+                        <div class="card-body">
+                            <h4 class="product-name">${p.name}</h4>
+                            <div class="rating">⭐⭐⭐⭐⭐ (5.0)</div>
+                            <div class="price-box">
+                                <span class="old-price">${oldPrice.toLocaleString("vi-VN")} đ</span>
+                                <span class="new-price">${p.price.toLocaleString("vi-VN")} đ</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-primary btn-dark" onclick="addToCart(${p.id})">Thêm vào giỏ</button>
+                                <button class="btn-primary" onclick="buyNow(${p.id})">Mua ngay</button>
+                            </div>
+                        </div>
+                    </div>`;
+        });
+      }
+
+      window.filterCategory = function (cat) {
+        document.querySelectorAll(".tag-btn").forEach((btn) => {
+          btn.classList.remove("active");
+          if (btn.innerText === cat) btn.classList.add("active");
+        });
+        renderShop(cat);
+      };
+      renderShop();
+
+      // 3. LOGIC GIỎ HÀNG
+      function toggleCart() {
+        document.getElementById("cart-sidebar").classList.toggle("open");
+        document.getElementById("cart-overlay").classList.toggle("open");
+        renderCart();
+      }
+
+      function addToCart(productId, isBuyNow = false) {
         if (!getCurrentUser()) {
-          alert("Vui lòng đăng nhập để mua hàng!");
-          window.location.href = "login.html"; // Chuyển hướng
+          showToast("⚠️ Vui lòng đăng nhập để mua hàng!", "error");
+          setTimeout(() => (window.location.href = "login.html"), 1500);
+          return;
+        }
+
+        const product = products.find((p) => p.id === productId);
+        let cart = getCart();
+        const existingItem = cart.find((item) => item.id === productId);
+
+        if (existingItem) {
+          existingItem.quantity += 1;
         } else {
-          alert("Đặt hàng thành công!");
+          cart.push({ ...product, quantity: 1 });
+        }
+
+        saveCart(cart);
+        updateHeader(); // Cập nhật số lượng trên icon
+
+        if (isBuyNow) {
+          // Nếu bấm Mua Ngay -> Mở thẳng giỏ hàng
+          if (
+            !document.getElementById("cart-sidebar").classList.contains("open")
+          ) {
+            toggleCart();
+          }
+        } else {
+          // Nếu bấm Thêm vào giỏ -> Hiện thông báo
+          showToast(`✅ Đã thêm <b>${product.name}</b> vào giỏ!`, "success");
         }
       }
+
+      function buyNow(productId) {
+        addToCart(productId, true); // true = mở giỏ hàng ngay lập tức
+      }
+
+      function renderCart() {
+        const cart = getCart();
+        const cartItemsContainer = document.getElementById("cart-items");
+        let total = 0;
+
+        if (cart.length === 0) {
+          cartItemsContainer.innerHTML =
+            '<p style="text-align: center; color: #888; margin-top: 50px;">Giỏ hàng của bạn đang trống.</p>';
+        } else {
+          cartItemsContainer.innerHTML = "";
+          cart.forEach((item, index) => {
+            total += item.price * item.quantity;
+            cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <img src="${item.img}" alt="${item.name}">
+                            <div class="cart-item-info">
+                                <div class="cart-item-title">${item.name}</div>
+                                <div class="cart-item-price">${item.price.toLocaleString("vi-VN")} đ</div>
+                                <div class="cart-qty-ctrl">
+                                    <button onclick="changeQty(${index}, -1)">-</button>
+                                    <span style="font-weight: bold; width: 20px; text-align: center;">${item.quantity}</span>
+                                    <button onclick="changeQty(${index}, 1)">+</button>
+                                </div>
+                                <button class="del-btn" onclick="removeItem(${index})">Xóa</button>
+                            </div>
+                        </div>
+                    `;
+          });
+        }
+        document.getElementById("cart-total-price").innerText =
+          total.toLocaleString("vi-VN") + " đ";
+      }
+
+      function changeQty(index, change) {
+        let cart = getCart();
+        if (cart[index].quantity + change > 0) {
+          cart[index].quantity += change;
+          saveCart(cart);
+          renderCart();
+          updateHeader();
+        }
+      }
+
+      function removeItem(index) {
+        let cart = getCart();
+        cart.splice(index, 1);
+        saveCart(cart);
+        renderCart();
+        updateHeader();
+      }
+
+      function checkout() {
+        if (getCart().length === 0) {
+          showToast("Giỏ hàng đang trống!", "error");
+          return;
+        }
+        alert(
+          "Tính năng Đặt Hàng đang được hoàn thiện. Cảm ơn bạn đã ủng hộ Xuân Công Shop!",
+        );
+        saveCart([]); // Xóa giỏ hàng sau khi mua (giả lập)
+        toggleCart();
+        updateHeader();
+      }
+
+      // 4. Countdown Flash Sale
+      let countDownDate =
+        new Date().getTime() + 1 * 24 * 60 * 60 * 1000 + 5 * 60 * 60 * 1000;
+      setInterval(function () {
+        let now = new Date().getTime();
+        let distance = countDownDate - now;
+        document.getElementById("countdown").innerHTML =
+          Math.floor(distance / (1000 * 60 * 60 * 24)) +
+          " Ngày " +
+          Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) +
+          " Giờ " +
+          Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) +
+          " Phút " +
+          Math.floor((distance % (1000 * 60)) / 1000) +
+          " Giây";
+      }, 1000);
     </script>
   </body>
 </html>
