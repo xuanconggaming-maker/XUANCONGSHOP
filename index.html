@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xuân Công Shop</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="index.html" class="logo">Xuân Công Shop</a>
+      <nav id="nav-menu"></nav>
+    </header>
+
+    <div class="container" id="shop-content"></div>
+
+    <script src="script.js"></script>
+    <script>
+      updateHeader();
+      const products = getProducts();
+      const shopContent = document.getElementById("shop-content");
+
+      // Phân loại và hiển thị
+      const categories = [...new Set(products.map((p) => p.category))];
+      categories.forEach((cat) => {
+        const catProducts = products.filter((p) => p.category === cat);
+        let html = `<h2 style="margin: 20px 0 10px; border-left: 4px solid var(--primary-color); padding-left: 10px;">${cat}</h2><div class="product-grid">`;
+        catProducts.forEach((p) => {
+          html += `
+                    <div class="product-card">
+                        <img src="${p.img}" class="product-img" alt="${p.name}">
+                        <h4 class="product-name">${p.name}</h4>
+                        <div class="product-price">${p.price.toLocaleString("vi-VN")} đ</div>
+                        <button class="btn-primary" onclick="buyItem()">Mua Ngay</button>
+                    </div>`;
+        });
+        html += `</div>`;
+        shopContent.innerHTML += html;
+      });
+
+      function buyItem() {
+        if (!getCurrentUser()) {
+          alert("Vui lòng đăng nhập để mua hàng!");
+          window.location.href = "login.html"; // Chuyển hướng
+        } else {
+          alert("Đặt hàng thành công!");
+        }
+      }
+    </script>
+  </body>
+</html>
