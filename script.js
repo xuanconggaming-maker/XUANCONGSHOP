@@ -102,3 +102,38 @@ function showToast(message, type = "success") {
     setTimeout(() => toast.remove(), 300); // Đợi hiệu ứng mờ kết thúc rồi xóa
   }, 3000);
 }
+// --- HIỆU ỨNG GỢN SÓNG (RIPPLE EFFECT) KHI CLICK NÚT ---
+
+document.addEventListener("click", function (e) {
+  // Kiểm tra xem phần tử bị click có mang class 'btn-primary' không
+  if (e.target.classList.contains("btn-primary")) {
+    const button = e.target;
+
+    // Tạo một thẻ <span> đại diện cho vòng tròn gợn sóng
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+
+    // Tính toán tọa độ chính xác của con trỏ chuột bên trong nút
+    const rect = button.getBoundingClientRect();
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${e.clientX - rect.left - radius}px`;
+    circle.style.top = `${e.clientY - rect.top - radius}px`;
+
+    circle.classList.add("ripple");
+
+    // Xóa các vòng tròn cũ nếu người dùng bấm liên tục quá nhanh
+    const existingRipple = button.querySelector(".ripple");
+    if (existingRipple) {
+      existingRipple.remove();
+    }
+
+    // Gắn vòng tròn vào trong nút
+    button.appendChild(circle);
+
+    // Dọn dẹp: tự động xóa vòng tròn HTML sau khi hiệu ứng kết thúc (600ms)
+    setTimeout(() => {
+      circle.remove();
+    }, 600);
+  }
+});

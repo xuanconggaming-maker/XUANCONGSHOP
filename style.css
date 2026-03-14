@@ -429,3 +429,43 @@ footer {
   border-top: 2px solid var(--primary-color);
   color: var(--text-gray);
 }
+
+/* --- HIỆU ỨNG NÚT BẤM (HOVER & RIPPLE) --- */
+
+/* Ghi đè để nâng cấp giao diện nút */
+.btn-primary {
+  position: relative; /* Quan trọng để định vị gợn sóng */
+  overflow: hidden; /* Cắt phần gợn sóng tràn ra ngoài nút */
+  transition: all 0.3s ease; /* Chuyển động mượt mà */
+  box-shadow: 0 4px 6px rgba(233, 30, 99, 0.2); /* Đổ bóng hồng nhẹ */
+}
+
+/* Hiệu ứng di chuột (Hover): Nhô lên và phát sáng */
+.btn-primary:hover {
+  transform: translateY(-2px); /* Nhấc nút lên 2 pixel */
+  box-shadow: 0 6px 15px rgba(233, 30, 99, 0.5); /* Bóng đậm và tỏa rộng hơn */
+}
+
+/* Hiệu ứng khi bấm xuống (Active) */
+.btn-primary:active {
+  transform: translateY(1px); /* Lún nhẹ xuống */
+  box-shadow: 0 2px 4px rgba(233, 30, 99, 0.2);
+}
+
+/* Tạo vòng tròn gợn sóng */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5); /* Màu trắng trong suốt */
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  pointer-events: none; /* Tránh việc vòng tròn chặn cú click chuột */
+}
+
+/* Hiệu ứng lan tỏa dần và mờ đi */
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

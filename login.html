@@ -2,21 +2,92 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tài khoản - Xuân Công Shop</title>
     <link rel="stylesheet" href="style.css" />
     <style>
+      /* Ghi đè CSS cơ bản để biến trang này thành full màn hình */
+      body.auth-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Bao trọn màn hình kể cả dọc hay ngang */
+        background: linear-gradient(135deg, #121212 0%, #2b0b16 100%);
+        margin: 0;
+        overflow: hidden;
+      }
+
+      /* Ẩn bớt thanh Header cho trang login giống các app xịn */
+      body.auth-page header {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+
+      /* Hiệu ứng Kính mờ (Glassmorphism) cực đẹp */
+      .form-container {
+        width: 100%;
+        max-width: 420px;
+        background: rgba(30, 30, 30, 0.6);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(233, 30, 99, 0.3);
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.5),
+          0 0 20px rgba(233, 30, 99, 0.1);
+        border-radius: 12px;
+        padding: 40px 30px;
+        margin: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .form-container:hover {
+        box-shadow:
+          0 15px 35px rgba(0, 0, 0, 0.6),
+          0 0 40px rgba(233, 30, 99, 0.2);
+      }
+
+      .form-container h2 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 30px;
+        font-size: 28px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Hiệu ứng focus cho Input */
+      input {
+        background: rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid #444 !important;
+        transition: all 0.3s ease !important;
+        padding: 12px 15px !important;
+        font-size: 15px;
+      }
+
+      input:focus {
+        transform: scale(1.02);
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 12px rgba(233, 30, 99, 0.3) !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+      }
+
       /* CSS ẩn hiện mượt mà cho các form */
       .auth-section {
         display: none;
-        animation: fadeIn 0.3s ease-in-out;
       }
       .active-form {
         display: block;
+        animation: slideUpFade 0.4s ease-out forwards;
       }
-      @keyframes fadeIn {
+
+      @keyframes slideUpFade {
         from {
           opacity: 0;
-          transform: translateY(-10px);
+          transform: translateY(20px);
         }
         to {
           opacity: 1;
@@ -25,7 +96,7 @@
       }
 
       .auth-links {
-        margin-top: 20px;
+        margin-top: 25px;
         text-align: center;
         font-size: 14px;
       }
@@ -36,28 +107,29 @@
         transition: 0.2s;
       }
       .auth-links a:hover {
-        color: var(--primary-color);
+        color: var(--text-light);
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
       }
       .highlight-link {
         color: var(--primary-color) !important;
         font-weight: bold;
+        font-size: 15px;
       }
     </style>
   </head>
-  <body>
-    <header><a href="index.html" class="logo">Xuân Công Shop</a></header>
+  <body class="auth-page">
+    <header>
+      <a href="index.html" class="logo" style="margin: 0 auto"
+        >Xuân Công Shop</a
+      >
+    </header>
 
-    <div class="container">
+    <div
+      class="container"
+      style="display: flex; justify-content: center; width: 100%"
+    >
       <div class="form-container auth-section active-form" id="form-login">
-        <h2
-          style="
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-          "
-        >
-          Đăng Nhập
-        </h2>
+        <h2>Đăng Nhập</h2>
         <input
           type="text"
           id="login-user"
@@ -68,8 +140,12 @@
           id="login-pass"
           placeholder="Mật khẩu (Thử: 123)"
         />
-        <button class="btn-primary" style="width: 100%" onclick="handleLogin()">
-          Đăng nhập
+        <button
+          class="btn-primary"
+          style="width: 100%; padding: 12px; font-size: 16px; margin-top: 10px"
+          onclick="handleLogin()"
+        >
+          Đăng Nhập
         </button>
 
         <div class="auth-links">
@@ -85,23 +161,15 @@
       </div>
 
       <div class="form-container auth-section" id="form-register">
-        <h2
-          style="
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-          "
-        >
-          Đăng Ký
-        </h2>
+        <h2>Đăng Ký</h2>
         <input type="text" id="reg-user" placeholder="Tên đăng nhập muốn tạo" />
         <input type="password" id="reg-pass" placeholder="Mật khẩu" />
         <button
           class="btn-primary"
-          style="width: 100%"
+          style="width: 100%; padding: 12px; font-size: 16px; margin-top: 10px"
           onclick="handleRegister()"
         >
-          Đăng ký ngay
+          Đăng Ký Ngay
         </button>
 
         <div class="auth-links">
@@ -112,24 +180,16 @@
       </div>
 
       <div class="form-container auth-section" id="form-forgot">
-        <h2
-          style="
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-          "
-        >
-          Khôi Phục Mật Khẩu
-        </h2>
+        <h2>Khôi Phục</h2>
         <p
           style="
             text-align: center;
             font-size: 13px;
             color: #aaa;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
           "
         >
-          Nhập tên tài khoản của bạn để đổi mật khẩu mới
+          Nhập tên tài khoản để đổi mật khẩu mới
         </p>
         <input
           type="text"
@@ -143,10 +203,10 @@
         />
         <button
           class="btn-primary"
-          style="width: 100%"
+          style="width: 100%; padding: 12px; font-size: 16px; margin-top: 10px"
           onclick="handleForgot()"
         >
-          Đổi mật khẩu
+          Đổi Mật Khẩu
         </button>
 
         <div class="auth-links">
@@ -155,22 +215,26 @@
       </div>
     </div>
 
+    <div id="toast-container"></div>
+
     <script src="script.js"></script>
     <script>
-      // Hàm chuyển đổi giữa các Form
+      // Hàm chuyển đổi giữa các Form (Có hiệu ứng slide siêu mượt)
       function switchForm(formId) {
-        document
-          .querySelectorAll(".auth-section")
-          .forEach((form) => form.classList.remove("active-form"));
+        document.querySelectorAll(".auth-section").forEach((form) => {
+          form.classList.remove("active-form");
+        });
         document.getElementById(formId).classList.add("active-form");
-
-        // Xóa dữ liệu cũ khi chuyển form cho sạch sẽ
+        // Xóa dữ liệu cũ khi chuyển form
         document
           .querySelectorAll("input")
           .forEach((input) => (input.value = ""));
+        // Tự động focus vào ô đầu tiên của form mới
+        setTimeout(() => {
+          document.querySelector(`#${formId} input`).focus();
+        }, 100);
       }
 
-      // Lấy danh sách người dùng từ CSDL ảo
       function getUsers() {
         return JSON.parse(localStorage.getItem("users")) || [];
       }
@@ -178,62 +242,79 @@
         localStorage.setItem("users", JSON.stringify(users));
       }
 
-      // Xử lý Đăng Nhập
+      // --- TÍNH NĂNG BẤM ENTER ĐỂ XÁC NHẬN ---
+      function bindEnterKey(inputId, actionFunction) {
+        document
+          .getElementById(inputId)
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              e.preventDefault(); // Ngăn hành vi mặc định của Enter
+              actionFunction();
+            }
+          });
+      }
+
+      // Gắn sự kiện Enter cho từng form
+      bindEnterKey("login-user", handleLogin);
+      bindEnterKey("login-pass", handleLogin);
+      bindEnterKey("reg-user", handleRegister);
+      bindEnterKey("reg-pass", handleRegister);
+      bindEnterKey("forgot-user", handleForgot);
+      bindEnterKey("forgot-new-pass", handleForgot);
+
+      // --- XỬ LÝ LOGIC ---
       function handleLogin() {
         const u = document.getElementById("login-user").value.trim();
         const p = document.getElementById("login-pass").value.trim();
-        if (!u || !p) return alert("Vui lòng nhập đủ tên và mật khẩu!");
+        if (!u || !p)
+          return showToast("⚠️ Vui lòng nhập đủ thông tin!", "error");
 
         const users = getUsers();
         const user = users.find((x) => x.username === u && x.password === p);
 
         if (user) {
           localStorage.setItem("currentUser", JSON.stringify(user));
-          window.location.href = "index.html";
+          showToast("✅ Đăng nhập thành công!", "success");
+          setTimeout(() => (window.location.href = "index.html"), 800);
         } else {
-          alert("Sai tên đăng nhập hoặc mật khẩu!");
+          showToast("❌ Sai tên đăng nhập hoặc mật khẩu!", "error");
         }
       }
 
-      // Xử lý Đăng Ký
       function handleRegister() {
         const u = document.getElementById("reg-user").value.trim();
         const p = document.getElementById("reg-pass").value.trim();
-        if (!u || !p) return alert("Vui lòng nhập đủ thông tin!");
+        if (!u || !p)
+          return showToast("⚠️ Vui lòng nhập đủ thông tin!", "error");
 
         const users = getUsers();
         if (users.find((x) => x.username === u)) {
-          return alert(
-            "Tên đăng nhập này đã có người sử dụng. Vui lòng chọn tên khác!",
-          );
+          return showToast("❌ Tên đăng nhập đã tồn tại!", "error");
         }
 
-        // Thêm user mới với quyền mặc định là 'customer' (khách hàng)
         users.push({ username: u, password: p, role: "customer" });
         saveUsers(users);
 
-        alert("Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.");
-        switchForm("form-login"); // Chuyển về trang đăng nhập
+        showToast("✅ Đăng ký thành công! Hãy đăng nhập.", "success");
+        setTimeout(() => switchForm("form-login"), 1000);
       }
 
-      // Xử lý Quên Mật Khẩu (Đặt lại mật khẩu)
       function handleForgot() {
         const u = document.getElementById("forgot-user").value.trim();
         const newP = document.getElementById("forgot-new-pass").value.trim();
         if (!u || !newP)
-          return alert("Vui lòng nhập đủ tên tài khoản và mật khẩu mới!");
+          return showToast("⚠️ Nhập đủ tài khoản và mật khẩu mới!", "error");
 
         let users = getUsers();
         let userIndex = users.findIndex((x) => x.username === u);
 
         if (userIndex !== -1) {
-          // Cập nhật mật khẩu mới
           users[userIndex].password = newP;
           saveUsers(users);
-          alert("Đổi mật khẩu thành công! Hãy đăng nhập bằng mật khẩu mới.");
-          switchForm("form-login");
+          showToast("✅ Đổi mật khẩu thành công!", "success");
+          setTimeout(() => switchForm("form-login"), 1000);
         } else {
-          alert("Không tìm thấy tài khoản này trong hệ thống!");
+          showToast("❌ Không tìm thấy tài khoản này!", "error");
         }
       }
     </script>
