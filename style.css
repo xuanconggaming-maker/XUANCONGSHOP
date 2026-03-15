@@ -33,22 +33,68 @@ body {
   border-bottom: 1px solid #333;
 }
 /* --- CẬP NHẬT LOGO HÌNH ẢNH --- */
+/* --- GIAO DIỆN CHỮ LOGO --- */
 .logo {
-  display: flex;
-  align-items: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--primary-color);
   text-decoration: none;
-  gap: 10px; /* Khoảng cách giữa logo và chữ (nếu có) */
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+.logo:hover {
+  color: #ffeb3b; /* Đổi sang màu vàng khi di chuột */
+  text-shadow: 0 0 15px var(--primary-color);
 }
 
-.logo img {
-  height: 45px; /* Giới hạn chiều cao để không làm phình Header */
-  width: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
+/* --- HIỆU ỨNG THANH MENU NGANG --- */
+.main-nav {
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Thêm bóng đổ cho thanh menu */
 }
 
-.logo img:hover {
-  transform: scale(1.05); /* Phóng to nhẹ khi di chuột vào */
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+  position: relative; /* Bắt buộc để làm hiệu ứng gạch chân */
+  padding: 5px 0;
+  transition: color 0.3s ease;
+}
+
+/* Khi rê chuột vào chữ sẽ sáng lên màu vàng chanh */
+.main-nav a:hover {
+  color: #ffeb3b;
+  text-shadow: 0 0 8px rgba(255, 235, 59, 0.5);
+}
+
+/* Tạo thanh gạch chân ẩn ở dưới chữ */
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 50%;
+  background-color: #ffeb3b;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* Khi rê chuột, gạch chân sẽ trượt dài ra 100% */
+.main-nav a:hover::after {
+  width: 100%;
 }
 .search-bar {
   display: flex;
