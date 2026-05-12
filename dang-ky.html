@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Ký Tài Khoản - Xuân Công Shop</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="d-flex justify-content-center align-items-center p-4">
+      <h3 class="logo fw-bold text-teal m-0">Xuân Công Shop</h3>
+    </header>
+
+    <main class="login-wrapper">
+      <div class="login-card">
+        <h2 class="text-center fw-bold text-dark-teal">Tạo Tài Khoản</h2>
+        <p class="text-center text-muted mb-4">
+          Tham gia hệ thống của chúng tôi ngay hôm nay.
+        </p>
+
+        <div id="registerAlertBox" class="alert d-none"></div>
+
+        <form id="registerForm">
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-dark-teal"
+              >Họ và Tên</label
+            >
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fa-regular fa-user text-muted"></i>
+              </span>
+              <input
+                type="text"
+                id="fullName"
+                class="form-control border-start-0"
+                placeholder="Nhập họ và tên của bạn"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-dark-teal"
+              >Tên đăng nhập</label
+            >
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fa-solid fa-at text-muted"></i>
+              </span>
+              <input
+                type="text"
+                id="username"
+                class="form-control border-start-0"
+                placeholder="Nhập tên đăng nhập (VD: xuancong123)"
+                required
+                minlength="3"
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-dark-teal"
+              >Địa chỉ Email</label
+            >
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fa-regular fa-envelope text-muted"></i>
+              </span>
+              <input
+                type="email"
+                id="email"
+                class="form-control border-start-0"
+                placeholder="Nhập email của bạn"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-dark-teal"
+              >Mật khẩu</label
+            >
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fa-solid fa-lock text-muted"></i>
+              </span>
+              <input
+                type="password"
+                id="password"
+                class="form-control border-start-0 border-end-0"
+                placeholder="Tạo mật khẩu (Ít nhất 6 ký tự)"
+                required
+                minlength="6"
+              />
+              <span
+                class="input-group-text bg-white border-start-0 toggle-password"
+                style="cursor: pointer"
+              >
+                <i class="fa-regular fa-eye-slash text-muted"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-dark-teal"
+              >Xác nhận Mật khẩu</label
+            >
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="fa-solid fa-clock-rotate-left text-muted"></i>
+              </span>
+              <input
+                type="password"
+                id="confirmPassword"
+                class="form-control border-start-0"
+                placeholder="Nhập lại mật khẩu"
+                required
+                minlength="6"
+              />
+            </div>
+          </div>
+
+          <div class="mb-4 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="terms"
+              required
+            />
+            <label class="form-check-label small text-muted" for="terms">
+              Tôi đồng ý với
+              <a href="#" class="text-teal fw-semibold text-decoration-none"
+                >Điều khoản Dịch vụ</a
+              >
+              và
+              <a href="#" class="text-teal fw-semibold text-decoration-none"
+                >Chính sách Bảo mật</a
+              >.
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-cyan w-100 mb-4"
+            id="registerBtn"
+          >
+            Đăng Ký
+          </button>
+        </form>
+
+        <p class="text-center mt-4 small text-muted">
+          Đã có tài khoản?
+          <a
+            href="index.html"
+            class="fw-bold text-decoration-none text-dark-teal"
+            >Đăng Nhập</a
+          >
+        </p>
+      </div>
+    </main>
+
+    <script type="module" src="register.js"></script>
+  </body>
+</html>

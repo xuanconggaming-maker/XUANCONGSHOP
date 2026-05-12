@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nạp Tiền - Xuân Công Shop</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- CSS CƠ BẢN --- */
+      body {
+        background-color: #fdfaf0;
+        font-family: "Inter", sans-serif;
+        color: #333;
+        overflow-x: hidden;
+      }
+      .text-primary-custom {
+        color: #2980b9;
+      }
+
+      /* --- TOPBAR --- */
+      .topbar {
+        background-color: #fff;
+        border-bottom: 1px solid #eaeaea;
+        height: 60px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+      }
+      .desktop-menu a {
+        color: #555;
+        text-decoration: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+      .desktop-menu a:hover {
+        color: #2980b9;
+      }
+
+      /* --- KHUNG TAB --- */
+      .nav-tabs-custom {
+        display: flex;
+        gap: 10px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #75c1d6;
+        flex-wrap: wrap;
+      }
+      .nav-tabs-custom a {
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #555;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 14px;
+      }
+      .nav-tabs-custom a.active {
+        border-bottom: 2px solid #2980b9;
+        color: #2980b9;
+        font-weight: 600;
+      }
+
+      /* --- BOX XANH DƯƠNG --- */
+      .blue-box {
+        background-color: #4285f4;
+        color: white;
+        border-radius: 8px;
+        padding: 20px;
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(66, 133, 244, 0.2);
+      }
+      .blue-box .form-control {
+        border: none;
+        border-radius: 4px;
+        padding: 10px 15px;
+      }
+      .blue-box .btn-custom {
+        background-color: #2ecc71;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        white-space: nowrap;
+      }
+
+      /* --- BOX VÀNG (NGÂN HÀNG) --- */
+      .yellow-card {
+        background-color: #f1c40f;
+        border-radius: 12px;
+        padding: 20px;
+        color: #000;
+        box-shadow: 0 4px 6px rgba(241, 196, 15, 0.2);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      .yellow-card p {
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .yellow-card span.fw-normal {
+        font-weight: 400;
+      }
+      .copy-badge {
+        background: #2980b9;
+        color: white;
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 12px;
+        cursor: pointer;
+        margin-left: 5px;
+      }
+      .qr-container {
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: center;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .qr-container img {
+        max-width: 100%;
+        border-radius: 4px;
+        height: auto;
+        object-fit: contain;
+      }
+
+      /* --- CỘT TÀI KHOẢN (PHẢI) --- */
+      .account-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        border: 1px solid #eaeaea;
+      }
+      .acc-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #f1e4e4;
+        object-fit: cover;
+      }
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px dashed #eee;
+        font-size: 13px;
+        align-items: center;
+      }
+      .stat-row:last-child {
+        border-bottom: none;
+      }
+      .stat-label {
+        color: #666;
+        font-weight: 600;
+      }
+      .stat-value {
+        color: #333;
+        text-align: right;
+        word-break: break-all;
+        max-width: 60%;
+      }
+
+      .table-custom th {
+        font-size: 13px;
+        color: #777;
+        font-weight: 500;
+        border-bottom-width: 1px;
+      }
+      .table-custom td {
+        font-size: 14px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <header
+      class="topbar d-flex justify-content-between align-items-center px-4 mb-4"
+    >
+      <div class="d-flex align-items-center gap-4">
+        <h4
+          class="fw-bold m-0"
+          style="color: #000; text-shadow: 1px 1px 2px #ccc"
+        >
+          Xuân Công<span style="color: red"> Shop</span>
+        </h4>
+        <nav class="desktop-menu d-none d-md-flex gap-2">
+          <a href="trang-chu.html"
+            ><i class="fa-solid fa-desktop text-muted me-1"></i> Hệ thống</a
+          >
+          <a href="#"
+            ><i class="fa-brands fa-facebook text-primary me-1"></i> Facebook</a
+          >
+          <a href="#"
+            ><i class="fa-brands fa-tiktok text-dark me-1"></i> TikTok</a
+          >
+          <a href="#"
+            ><i class="fa-brands fa-instagram text-danger me-1"></i>
+            Instagram</a
+          >
+        </nav>
+      </div>
+
+      <div class="d-flex align-items-center gap-4 text-muted fs-5">
+        <div class="dropdown">
+          <a
+            href="#"
+            class="d-flex align-items-center text-decoration-none"
+            data-bs-toggle="dropdown"
+          >
+            <img
+              id="topAvatar"
+              src="https://ui-avatars.com/api/?name=User"
+              class="rounded-circle border"
+              width="35"
+              height="35"
+            />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+            <li>
+              <a
+                class="dropdown-item py-2 text-danger fw-medium"
+                href="#"
+                id="logoutBtn"
+                ><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng
+                xuất</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="container-fluid px-md-5 pb-5">
+      <div class="d-flex justify-content-between align-items-end mb-3">
+        <h5 class="fw-bold m-0">NẠP TIỀN</h5>
+        <div class="text-muted small">Hệ thống &gt; Nạp tiền</div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="nav-tabs-custom mb-4">
+            <a class="active" onclick="switchTab('chuyen-khoan', this)"
+              >Chuyển khoản ngân hàng</a
+            >
+            <a onclick="switchTab('the-cao', this)">Nạp thẻ cào</a>
+            <a onclick="switchTab('nhat-ky', this)">Nhật ký nạp tiền</a>
+          </div>
+
+          <div id="tab-chuyen-khoan" class="tab-content-section">
+            <div
+              class="p-4 bg-white border border-info rounded-3 shadow-sm mb-4"
+            >
+              <h6 class="fw-bold mb-2">
+                LƯU Ý KHI NẠP TIỀN
+                <span class="text-danger fw-normal small"
+                  >Nhập tên người gửi để lấy thông tin nạp tiền</span
+                >
+              </h6>
+              <a href="#" class="text-decoration-none text-primary small"
+                >Gửi hỗ trợ (giữ bill và gửi nội dung chuyển khoản)</a
+              >
+
+              <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                  <div class="blue-box">
+                    <label class="small fw-bold mb-2"
+                      >Nhập số tiền cần nạp (VNĐ)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control mb-3"
+                      id="amountInput"
+                      placeholder="Hãy nhập số tiền bạn muốn nạp"
+                      oninput="generateSyntax()"
+                    />
+
+                    <label class="small fw-bold mb-2"
+                      >Tên
+                      <span class="text-danger fst-italic">người gửi</span> (Mặc
+                      định hệ thống)</label
+                    >
+                    <div class="d-flex gap-2">
+                      <input
+                        type="text"
+                        class="form-control bg-light text-muted"
+                        id="senderNameInput"
+                        placeholder="Đang tải..."
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="blue-box">
+                    <label class="small fw-bold mb-2"
+                      >NỘI DUNG CHUYỂN TIỀN. ĐỌC LƯU Ý ĐỂ CỘNG AUTO</label
+                    >
+                    <div class="d-flex gap-2">
+                      <input
+                        type="text"
+                        class="form-control text-muted bg-light"
+                        id="syntaxDisplay"
+                        value="NAPTIEN ..."
+                        readonly
+                      />
+                      <button class="btn-custom" onclick="copySyntax()">
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-4 g-3 justify-content-center">
+                <div class="col-md-5">
+                  <div class="yellow-card">
+                    <p>Ngân hàng: <span class="fw-normal">MBBANK</span></p>
+                    <p>
+                      Chủ TK:
+                      <span class="fw-normal text-uppercase">VU XUAN CONG</span>
+                    </p>
+                    <p>
+                      STK:
+                      <span class="fw-bold fs-5 text-primary">4619092006</span>
+                      <span class="copy-badge" onclick="copyText('4619092006')"
+                        >Copy</span
+                      >
+                    </p>
+                    <p>Chi nhánh: <span class="fw-normal">Hà Nội</span></p>
+
+                    <div class="qr-container">
+                      <img
+                        id="qrCodeImg"
+                        src="https://img.vietqr.io/image/970422-4619092006-compact2.png?amount=0&addInfo=NAPTIEN&accountName=VU%20XUAN%20CONG"
+                        alt="Mã QR MBBank"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-the-cao" class="tab-content-section d-none">
+            <div
+              class="p-5 bg-white border rounded-3 shadow-sm text-center text-muted"
+            >
+              <i class="fa-solid fa-sim-card fs-1 mb-3 text-secondary"></i>
+              <h5>Tính năng nạp thẻ cào đang bảo trì</h5>
+              <p>Vui lòng sử dụng phương thức chuyển khoản ngân hàng.</p>
+            </div>
+          </div>
+
+          <div id="tab-nhat-ky" class="tab-content-section d-none">
+            <div class="p-4 bg-white border rounded-3 shadow-sm">
+              <h6 class="fw-bold mb-4">Nhật ký giao dịch nạp tiền</h6>
+              <div class="table-responsive">
+                <table class="table table-hover table-custom mb-0 text-center">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Thời gian</th>
+                      <th>Nội dung</th>
+                      <th>Số tiền</th>
+                      <th>Trạng thái</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactionList">
+                    <tr>
+                      <td colspan="4" class="text-center py-4 text-muted">
+                        <span
+                          class="spinner-border spinner-border-sm text-primary"
+                        ></span>
+                        Đang tải dữ liệu...
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="account-card">
+            <h6 class="fw-bold mb-4">Thông tin tài khoản</h6>
+            <div class="text-center mb-4">
+              <img
+                id="rightAvatar"
+                src="https://ui-avatars.com/api/?name=U"
+                class="acc-avatar mb-2"
+                alt="Avatar"
+              />
+              <h5 class="fw-bold m-0" id="rightName">Đang tải...</h5>
+              <div class="text-muted small mt-1" id="rightRank">Thành viên</div>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Số tiền hiện tại:</span>
+              <span class="stat-value fw-bold text-success" id="rightBalance"
+                >0 đ</span
+              >
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Tổng nạp:</span>
+              <span
+                class="stat-value fw-bold text-primary"
+                id="rightTotalDeposit"
+                >0 đ</span
+              >
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">E-mail:</span>
+              <span class="stat-value text-muted" id="rightEmail">...</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Ngày tham gia:</span>
+              <span class="stat-value text-muted" id="rightJoinDate">...</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Cấp tiếp theo:</span>
+              <span class="stat-value text-info fw-semibold"
+                >0/1,000,000 đ</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+      import {
+        getDatabase,
+        ref,
+        get,
+        onValue,
+      } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+      import { firebaseConfig } from "./firebase-config.js";
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getDatabase(app);
+
+      let currentUsername = "";
+
+      // 1. CHUYỂN TAB
+      window.switchTab = function (tabId, element) {
+        document
+          .querySelectorAll(".tab-content-section")
+          .forEach((sec) => sec.classList.add("d-none"));
+        document
+          .querySelectorAll(".nav-tabs-custom a")
+          .forEach((btn) => btn.classList.remove("active"));
+        document.getElementById("tab-" + tabId).classList.remove("d-none");
+        element.classList.add("active");
+      };
+
+      // 2. KIỂM TRA ĐĂNG NHẬP & TẢI DỮ LIỆU TÀI KHOẢN
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const userRef = ref(db, "users/" + user.uid);
+
+          // Sử dụng onValue để cập nhật cấp bậc Realtime khi nạp tiền
+          onValue(userRef, (snapshot) => {
+            if (snapshot.exists()) {
+              const userData = snapshot.val();
+              const displayName = userData.fullName || "User";
+              currentUsername =
+                userData.username || user.uid.substring(0, 6).toUpperCase();
+
+              const balanceNum = parseInt(userData.balance) || 0;
+              const totalDeposit = parseInt(userData.totalDeposit) || 0; // Lấy tổng nạp từ database
+
+              // --- LOGIC TỰ ĐỘNG PHÂN CẤP ---
+              let rank = "Thành viên";
+              let nextRankThreshold = 500000;
+              let nextRankName = "Đại lý";
+
+              if (totalDeposit >= 5000000) {
+                rank = "Nhà phân phối";
+                nextRankThreshold = 0; // Max cấp
+              } else if (totalDeposit >= 500000) {
+                rank = "Đại lý";
+                nextRankThreshold = 5000000;
+                nextRankName = "Nhà phân phối";
+              }
+
+              // Cập nhật cấp bậc lên Database nếu có thay đổi (Tự động nhận lệnh)
+              if (userData.rank !== rank) {
+                import("https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js").then(
+                  (mod) => {
+                    mod.update(userRef, { rank: rank });
+                  },
+                );
+              }
+
+              // --- HIỂN THỊ GIAO DIỆN ---
+              const formattedBal = new Intl.NumberFormat("vi-VN").format(
+                balanceNum,
+              );
+              const formattedTotal = new Intl.NumberFormat("vi-VN").format(
+                totalDeposit,
+              );
+
+              document.getElementById("rightName").innerText = displayName;
+              document.getElementById("rightRank").innerText = rank;
+              document.getElementById("rightBalance").innerText =
+                formattedBal + " đ";
+              document.getElementById("rightTotalDeposit").innerText =
+                formattedTotal + " đ";
+
+              // Tính toán thanh tiến trình cấp tiếp theo
+              const progressContainer = document.querySelector(
+                ".stat-value.text-info",
+              );
+              if (nextRankThreshold > 0) {
+                progressContainer.innerText = `${new Intl.NumberFormat("vi-VN").format(totalDeposit)}/${new Intl.NumberFormat("vi-VN").format(nextRankThreshold)} đ`;
+              } else {
+                progressContainer.innerText = "Cấp bậc tối đa";
+              }
+
+              // Giữ nguyên các phần Avatar, Email...
+              const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=ffb6c1&color=fff&bold=true`;
+              document.getElementById("topAvatar").src = avatarUrl;
+              document.getElementById("rightAvatar").src = avatarUrl;
+              document.getElementById("rightEmail").innerText =
+                userData.email || "";
+              document.getElementById("senderNameInput").value =
+                currentUsername;
+              generateSyntax();
+            }
+          });
+          // ... (Giữ nguyên phần tải nhật ký nạp tiền phía dưới)
+
+          // 3. TẢI NHẬT KÝ NẠP TIỀN THÔNG MINH
+          const transRef = ref(db, "users/" + user.uid + "/transactions");
+          onValue(transRef, (snapshot) => {
+            const tbody = document.getElementById("transactionList");
+            tbody.innerHTML = "";
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              const transArray = Object.values(data).reverse();
+              transArray.forEach((t) => {
+                let badgeHtml =
+                  '<span class="text-warning fw-bold">ĐANG XỬ LÝ</span>';
+                let detailMsg = t.syntax || "Đang xử lý nạp tiền"; // Mặc định hiển thị Nội dung
+
+                // Xử lý Trạng thái & Lời nhắn
+                if (t.status === "THÀNH CÔNG") {
+                  badgeHtml =
+                    '<span class="text-success fw-bold">THÀNH CÔNG</span>';
+                  detailMsg = "Nạp tiền thành công";
+                } else if (t.status === "THẤT BẠI") {
+                  badgeHtml =
+                    '<span class="text-danger fw-bold">THẤT BẠI</span>';
+                }
+
+                // Nếu là giao dịch do Admin cộng tay (có trường type = "admin")
+                if (t.type === "admin") {
+                  detailMsg = "Được Admin cộng tiền";
+                  badgeHtml =
+                    '<span class="text-success fw-bold">THÀNH CÔNG</span>';
+                }
+
+                tbody.innerHTML += `
+                     <tr>
+                       <td>${t.time}</td>
+                       <td class="text-primary fw-medium">${detailMsg}</td>
+                       <td class="text-success fw-bold">+ ${new Intl.NumberFormat("vi-VN").format(t.amount)} đ</td>
+                       <td>${badgeHtml}</td>
+                     </tr>
+                   `;
+              });
+            } else {
+              tbody.innerHTML =
+                '<tr><td colspan="4" class="text-center py-4 text-muted">Chưa có dữ liệu nạp tiền</td></tr>';
+            }
+          });
+        } else {
+          window.location.replace("index.html");
+        }
+      });
+
+      // 4. CÁC HÀM XỬ LÝ NẠP TIỀN
+      window.generateSyntax = function () {
+        let nameInput = document.getElementById("senderNameInput").value.trim();
+        if (!nameInput) nameInput = currentUsername;
+
+        let amountVal = document.getElementById("amountInput").value;
+        let amount = amountVal ? parseInt(amountVal) : 0;
+
+        // Tạo cú pháp không thay đổi
+        const syntax = `NAPTIEN ${nameInput.replace(/\s+/g, "")}`;
+        document.getElementById("syntaxDisplay").value = syntax;
+
+        // Cập nhật lại QR Code của MB Bank (tích hợp số tiền vừa nhập)
+        const qrUrl = `https://img.vietqr.io/image/970422-4619092006-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(syntax)}&accountName=VU%20XUAN%20CONG`;
+        document.getElementById("qrCodeImg").src = qrUrl;
+      };
+
+      window.copyText = function (text) {
+        navigator.clipboard.writeText(text);
+        alert("Đã sao chép Số tài khoản: " + text);
+      };
+
+      window.copySyntax = function () {
+        const syntax = document.getElementById("syntaxDisplay").value;
+        navigator.clipboard.writeText(syntax);
+        alert("Đã sao chép Cú pháp chuyển tiền: " + syntax);
+      };
+
+      document.getElementById("logoutBtn").addEventListener("click", (e) => {
+        e.preventDefault();
+        signOut(auth).then(() => window.location.replace("index.html"));
+      });
+    </script>
+  </body>
+</html>

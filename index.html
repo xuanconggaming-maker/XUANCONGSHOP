@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Nhập - Xuân Công Shop</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-cream">
+    <header class="d-flex justify-content-between align-items-center p-4">
+      <h4 class="fw-bold m-0 text-dark">Xuân Công Shop</h4>
+      <i
+        class="fa-regular fa-circle-question fs-5 text-muted"
+        style="cursor: pointer"
+      ></i>
+    </header>
+
+    <main class="login-wrapper">
+      <div class="login-card">
+        <h2 class="text-center fw-bold text-dark mb-2">Đăng Nhập Hệ Thống</h2>
+        <p class="text-center text-muted mb-4 small">
+          Đăng nhập để quản lý cửa hàng của bạn
+        </p>
+
+        <div id="alertBox" class="alert d-none"></div>
+
+        <form id="loginForm">
+          <div class="mb-3">
+            <label class="form-label fw-semibold text-muted small"
+              >Tên đăng nhập hoặc Email</label
+            >
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0"
+                ><i class="fa-regular fa-envelope text-muted"></i
+              ></span>
+              <input
+                type="text"
+                id="email"
+                class="form-control border-start-0 ps-0"
+                placeholder="Nhập tên đăng nhập hoặc email"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="form-label fw-semibold text-muted small m-0"
+                >Mật khẩu</label
+              >
+              <a
+                href="#"
+                class="text-decoration-none small text-dark-teal fw-semibold"
+                >Quên mật khẩu?</a
+              >
+            </div>
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0"
+                ><i class="fa-solid fa-lock text-muted"></i
+              ></span>
+              <input
+                type="password"
+                id="password"
+                class="form-control border-start-0 border-end-0 ps-0"
+                placeholder="Nhập mật khẩu"
+                required
+              />
+              <span
+                class="input-group-text bg-white border-start-0"
+                id="togglePassword"
+                style="cursor: pointer"
+                ><i class="fa-regular fa-eye-slash text-muted"></i
+              ></span>
+            </div>
+          </div>
+
+          <div class="mb-4 form-check">
+            <input
+              type="checkbox"
+              class="form-check-input custom-checkbox"
+              id="rememberMe"
+            />
+            <label class="form-check-label small text-muted" for="rememberMe"
+              >Duy trì đăng nhập</label
+            >
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-dark-teal w-100 mb-4 d-flex justify-content-center align-items-center"
+            id="loginBtn"
+          >
+            Đăng Nhập <i class="fa-solid fa-arrow-right ms-2 small"></i>
+          </button>
+        </form>
+
+        <div class="divider text-center mb-4">
+          <span class="bg-white px-3 small text-muted fw-semibold"
+            >HOẶC ĐĂNG NHẬP BẰNG</span
+          >
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-6">
+            <button
+              class="btn btn-outline-light-gray w-100 d-flex align-items-center justify-content-center text-dark"
+            >
+              <img
+                src="https://img.icons8.com/color/20/google-logo.png"
+                class="me-2"
+                alt="Google"
+              />
+              <span class="small fw-semibold">Google</span>
+            </button>
+          </div>
+          <div class="col-6">
+            <button
+              class="btn btn-outline-light-gray w-100 d-flex align-items-center justify-content-center text-dark"
+            >
+              <i class="fa-brands fa-apple fs-5 me-2"></i>
+              <span class="small fw-semibold">Apple</span>
+            </button>
+          </div>
+        </div>
+
+        <p class="text-center mt-2 small text-muted">
+          Chưa có tài khoản?
+          <a
+            href="dang-ky.html"
+            class="fw-bold text-decoration-none text-dark-teal"
+            >Đăng ký ngay</a
+          >
+        </p>
+      </div>
+    </main>
+
+    <footer class="footer p-4 mt-auto">
+      <div
+        class="container-fluid d-flex justify-content-between align-items-center text-muted"
+        style="font-size: 11px"
+      >
+        <div class="fw-semibold">© 2024 XUÂN CÔNG SHOP.</div>
+        <div>
+          <a href="#" class="text-muted text-decoration-none fw-semibold me-3"
+            >Chính sách bảo mật</a
+          >
+          <a href="#" class="text-muted text-decoration-none fw-semibold"
+            >Điều khoản dịch vụ</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="auth.js"></script>
+  </body>
+</html>
