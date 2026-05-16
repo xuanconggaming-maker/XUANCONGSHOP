@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tăng Follow TikTok - Xuân Công Shop</title>
+    <title>Tăng Lượt Xem TikTok - Xuân Công Shop</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -32,7 +32,6 @@
         top: 0;
         z-index: 1030;
       }
-
       .search-box {
         background-color: transparent;
         border: none;
@@ -365,6 +364,7 @@
     </style>
   </head>
   <body>
+    <!-- TOPBAR -->
     <header
       class="topbar d-flex justify-content-between align-items-center px-3"
     >
@@ -447,7 +447,7 @@
             <li>
               <a
                 class="dropdown-item py-2 text-dark fw-medium"
-                href="index.html"
+                href="#"
                 id="logoutBtn"
               >
                 <i
@@ -461,6 +461,7 @@
       </div>
     </header>
 
+    <!-- MENU NGANG DESKTOP -->
     <nav class="desktop-menu d-none d-md-block px-2">
       <div class="dropdown-hover">
         <a
@@ -509,21 +510,18 @@
         </div>
       </div>
       <div class="dropdown-hover">
-        <a href="#" class="menu-item text-danger">
+        <a href="" class="menu-item text-danger">
           <i class="fa-brands fa-instagram"></i> Instagram
           <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i>
         </a>
         <div class="dropdown-menu-custom">
-          <a href="buff-like-instagram.html" class="dropdown-item-custom"
-            >Tăng Like Instagram</a
-          >
-          <a href="buff-follow-instagram.html" class="dropdown-item-custom"
-            >Tăng Follow Instagram</a
-          >
+          <a href="buff-like-instagram.html" class="dropdown-item-custom">Tăng Like Instagram</a>
+          <a href="buff-follow-instagram.html" class="dropdown-item-custom">Tăng Follow Instagram</a>
         </div>
       </div>
     </nav>
 
+    <!-- MOBILE MENU -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenuSidebar">
       <div class="offcanvas-header border-bottom">
         <h5 class="offcanvas-title fw-bold">Menu Dịch Vụ</h5>
@@ -622,12 +620,12 @@
                   >Tăng Theo Dõi</a
                 >
                 <a
-                  href="#"
+                  href="buff-tim-tiktok.html"
                   class="d-block py-2 text-decoration-none text-muted small"
                   >Tăng Tim Video</a
                 >
                 <a
-                  href="#"
+                  href="buff-view-tiktok.html"
                   class="d-block py-2 text-decoration-none text-muted small"
                   >Tăng Lượt Xem (View)</a
                 >
@@ -671,15 +669,15 @@
 
     <div class="container-fluid py-4 px-md-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <div class="page-header-title">TĂNG FOLLOW TIKTOK</div>
+        <div class="page-header-title">TĂNG LƯỢT XEM (VIEW) TIKTOK</div>
         <div class="breadcrumb-text d-none d-sm-block">
-          TikTok &gt; Tăng Theo Dõi
+          TikTok &gt; Tăng Lượt Xem
         </div>
       </div>
 
       <div class="tab-card">
         <a class="tab-item active" onclick="switchSection('create-order', this)"
-          >Tăng Follow TikTok</a
+          >Tăng View TikTok</a
         >
         <a class="tab-item" onclick="switchSection('order-history', this)"
           >Nhật ký đơn hàng</a
@@ -689,28 +687,30 @@
 
       <div class="row g-4">
         <div class="col-lg-8">
+          <!-- FORM ĐẶT ĐƠN VIEW TIKTOK -->
           <div class="main-card" id="section-create-order">
-            <form id="tiktokFollowForm">
+            <form id="tiktokViewForm">
               <div class="row mb-4">
                 <div class="col-md-6 mb-3 mb-md-0">
                   <div class="server-label">Chọn Gói :</div>
 
+                  <!-- TỐI ĐA 3 GÓI VIEW TIKTOK -->
                   <label
                     class="server-item"
                     onclick="
                       selectServer(
                         this,
-                        35,
-                        'S1 Follow TikTok Việt',
-                        'Follow từ người dùng Việt Nam<br>Lên đều, an toàn cho kênh<br>Hỗ trợ bảo hành 7 ngày',
+                        1,
+                        'S1 View TikTok Nhanh',
+                        'Lượt xem lên nhanh thần tốc<br>An toàn cho kênh 100%<br>Không bảo hành',
                       )
                     "
                   >
                     <input type="radio" name="server" value="sv1" checked />
-                    S1 Follow TikTok Việt
-                    <span class="text-danger ms-1 fw-bold">35 vnđ</span>
-                    <span class="badge-custom" style="background-color: #00c853"
-                      >Chất lượng</span
+                    S1 View TikTok Nhanh
+                    <span class="text-danger ms-1 fw-bold">1 vnđ</span>
+                    <span class="badge-custom" style="background-color: #2962ff"
+                      >Tốc độ cao</span
                     >
                   </label>
 
@@ -719,17 +719,17 @@
                     onclick="
                       selectServer(
                         this,
-                        15,
-                        'S2 Follow TikTok Ngoại',
-                        'Follow từ tài khoản quốc tế (Tây)<br>Lên cực nhanh, giá siêu rẻ<br>Không hỗ trợ bảo hành',
+                        0.5,
+                        'S2 View TikTok Ngoại',
+                        'View tài khoản quốc tế (Tây)<br>Giá siêu rẻ, phù hợp buff số lượng lớn<br>Lên chậm hơn S1',
                       )
                     "
                   >
                     <input type="radio" name="server" value="sv2" />
-                    S2 Follow TikTok Ngoại
-                    <span class="text-danger ms-1 fw-bold">15 vnđ</span>
+                    S2 View TikTok Ngoại
+                    <span class="text-danger ms-1 fw-bold">0.5 vnđ</span>
                     <span class="badge-custom" style="background-color: #ff9800"
-                      >Siêu rẻ</span
+                      >Rẻ nhất</span
                     >
                   </label>
 
@@ -738,17 +738,17 @@
                     onclick="
                       selectServer(
                         this,
-                        45,
-                        'S3 Follow TikTok Nhanh',
-                        'Tốc độ ưu tiên chạy nhanh nhất<br>Người dùng thật 100%<br>Tuyệt đối an toàn cho kênh',
+                        3,
+                        'S3 View TikTok Xu Hướng',
+                        'View thật từ người dùng Việt Nam<br>Có tỉ lệ giúp video cắn đề xuất<br>Hỗ trợ bảo hành 30 ngày',
                       )
                     "
                   >
                     <input type="radio" name="server" value="sv3" />
-                    S3 Follow TikTok Nhanh
-                    <span class="text-danger ms-1 fw-bold">45 vnđ</span>
-                    <span class="badge-custom" style="background-color: #2962ff"
-                      >Tốc độ cao</span
+                    S3 View TikTok Xu Hướng
+                    <span class="text-danger ms-1 fw-bold">3 vnđ</span>
+                    <span class="badge-custom" style="background-color: #00c853"
+                      >Chất lượng cao</span
                     >
                   </label>
                 </div>
@@ -758,12 +758,12 @@
                     <div class="fw-bold mb-2 text-dark">
                       Ghi chú gói
                       <span class="text-danger" id="notePackageName"
-                        >S1 Follow TikTok Việt</span
+                        >S1 View TikTok Nhanh</span
                       >
                     </div>
                     <div id="notePackageDetails">
-                      Follow từ người dùng Việt Nam<br /><br />Lên đều, an toàn
-                      cho kênh<br /><br />Hỗ trợ bảo hành 7 ngày
+                      Lượt xem lên nhanh thần tốc<br /><br />An toàn cho kênh
+                      100%<br /><br />Không bảo hành
                     </div>
                   </div>
                 </div>
@@ -772,28 +772,27 @@
               <div class="row mb-3">
                 <div class="col-md-8 mb-3 mb-md-0">
                   <div class="form-label-custom">
-                    <span
-                      >Nhập ID hoặc Link kênh TikTok (VD: @xuancong74):</span
-                    >
+                    <span>Nhập Link Video TikTok cần tăng View:</span>
                   </div>
                   <input
                     type="text"
                     class="form-control form-control-custom w-100"
                     id="tiktokLinkInput"
-                    placeholder="Nhập ID kênh (Có chữ @) hoặc Link TikTok"
+                    placeholder="Dán link video TikTok vào đây..."
                     required
                   />
                 </div>
                 <div class="col-md-4">
                   <div class="form-label-custom">
-                    <span>Số lượng (Tối thiểu 100):</span>
+                    <span>Số lượng (Tối thiểu 1000):</span>
                   </div>
                   <input
                     type="number"
                     class="form-control form-control-custom w-100"
                     id="tiktokQuantity"
-                    value="100"
-                    min="100"
+                    value="1000"
+                    min="1000"
+                    step="100"
                     required
                   />
                 </div>
@@ -804,19 +803,19 @@
                 <textarea
                   class="form-control form-control-custom w-100"
                   rows="3"
-                  placeholder="Ghi chú thêm cho đơn hàng..."
+                  placeholder="Ghi chú nếu có..."
                 ></textarea>
               </div>
 
               <div class="total-box">
-                <div class="total-price" id="tiktokTotalPrice">3,500 vnđ</div>
+                <div class="total-price" id="tiktokTotalPrice">1,000 vnđ</div>
                 <div class="total-text mb-2">Tổng tiền thanh toán</div>
                 <div
                   class="total-text"
                   style="color: #444"
                   id="tiktokTotalDesc"
                 >
-                  Bạn sẽ tăng 100 Follow với giá 35 vnđ / Follow
+                  Bạn sẽ tăng 1000 View với giá 1 vnđ / View
                 </div>
               </div>
 
@@ -824,6 +823,7 @@
             </form>
           </div>
 
+          <!-- NHẬT KÝ ĐƠN HÀNG VIEW TIKTOK -->
           <div class="main-card d-none" id="section-order-history">
             <div class="history-filter-box">
               <div class="row g-2">
@@ -871,7 +871,7 @@
                     <th>#</th>
                     <th>Thao tác</th>
                     <th>Thời gian</th>
-                    <th>ID TikTok</th>
+                    <th>ID Video TikTok</th>
                     <th>Trạng thái</th>
                     <th>Tên Gói</th>
                   </tr>
@@ -941,6 +941,7 @@
       </div>
     </div>
 
+    <!-- MODAL XÁC NHẬN MUA -->
     <div class="modal fade" id="confirmBuyModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
@@ -965,9 +966,9 @@
                   Gói: <span id="modalPackage" class="text-primary">...</span>
                 </li>
                 <li>
-                  ID TikTok: <span id="modalUid" class="text-danger">...</span>
+                  Link Video: <span id="modalUid" class="text-danger">...</span>
                 </li>
-                <li>Số lượng: <span id="modalQty">...</span> Follow</li>
+                <li>Số lượng: <span id="modalQty">...</span> View</li>
               </ul>
             </div>
             <h5 class="text-center mt-3 text-dark">
@@ -998,8 +999,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-      let currentPrice = 35;
-      let currentPackageName = "S1 Follow TikTok Việt";
+      let currentPrice = 1;
+      let currentPackageName = "S1 View TikTok Nhanh";
       let pendingOrderData = null;
 
       function switchSection(sectionId, element) {
@@ -1031,7 +1032,7 @@
         document.getElementById("tiktokTotalPrice").innerText =
           new Intl.NumberFormat("vi-VN").format(total) + " vnđ";
         document.getElementById("tiktokTotalDesc").innerText =
-          `Bạn sẽ tăng ${qty} Follow với giá ${currentPrice} vnđ / Follow`;
+          `Bạn sẽ tăng ${qty} View với giá ${currentPrice} vnđ / View`;
       }
 
       document
@@ -1165,14 +1166,14 @@
 
       // 3. Xử lý Form Mua -> Bật Modal Xác nhận
       document
-        .getElementById("tiktokFollowForm")
+        .getElementById("tiktokViewForm")
         .addEventListener("submit", (e) => {
           e.preventDefault();
           const uid = document.getElementById("tiktokLinkInput").value.trim();
           const qty = parseInt(document.getElementById("tiktokQuantity").value);
 
-          if (qty < 100) {
-            alert("Lỗi: Số lượng mua tối thiểu là 100 Follow!");
+          if (qty < 1000) {
+            alert("Lỗi: Số lượng mua tối thiểu là 1000 View!");
             return;
           }
 
@@ -1253,15 +1254,16 @@
               amount: -total,
               type: "order",
               status: "TRỪ TIỀN",
-              syntax: `Mua ${qty} Follow TikTok cho ID: ${uid}`,
+              syntax: `Mua ${qty} View TikTok cho video: ${uid}`,
             });
 
             bootstrap.Modal.getInstance(
               document.getElementById("confirmBuyModal"),
             ).hide();
-            alert(
-              `✅ MUA THÀNH CÔNG!\n\nMã đơn: ${randomOrderId}\nĐã trừ: ${new Intl.NumberFormat("vi-VN").format(total)} đ`,
-            );
+            alert(`✅ MUA THÀNH CÔNG!
+
+Mã đơn: ${randomOrderId}
+Đã trừ: ${new Intl.NumberFormat("vi-VN").format(total)} đ`);
             document.getElementById("tiktokLinkInput").value = "";
           } catch (err) {
             alert("Lỗi kết nối máy chủ. Vui lòng thử lại!");
