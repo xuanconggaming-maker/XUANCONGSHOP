@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tăng Follow Facebook - Xuân Công Shop</title>
+    <title>Tăng Like Bài Viết Facebook - Xuân Công Shop</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -28,27 +28,23 @@
         background-color: #fff;
         border-bottom: 1px solid #eaeaea;
         height: 60px;
-        /* Thêm 3 dòng dưới đây để cố định Topbar */
         position: sticky;
         top: 0;
         z-index: 1030;
       }
-
       .search-box {
         background-color: transparent;
         border: none;
         box-shadow: none;
         outline: none;
       }
-
       .desktop-menu {
         background-color: #fff;
         border-bottom: 1px solid #eaeaea;
         white-space: nowrap;
         overflow: visible;
-        /* Thêm 3 dòng dưới đây để cố định Menu ngang (Desktop) */
         position: sticky;
-        top: 60px; /* Cách mép trên đúng bằng chiều cao của Topbar */
+        top: 60px;
         z-index: 1020;
       }
       .dropdown-hover {
@@ -69,7 +65,6 @@
         background-color: #f1f1f1;
         border-radius: 5px;
       }
-
       .dropdown-menu-custom {
         visibility: hidden;
         opacity: 0;
@@ -106,7 +101,7 @@
         padding-left: 25px;
       }
 
-      /* --- TAB NAV --- */
+      /* --- TAB NAV & CẤU TRÚC CHUNG --- */
       .page-header-title {
         font-size: 16px;
         font-weight: 700;
@@ -117,7 +112,6 @@
         font-size: 13px;
         color: #777;
       }
-
       .tab-card {
         background: #fff;
         border: 1px solid #dee2e6;
@@ -143,7 +137,6 @@
         color: #00bcd4;
         border-bottom: 2px solid #00bcd4;
       }
-
       .main-card {
         background: #fff;
         border: 1px solid #dee2e6;
@@ -182,7 +175,6 @@
         margin-left: 5px;
         color: white;
       }
-
       .server-note-box {
         background-color: #e8f5e9;
         border: 1px solid #c8e6c9;
@@ -213,6 +205,45 @@
         box-shadow: 0 0 0 0.2rem rgba(239, 154, 154, 0.25);
       }
 
+      /* --- CHỌN CẢM XÚC CSS --- */
+      .reaction-selector {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .reaction-option {
+        cursor: pointer;
+        transition: transform 0.2s;
+        position: relative;
+      }
+      .reaction-option input[type="radio"] {
+        display: none;
+      }
+      .reaction-option img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        /* Hạ độ sáng một chút xíu khi chưa chọn */
+        opacity: 0.6;
+        transform: scale(0.95);
+        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .reaction-option input[type="radio"]:checked + img {
+        /* Khi click chọn: Sáng rực 100%, phóng to và có bóng đổ */
+        opacity: 1;
+        transform: scale(1.25);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        position: relative;
+      }
+      .reaction-option:hover img {
+        transform: scale(1.1);
+        opacity: 0.9;
+      }
+
+      /* --- TOTAL BOX --- */
       .total-box {
         background-color: #ffcdd2;
         padding: 20px;
@@ -230,7 +261,6 @@
         color: #000;
         font-weight: 500;
       }
-
       .btn-buy {
         background-color: #5c6bc0;
         color: white;
@@ -376,11 +406,9 @@
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#mobileMenuSidebar"
-          aria-controls="mobileMenuSidebar"
         >
           <i class="fa-solid fa-arrow-right-arrow-left"></i>
         </button>
-
         <div class="input-group">
           <span class="input-group-text bg-transparent border-0"
             ><i class="fa-solid fa-magnifying-glass text-muted"></i
@@ -392,29 +420,24 @@
           />
         </div>
       </div>
-
       <div class="d-flex align-items-center gap-3 text-muted fs-5">
         <i class="fa-solid fa-table-cells" style="cursor: pointer"></i>
         <i class="fa-solid fa-expand" style="cursor: pointer"></i>
         <i class="fa-solid fa-gear" style="cursor: pointer"></i>
-
         <div class="dropdown">
           <a
             href="#"
             class="d-flex align-items-center text-decoration-none"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
           >
             <img
               id="userAvatar"
-              src="https://ui-avatars.com/api/?name=User&background=e83e8c&color=fff&bold=true"
+              src="https://ui-avatars.com/api/?name=User"
               class="rounded-circle"
               width="35"
               height="35"
-              alt="User"
             />
           </a>
-
           <ul
             class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
             style="min-width: 260px"
@@ -424,18 +447,15 @@
                 Chào mừng <span id="welcomeName">User</span>
               </div>
               <div class="fw-medium mt-1 text-dark fs-6">
-                <i class="fa-solid fa-dollar-sign text-secondary"></i> Số tiền
-                :<span id="userBalance" class="ms-1">0</span>
+                <i class="fa-solid fa-dollar-sign text-secondary"></i> Số tiền:
+                <span id="userBalance" class="ms-1 fw-bold text-success"
+                  >0</span
+                >
               </div>
             </li>
-
             <li><hr class="dropdown-divider" /></li>
-
             <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
+              <a class="dropdown-item py-2 text-dark fw-medium" href="#"
                 ><i class="fa-regular fa-circle-user text-muted me-2 fs-6"></i>
                 Tài khoản</a
               >
@@ -443,7 +463,6 @@
             <li>
               <a
                 class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
                 href="nap-tien.html"
                 ><i
                   class="fa-solid fa-dollar-sign text-muted me-2 fs-6 px-1"
@@ -451,40 +470,10 @@
                 Nạp tiền</a
               >
             </li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
-                ><i class="fa-regular fa-file-lines text-muted me-2 fs-6"></i>
-                Lịch sử dòng tiền</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
-                ><i class="fa-solid fa-cart-shopping text-muted me-2 fs-6"></i>
-                Đánh giá nhân viên</a
-              >
-            </li>
-
             <li><hr class="dropdown-divider" /></li>
-
             <li>
               <a
                 class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
-                ><i class="fa-solid fa-gear text-muted me-2 fs-6"></i> Cài đặt
-                giao diện</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
                 href="#"
                 id="logoutBtn"
                 ><i
@@ -501,23 +490,15 @@
     <nav class="desktop-menu d-none d-md-block px-2">
       <div class="dropdown-hover">
         <a
-          href="#"
+          href="trang-chu.html"
           class="menu-item text-primary"
           style="color: #6366f1 !important"
           ><i class="fa-solid fa-desktop"></i> Hệ thống
           <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i
         ></a>
         <div class="dropdown-menu-custom">
-          <a href="#" class="dropdown-item-custom">Trang chủ</a>
-          <a href="#" class="dropdown-item-custom">Nhật ký hoạt động</a>
-          <a href="#" class="dropdown-item-custom">Nạp tiền</a>
-          <a href="#" class="dropdown-item-custom">Tài khoản</a>
-          <a href="#" class="dropdown-item-custom">Thông báo</a>
-          <a href="#" class="dropdown-item-custom">Hoàn tiền</a>
-          <a href="#" class="dropdown-item-custom">Tạo web con và API</a>
-          <a href="#" class="dropdown-item-custom">Bảng giá và cấp bậc</a>
-          <a href="#" class="dropdown-item-custom">Gửi hỗ trợ</a>
-          <a href="#" class="dropdown-item-custom">Tiếp thị liên kết</a>
+          <a href="trang-chu.html" class="dropdown-item-custom">Trang chủ</a>
+          <a href="nap-tien.html" class="dropdown-item-custom">Nạp tiền</a>
         </div>
       </div>
       <div class="dropdown-hover">
@@ -542,7 +523,6 @@
         <div class="dropdown-menu-custom">
           <a href="#" class="dropdown-item-custom">Tăng Theo Dõi</a>
           <a href="#" class="dropdown-item-custom">Tăng Tim Video</a>
-          <a href="#" class="dropdown-item-custom">Tăng Lượt Xem (View)</a>
         </div>
       </div>
       <div class="dropdown-hover">
@@ -600,7 +580,6 @@
               </div>
             </div>
           </div>
-
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button
@@ -619,7 +598,7 @@
             >
               <div class="accordion-body bg-light py-2">
                 <a
-                  href="#"
+                  href="buff-like-fb.html"
                   class="d-block py-2 text-decoration-none text-muted small"
                   >Tăng Like Bài Viết</a
                 >
@@ -631,88 +610,21 @@
               </div>
             </div>
           </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button collapsed py-3 text-dark"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#colTiktok"
-              >
-                <i class="fa-brands fa-tiktok me-2"></i> TikTok
-              </button>
-            </h2>
-            <div
-              id="colTiktok"
-              class="accordion-collapse collapse"
-              data-bs-parent="#mobileAccordion"
-            >
-              <div class="accordion-body bg-light py-2">
-                <a
-                  href="#"
-                  class="d-block py-2 text-decoration-none text-muted small"
-                  >Tăng Theo Dõi</a
-                >
-                <a
-                  href="#"
-                  class="d-block py-2 text-decoration-none text-muted small"
-                  >Tăng Tim Video</a
-                >
-                <a
-                  href="#"
-                  class="d-block py-2 text-decoration-none text-muted small"
-                  >Tăng Lượt Xem (View)</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="accordion-item">
-            <h2 class="accordion-header">
-              <button
-                class="accordion-button collapsed py-3 text-danger"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#colIg"
-              >
-                <i class="fa-brands fa-instagram me-2"></i> Instagram
-              </button>
-            </h2>
-            <div
-              id="colIg"
-              class="accordion-collapse collapse"
-              data-bs-parent="#mobileAccordion"
-            >
-              <div class="accordion-body bg-light py-2">
-                <a
-                  href="#"
-                  class="d-block py-2 text-decoration-none text-muted small"
-                  >Tăng Like Instagram</a
-                >
-                <a
-                  href="#"
-                  class="d-block py-2 text-decoration-none text-muted small"
-                  >Tăng Follow Instagram</a
-                >
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
     <div class="container-fluid py-4 px-md-4">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <div class="page-header-title">TĂNG FOLLOW TRANG CÁ NHÂN</div>
+        <div class="page-header-title">TĂNG LIKE BÀI VIẾT FACEBOOK</div>
         <div class="breadcrumb-text d-none d-sm-block">
-          Facebook &gt; Tăng FOLLOW trang cá nhân
+          Facebook &gt; Tăng Like Bài Viết
         </div>
       </div>
 
       <div class="tab-card">
         <a class="tab-item active" onclick="switchSection('create-order', this)"
-          >Tăng FOLLOW trang cá nhân</a
+          >Tăng Like Bài Viết</a
         >
         <a class="tab-item" onclick="switchSection('order-history', this)"
           >Nhật ký đơn hàng</a
@@ -723,55 +635,85 @@
       <div class="row g-4">
         <div class="col-lg-8">
           <div class="main-card" id="section-create-order">
-            <form id="fbFollowForm">
+            <form id="fbLikeForm">
               <div class="row mb-4">
                 <div class="col-md-6 mb-3 mb-md-0">
                   <div class="server-label">Chọn Gói :</div>
+
                   <label
                     class="server-item"
-                    onclick="selectServer(this, 13, 'Follow sale độc quyền')"
+                    onclick="
+                      selectServer(
+                        this,
+                        31,
+                        'S1 Like clone xịn',
+                        'Tốc độ cực nhanh<br>100% tài khoản clone xịn<br>Phù hợp cho bài viết, ảnh đại diện',
+                        false,
+                      )
+                    "
                   >
-                    <input type="radio" name="server" value="sv1" checked />
-                    Follow sale độc quyền
-                    <span class="text-danger ms-1 fw-bold">13 vnđ</span>
-                    <span class="badge-custom" style="background-color: #00c853"
-                      >New-nhanh</span
+                    <input type="radio" name="server" value="sv1" />
+                    S1 Like clone xịn
+                    <span class="text-danger ms-1 fw-bold">31 vnđ</span>
+                    <span class="badge-custom" style="background-color: #2962ff"
+                      >New-Tốt</span
                     >
                   </label>
+
                   <label
                     class="server-item"
-                    onclick="selectServer(this, 13.85, 'Follow clone TÂY')"
+                    onclick="
+                      selectServer(
+                        this,
+                        10.5,
+                        'S2 Like clone nhanh',
+                        'Lên nhanh<br>Tuyệt đối 100% tài khoản Clone',
+                        false,
+                      )
+                    "
                   >
                     <input type="radio" name="server" value="sv2" />
-                    Follow clone TÂY - Chạy All Page...
-                    <span class="text-danger ms-1 fw-bold">13.85 vnđ</span>
-                    <span class="badge-custom" style="background-color: #00c853"
-                      >Tốt - 50k / ngày</span
+                    S2 Like clone nhanh
+                    <span class="text-danger ms-1 fw-bold">10.5 vnđ</span>
+                    <span class="badge-custom" style="background-color: #ff5252"
+                      >Hay quá tải-100% Clone</span
                     >
                   </label>
+
                   <label
                     class="server-item"
-                    onclick="selectServer(this, 20.5, 'Follow clone Việt')"
+                    onclick="
+                      selectServer(
+                        this,
+                        20.5,
+                        'S2 Like siêu nhanh',
+                        'Rất nhanh - Đang HĐ<br>Lên từ từ tự nhiên<br>Tuyệt đối an toàn',
+                        true,
+                      )
+                    "
                   >
-                    <input type="radio" name="server" value="sv3" />
-                    Follow clone Việt
+                    <input type="radio" name="server" value="sv4" checked />
+                    S2 Like siêu nhanh
                     <span class="text-danger ms-1 fw-bold">20.5 vnđ</span>
                     <span class="badge-custom" style="background-color: #2962ff"
-                      >clone 100%</span
+                      >Rất nhanh-Đang HĐ</span
                     >
                   </label>
                 </div>
+
                 <div class="col-md-6">
                   <div class="server-note-box">
                     <div class="fw-bold mb-2 text-dark">
                       Ghi chú gói
-                      <span class="text-danger" id="notePackageName"
-                        >Follow sale độc quyền</span
+                      <span class="text-success" id="notePackageName"
+                        >S2 Like siêu nhanh</span
                       >
+                      mã gói :
+                      <span class="text-success">facebook_like_v7</span>
                     </div>
-                    <div>
-                      Tốc độ nhanh<br /><br />Tài nguyên page Việt - Avata
-                      random<br /><br />Bảo hành 7 ngày
+                    <div id="notePackageDetails">
+                      Tốc độ 10k->50k/1 ngày<br /><br />Nhập id bài viết<br /><br />Chất
+                      lượng cao<br /><br />Không bảo hành
                     </div>
                   </div>
                 </div>
@@ -784,31 +726,94 @@
                       >Nhập ID (<a
                         href="#"
                         class="text-primary text-decoration-none"
-                        id="getUidBtn"
+                        id="getIdBtn"
                         >Lấy Id</a
-                      >) hoặc Link:</span
+                      >) hoặc Link tùy theo gói:
+                      <a href="#" class="text-primary text-decoration-none ms-1"
+                        >Bạn muốn mua 1 lần nhiều ID ?</a
+                      ></span
                     >
                   </div>
                   <input
                     type="text"
                     class="form-control form-control-custom w-100"
-                    id="fbLinkInput"
-                    placeholder="Nhập ID hoặc Link fb"
+                    id="likeLinkInput"
+                    placeholder="Nhập ID (Lấy Id) hoặc Link tùy theo gói"
                     required
                   />
                 </div>
                 <div class="col-md-4">
-                  <div class="form-label-custom">
-                    <span>Số lượng (Tối thiểu 1000):</span>
-                  </div>
+                  <div class="form-label-custom"><span>Số lượng:</span></div>
                   <input
                     type="number"
                     class="form-control form-control-custom w-100"
-                    id="fbQuantity"
-                    value="1000"
-                    min="1000"
+                    id="likeQuantity"
+                    value="100"
+                    min="100"
                     required
                   />
+                </div>
+              </div>
+
+              <div class="mb-4 mt-2" id="reactionGroup">
+                <div class="form-label-custom"><span>Chọn cảm xúc:</span></div>
+                <div class="reaction-selector">
+                  <label class="reaction-option">
+                    <input type="radio" name="reaction" value="Like" checked />
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/emoji-datasource-facebook/img/facebook/64/1f44d.png"
+                      alt="Like"
+                      title="Thích"
+                    />
+                  </label>
+                  <label class="reaction-option">
+                    <input type="radio" name="reaction" value="Love" />
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/emoji-datasource-facebook/img/facebook/64/2764-fe0f.png"
+                      alt="Love"
+                      title="Yêu thích"
+                    />
+                  </label>
+                  <label class="reaction-option">
+                    <input type="radio" name="reaction" value="Care" />
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/emoji-datasource-facebook/img/facebook/64/1f970.png"
+                      alt="Care"
+                      title="Thương thương"
+                    />
+                  </label>
+                  <label class="reaction-option">
+                    <input type="radio" name="reaction" value="Haha" />
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/emoji-datasource-facebook/img/facebook/64/1f606.png"
+                      alt="Haha"
+                      title="Haha"
+                    />
+                  </label>
+                  <label class="reaction-option">
+                    <input type="radio" name="reaction" value="Wow" />
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/emoji-datasource-facebook/img/facebook/64/1f632.png"
+                      alt="Wow"
+                      title="Wow"
+                    />
+                  </label>
+                  <label class="reaction-option">
+                    <input type="radio" name="reaction" value="Sad" />
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/emoji-datasource-facebook/img/facebook/64/1f622.png"
+                      alt="Sad"
+                      title="Buồn"
+                    />
+                  </label>
+                  <label class="reaction-option">
+                    <input type="radio" name="reaction" value="Angry" />
+                    <img
+                      src="https://cdn.jsdelivr.net/npm/emoji-datasource-facebook/img/facebook/64/1f621.png"
+                      alt="Angry"
+                      title="Phẫn nộ"
+                    />
+                  </label>
                 </div>
               </div>
 
@@ -822,10 +827,10 @@
               </div>
 
               <div class="total-box">
-                <div class="total-price" id="fbTotalPrice">13,000 vnđ</div>
+                <div class="total-price" id="likeTotalPrice">2,050 vnđ</div>
                 <div class="total-text mb-2">Tổng tiền thanh toán</div>
-                <div class="total-text" style="color: #444" id="fbTotalDesc">
-                  Bạn sẽ tăng 1000 tương tác với giá 13 vnđ / tương tác
+                <div class="total-text" style="color: #444" id="likeTotalDesc">
+                  Bạn sẽ tăng 100 tương tác với giá 20.5 vnđ / tương tác
                 </div>
               </div>
 
@@ -837,10 +842,8 @@
             <div class="history-filter-box">
               <div class="row g-2">
                 <div class="col-md-3">
-                  <label class="form-label small text-muted mb-1"
-                    >Từ khoá</label
-                  >
-                  <input
+                  <label class="form-label small text-muted mb-1">Từ khoá</label
+                  ><input
                     type="text"
                     class="form-control form-control-sm"
                     placeholder="Id hoặc mã đơn"
@@ -849,22 +852,20 @@
                 <div class="col-md-3">
                   <label class="form-label small text-muted mb-1"
                     >Tìm theo gói</label
-                  >
-                  <select class="form-select form-select-sm">
+                  ><select class="form-select form-select-sm">
                     <option>----Tất cả----</option>
                   </select>
                 </div>
                 <div class="col-md-3">
                   <label class="form-label small text-muted mb-1"
                     >Trạng thái</label
-                  >
-                  <select class="form-select form-select-sm">
+                  ><select class="form-select form-select-sm">
                     <option>Tất cả</option>
                   </select>
                 </div>
                 <div class="col-md-3">
-                  <label class="form-label small text-muted mb-1">Limit</label>
-                  <select class="form-select form-select-sm">
+                  <label class="form-label small text-muted mb-1">Limit</label
+                  ><select class="form-select form-select-sm">
                     <option>100</option>
                   </select>
                 </div>
@@ -880,7 +881,7 @@
                     <th>#</th>
                     <th>Thao tác</th>
                     <th>Thời gian</th>
-                    <th>Uid</th>
+                    <th>ID Bài Viết</th>
                     <th>Trạng thái</th>
                     <th>Tên Gói</th>
                   </tr>
@@ -934,7 +935,6 @@
               >
               <span class="stat-value" id="rightNextRank">0/500,000</span>
             </div>
-
             <div class="progress-bar-container">
               <div class="progress-badge" id="progressPercent">0%</div>
               <div class="progress-bg mt-1">
@@ -974,9 +974,16 @@
                   Gói: <span id="modalPackage" class="text-primary">...</span>
                 </li>
                 <li>
-                  ID / UID: <span id="modalUid" class="text-danger">...</span>
+                  Cảm xúc:
+                  <span id="modalReaction" class="text-warning fw-bold fs-5"
+                    >...</span
+                  >
                 </li>
-                <li>Số lượng: <span id="modalQty">...</span> Follow</li>
+                <li>
+                  ID Bài Viết:
+                  <span id="modalUid" class="text-danger">...</span>
+                </li>
+                <li>Số lượng: <span id="modalQty">...</span> Tương tác</li>
               </ul>
             </div>
             <h5 class="text-center mt-3 text-dark">
@@ -1007,11 +1014,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-      let currentPrice = 13;
-      let currentPackageName = "Follow sale độc quyền";
-      let pendingOrderData = null; // Lưu dữ liệu chờ thanh toán
+      let currentPrice = 20.5;
+      let currentPackageName = "S2 Like siêu nhanh";
+      let pendingOrderData = null;
 
-      // Chuyển Tab Đặt đơn / Nhật ký
       function switchSection(sectionId, element) {
         document.getElementById("section-create-order").classList.add("d-none");
         document
@@ -1020,79 +1026,100 @@
         document
           .getElementById("section-" + sectionId)
           .classList.remove("d-none");
-
         document
           .querySelectorAll(".tab-item")
           .forEach((el) => el.classList.remove("active"));
         element.classList.add("active");
       }
 
-      function selectServer(element, price, name) {
+      // Sửa hàm selectServer để nhận thêm biến showReaction
+      function selectServer(element, price, name, details, showReaction) {
         currentPrice = price;
         currentPackageName = name;
         document.getElementById("notePackageName").innerText = name;
-        calculateFbTotal();
-      }
+        document.getElementById("notePackageDetails").innerHTML = details;
 
-      function calculateFbTotal() {
-        const qty = parseInt(document.getElementById("fbQuantity").value) || 0;
+        // Điều khiển Ẩn/Hiện khung cảm xúc
+        const reactionGroup = document.getElementById("reactionGroup");
+        if (showReaction) {
+          reactionGroup.style.display = "block";
+        } else {
+          reactionGroup.style.display = "none";
+        }
+
+        calculateTotal();
+      }
+      function calculateTotal() {
+        const qty =
+          parseInt(document.getElementById("likeQuantity").value) || 0;
         const total = qty * currentPrice;
-        document.getElementById("fbTotalPrice").innerText =
+        document.getElementById("likeTotalPrice").innerText =
           new Intl.NumberFormat("vi-VN").format(total) + " vnđ";
-        document.getElementById("fbTotalDesc").innerText =
+        document.getElementById("likeTotalDesc").innerText =
           `Bạn sẽ tăng ${qty} tương tác với giá ${currentPrice} vnđ / tương tác`;
       }
 
-      document
-        .getElementById("fbQuantity")
-        .addEventListener("input", calculateFbTotal);
+      // 3. Click Đặt đơn -> Bật Modal
+      document.getElementById("fbLikeForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const uid = document.getElementById("likeLinkInput").value.trim();
+        const qty = parseInt(document.getElementById("likeQuantity").value);
 
-      // Nút Lấy UID
-      document
-        .getElementById("getUidBtn")
-        .addEventListener("click", async function (e) {
-          e.preventDefault();
-          const inputField = document.getElementById("fbLinkInput");
-          let link = inputField.value.trim();
+        if (qty < 100) {
+          alert("Lỗi: Số lượng mua tối thiểu là 100 Tương tác!");
+          return;
+        }
 
-          if (!link) {
-            alert("Vui lòng nhập link!");
-            return;
-          }
-          if (/^\d+$/.test(link)) {
-            alert("Đã là UID.");
-            return;
-          }
+        const totalText = document
+          .getElementById("likeTotalPrice")
+          .innerText.replace(/\./g, "")
+          .replace(" vnđ", "");
+        const total = parseInt(totalText);
 
-          const originalText = this.innerHTML;
-          this.innerHTML = "...";
-          try {
-            const idMatch = link.match(/(?:id=|profile\.php\?id=)(\d+)/);
-            if (idMatch && idMatch[1]) {
-              inputField.value = idMatch[1];
-              this.innerHTML = originalText;
-              return;
-            }
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://id.traodoisub.com/api.php?link=${encodeURIComponent(link)}`)}`;
-            const response = await fetch(proxyUrl);
-            const data = await response.json();
-            if (data.contents) {
-              const parsed = JSON.parse(data.contents);
-              if (parsed.id || parsed.uid) {
-                inputField.value = parsed.id || parsed.uid;
-              } else {
-                alert("Vui lòng tự lấy UID qua web trung gian do fb chặn.");
-                inputField.value = "";
-              }
-            }
-          } catch (e) {
-            alert("Lỗi mạng.");
-          } finally {
-            this.innerHTML = originalText;
-          }
-        });
+        document.getElementById("modalPackage").innerText = currentPackageName;
+        document.getElementById("modalUid").innerText = uid;
+        document.getElementById("modalQty").innerText = new Intl.NumberFormat(
+          "vi-VN",
+        ).format(qty);
+        document.getElementById("modalTotal").innerText =
+          new Intl.NumberFormat("vi-VN").format(total) + " đ";
 
-      calculateFbTotal();
+        // Logic kiểm tra xem có đang dùng gói Cảm xúc không
+        let finalPackageName = currentPackageName;
+        const reactionGroup = document.getElementById("reactionGroup");
+        const modalReactionRow = document.getElementById("modalReactionRow");
+
+        if (reactionGroup.style.display !== "none") {
+          const reaction = document.querySelector(
+            'input[name="reaction"]:checked',
+          ).value;
+          const reactionDisplay = {
+            Like: "👍 Thích",
+            Love: "❤️ Yêu thích",
+            Care: "🥰 Thương thương",
+            Haha: "😆 Haha",
+            Wow: "😮 Wow",
+            Sad: "😢 Buồn",
+            Angry: "😡 Phẫn nộ",
+          };
+          document.getElementById("modalReaction").innerText =
+            reactionDisplay[reaction];
+          modalReactionRow.style.display = "list-item"; // Hiện dòng Cảm xúc trên Modal
+          finalPackageName = `${currentPackageName} (${reaction})`; // Gắn thêm đuôi cảm xúc vào log DB
+        } else {
+          modalReactionRow.style.display = "none"; // Ẩn dòng cảm xúc trên Modal nếu mua gói thường
+        }
+
+        pendingOrderData = {
+          uid,
+          qty,
+          total,
+          packageName: finalPackageName,
+        };
+        new bootstrap.Modal(document.getElementById("confirmBuyModal")).show();
+      });
+
+      calculateTotal();
     </script>
 
     <script type="module">
@@ -1106,7 +1133,6 @@
         getDatabase,
         ref,
         onValue,
-        get,
         update,
         push,
         set,
@@ -1120,12 +1146,12 @@
       let currentBalance = 0;
       let currentUserUid = null;
 
+      // 1. Tải thông tin User
       onAuthStateChanged(auth, (user) => {
         if (user) {
           currentUserUid = user.uid;
           const userRef = ref(db, "users/" + user.uid);
 
-          // 1. Tải thông tin tài khoản
           onValue(userRef, (snapshot) => {
             if (snapshot.exists()) {
               const userData = snapshot.val();
@@ -1173,7 +1199,7 @@
             }
           });
 
-          // 2. Tải Nhật Ký Đơn Hàng Realtime
+          // 2. Tải Nhật Ký Đơn
           const ordersRef = ref(db, "users/" + user.uid + "/orders");
           onValue(ordersRef, (snapshot) => {
             const tbody = document.getElementById("historyList");
@@ -1182,52 +1208,31 @@
               const orders = snapshot.val();
               const ordersArray = Object.values(orders).reverse();
 
-              // ĐOẠN CODE MỚI: TÍCH HỢP MENU DROPDOWN MƯỢT MÀ
               ordersArray.forEach((order) => {
                 let badgeClass =
                   order.status === "Hoàn thành"
                     ? "badge-status-success"
                     : "badge-status-running";
-
                 tbody.innerHTML += `
-      <tr>
-        <td class="text-muted fw-medium">${order.orderId}</td>
-        <td>
-            <div class="dropdown">
-                <button class="btn-action-history" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Thao tác <i class="fa-solid fa-chevron-down ms-1" style="font-size:10px"></i>
-                </button>
-                <ul class="dropdown-menu shadow border-0 mt-1" style="font-size: 13px; z-index: 9999;">
-                    <li>
-                        <a class="dropdown-item py-2 fw-medium text-dark" href="#" onclick="alert('Đang xem chi tiết đơn: ${order.orderId}')">
-                            <i class="fa-solid fa-circle-info text-primary me-2"></i> Xem chi tiết
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item py-2 fw-medium text-dark" href="#" onclick="alert('Vui lòng gửi mã đơn ${order.orderId} cho Admin qua Zalo/Tele để được hỗ trợ')">
-                            <i class="fa-solid fa-headset text-success me-2"></i> Hỗ trợ / Báo lỗi
-                        </a>
-                    </li>
-                    ${
-                      order.status === "Đang chạy"
-                        ? `
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <a class="dropdown-item py-2 fw-medium text-danger" href="#" onclick="alert('Hệ thống đang chạy, không thể hủy ngang đơn này!')">
-                            <i class="fa-solid fa-ban text-danger me-2"></i> Hủy đơn
-                        </a>
-                    </li>`
-                        : ""
-                    }
-                </ul>
-            </div>
-        </td>
-        <td class="text-muted">${order.time}</td>
-        <td><a href="${order.uid_fb}" target="_blank" class="text-primary text-decoration-none fw-medium" style="word-break: break-all; max-width: 150px; display: inline-block;">${order.uid_fb}</a></td>
-        <td><span class="${badgeClass}">${order.status}</span></td>
-        <td class="text-muted">${order.packageName}</td>
-      </tr>
-   `;
+                  <tr>
+                    <td class="text-muted fw-medium">${order.orderId}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn-action-history" type="button" data-bs-toggle="dropdown">
+                                Thao tác <i class="fa-solid fa-chevron-down ms-1" style="font-size:10px"></i>
+                            </button>
+                            <ul class="dropdown-menu shadow border-0 mt-1" style="font-size: 13px; z-index: 9999;">
+                                <li><a class="dropdown-item py-2 fw-medium text-dark" href="#" onclick="alert('Xem chi tiết đơn: ${order.orderId}')"><i class="fa-solid fa-circle-info text-primary me-2"></i> Xem chi tiết</a></li>
+                                <li><a class="dropdown-item py-2 fw-medium text-dark" href="#" onclick="alert('Gửi mã đơn ${order.orderId} cho Admin để được hỗ trợ')"><i class="fa-solid fa-headset text-success me-2"></i> Hỗ trợ / Báo lỗi</a></li>
+                                ${order.status === "Đang chạy" ? `<li><hr class="dropdown-divider"></li><li><a class="dropdown-item py-2 fw-medium text-danger" href="#" onclick="alert('Hệ thống đang chạy, không thể hủy ngang đơn này!')"><i class="fa-solid fa-ban text-danger me-2"></i> Hủy đơn</a></li>` : ""}
+                            </ul>
+                        </div>
+                    </td>
+                    <td class="text-muted">${order.time}</td>
+                    <td><a href="#" class="text-primary text-decoration-none fw-medium" style="word-break: break-all; max-width: 150px; display: inline-block;">${order.uid_fb}</a></td>
+                    <td><span class="${badgeClass}">${order.status}</span></td>
+                    <td class="text-muted">${order.packageName}</td>
+                  </tr>`;
               });
             } else {
               tbody.innerHTML = `<tr><td colspan="6" class="py-4 text-muted">Chưa có đơn hàng nào</td></tr>`;
@@ -1238,50 +1243,58 @@
         }
       });
 
-      // 3. Xử lý Form Mua -> Bật Modal Xác nhận
-      document
-        .getElementById("fbFollowForm")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const uid = document.getElementById("fbLinkInput").value.trim();
-          const qty = parseInt(document.getElementById("fbQuantity").value);
+      // 3. Click Đặt đơn -> Bật Modal
+      document.getElementById("fbLikeForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const uid = document.getElementById("likeLinkInput").value.trim();
+        const qty = parseInt(document.getElementById("likeQuantity").value);
+        const reaction = document.querySelector(
+          'input[name="reaction"]:checked',
+        ).value; // Lấy giá trị cảm xúc
 
-          if (qty < 1000) {
-            alert("Lỗi: Số lượng mua tối thiểu là 1000!");
-            return;
-          }
+        if (qty < 100) {
+          alert("Lỗi: Số lượng mua tối thiểu là 100 Tương tác!");
+          return;
+        }
 
-          const totalText = document
-            .getElementById("fbTotalPrice")
-            .innerText.replace(/\./g, "")
-            .replace(" vnđ", "");
-          const total = parseInt(totalText);
+        const totalText = document
+          .getElementById("likeTotalPrice")
+          .innerText.replace(/\./g, "")
+          .replace(" vnđ", "");
+        const total = parseInt(totalText);
 
-          // Cập nhật Modal
-          document.getElementById("modalPackage").innerText =
-            currentPackageName;
-          document.getElementById("modalUid").innerText = uid;
-          document.getElementById("modalQty").innerText = new Intl.NumberFormat(
-            "vi-VN",
-          ).format(qty);
-          document.getElementById("modalTotal").innerText =
-            new Intl.NumberFormat("vi-VN").format(total) + " đ";
+        document.getElementById("modalPackage").innerText = currentPackageName;
+        document.getElementById("modalUid").innerText = uid;
+        document.getElementById("modalQty").innerText = new Intl.NumberFormat(
+          "vi-VN",
+        ).format(qty);
+        document.getElementById("modalTotal").innerText =
+          new Intl.NumberFormat("vi-VN").format(total) + " đ";
 
-          // Lưu vào biến tạm
-          pendingOrderData = {
-            uid,
-            qty,
-            total,
-            packageName: currentPackageName,
-          };
+        // Render Tên cảm xúc hoặc Icon vào modal
+        const reactionDisplay = {
+          Like: "👍 Thích",
+          Love: "❤️ Yêu thích",
+          Care: "🥰 Thương thương",
+          Haha: "😆 Haha",
+          Wow: "😮 Wow",
+          Sad: "😢 Buồn",
+          Angry: "😡 Phẫn nộ",
+        };
+        document.getElementById("modalReaction").innerText =
+          reactionDisplay[reaction];
 
-          // Hiện Modal
-          new bootstrap.Modal(
-            document.getElementById("confirmBuyModal"),
-          ).show();
-        });
+        pendingOrderData = {
+          uid,
+          qty,
+          total,
+          packageName: `${currentPackageName} (${reaction})`,
+          reaction,
+        };
+        new bootstrap.Modal(document.getElementById("confirmBuyModal")).show();
+      });
 
-      // 4. Bấm "Thanh toán" trong Modal -> Trừ tiền & Ghi Log
+      // 4. Xác nhận thanh toán -> Trừ tiền
       document
         .getElementById("btnConfirmPay")
         .addEventListener("click", async function () {
@@ -1307,8 +1320,6 @@
 
           try {
             const userRef = ref(db, "users/" + currentUserUid);
-
-            // A. Trừ tiền
             await update(userRef, { balance: currentBalance - total });
 
             const now = new Date();
@@ -1317,7 +1328,6 @@
               10000000 + Math.random() * 90000000,
             );
 
-            // B. Ghi vào mục Orders (Để hiện ở Tab Nhật ký đơn hàng)
             const newOrderRef = push(
               ref(db, "users/" + currentUserUid + "/orders"),
             );
@@ -1325,29 +1335,27 @@
               orderId: randomOrderId,
               time: timeStr,
               uid_fb: uid,
-              packageName: packageName,
+              packageName: packageName, // Đã kèm chữ Cảm xúc ở đuôi
               qty: qty,
               total: total,
               status: "Đang chạy",
             });
 
-            // C. Ghi vào mục Transactions (Để hiện ở Lịch sử dòng tiền / Trang nạp tiền)
             await push(ref(db, "users/" + currentUserUid + "/transactions"), {
               time: timeStr,
               amount: -total,
               type: "order",
               status: "TRỪ TIỀN",
-              syntax: `Mua ${qty} Follow cho UID: ${uid}`,
+              syntax: `Mua ${qty} Tương tác cho bài viết: ${uid}`,
             });
 
-            // Ẩn modal & Báo thành công
             bootstrap.Modal.getInstance(
               document.getElementById("confirmBuyModal"),
             ).hide();
             alert(
               `✅ MUA THÀNH CÔNG!\n\nMã đơn: ${randomOrderId}\nĐã trừ: ${new Intl.NumberFormat("vi-VN").format(total)} đ`,
             );
-            document.getElementById("fbLinkInput").value = "";
+            document.getElementById("likeLinkInput").value = "";
           } catch (err) {
             alert("Lỗi kết nối máy chủ. Vui lòng thử lại!");
           } finally {
