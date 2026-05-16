@@ -28,7 +28,12 @@
         background-color: #fff;
         border-bottom: 1px solid #eaeaea;
         height: 60px;
+        /* Thêm 3 dòng dưới đây để cố định Topbar */
+        position: sticky;
+        top: 0;
+        z-index: 1030;
       }
+
       .search-box {
         background-color: transparent;
         border: none;
@@ -41,6 +46,10 @@
         border-bottom: 1px solid #eaeaea;
         white-space: nowrap;
         overflow: visible;
+        /* Thêm 3 dòng dưới đây để cố định Menu ngang (Desktop) */
+        position: sticky;
+        top: 60px; /* Cách mép trên đúng bằng chiều cao của Topbar */
+        z-index: 1020;
       }
       .dropdown-hover {
         position: relative;
@@ -1002,21 +1011,52 @@
               const orders = snapshot.val();
               const ordersArray = Object.values(orders).reverse();
 
+              // ĐOẠN CODE MỚI: TÍCH HỢP MENU DROPDOWN MƯỢT MÀ
               ordersArray.forEach((order) => {
                 let badgeClass =
                   order.status === "Hoàn thành"
                     ? "badge-status-success"
                     : "badge-status-running";
+
                 tbody.innerHTML += `
-                      <tr>
-                        <td class="text-muted">${order.orderId}</td>
-                        <td><button class="btn-action-history">Thao tác <i class="fa-solid fa-chevron-down ms-1" style="font-size:10px"></i></button></td>
-                        <td>${order.time}</td>
-                        <td class="text-primary">${order.uid_fb}</td>
-                        <td><span class="${badgeClass}">${order.status}</span></td>
-                        <td>${order.packageName}</td>
-                      </tr>
-                   `;
+      <tr>
+        <td class="text-muted fw-medium">${order.orderId}</td>
+        <td>
+            <div class="dropdown">
+                <button class="btn-action-history" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Thao tác <i class="fa-solid fa-chevron-down ms-1" style="font-size:10px"></i>
+                </button>
+                <ul class="dropdown-menu shadow border-0 mt-1" style="font-size: 13px; z-index: 9999;">
+                    <li>
+                        <a class="dropdown-item py-2 fw-medium text-dark" href="#" onclick="alert('Đang xem chi tiết đơn: ${order.orderId}')">
+                            <i class="fa-solid fa-circle-info text-primary me-2"></i> Xem chi tiết
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item py-2 fw-medium text-dark" href="#" onclick="alert('Vui lòng gửi mã đơn ${order.orderId} cho Admin qua Zalo/Tele để được hỗ trợ')">
+                            <i class="fa-solid fa-headset text-success me-2"></i> Hỗ trợ / Báo lỗi
+                        </a>
+                    </li>
+                    ${
+                      order.status === "Đang chạy"
+                        ? `
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item py-2 fw-medium text-danger" href="#" onclick="alert('Hệ thống đang chạy, không thể hủy ngang đơn này!')">
+                            <i class="fa-solid fa-ban text-danger me-2"></i> Hủy đơn
+                        </a>
+                    </li>`
+                        : ""
+                    }
+                </ul>
+            </div>
+        </td>
+        <td class="text-muted">${order.time}</td>
+        <td><a href="${order.uid_fb}" target="_blank" class="text-primary text-decoration-none fw-medium" style="word-break: break-all; max-width: 150px; display: inline-block;">${order.uid_fb}</a></td>
+        <td><span class="${badgeClass}">${order.status}</span></td>
+        <td class="text-muted">${order.packageName}</td>
+      </tr>
+   `;
               });
             } else {
               tbody.innerHTML = `<tr><td colspan="6" class="py-4 text-muted">Chưa có đơn hàng nào</td></tr>`;
