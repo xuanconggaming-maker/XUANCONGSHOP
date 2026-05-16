@@ -188,65 +188,442 @@
         font-size: 14px;
         vertical-align: middle;
       }
+      /* --- CSS GIAO DIỆN --- */
+      body {
+        background-color: #faf8f3;
+        font-family: "Inter", sans-serif;
+        color: #333;
+        overflow-x: hidden;
+      }
+      .topbar {
+        background-color: #fff;
+        border-bottom: 1px solid #eaeaea;
+        height: 60px;
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+      }
+      .search-box {
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        outline: none;
+      }
+
+      .desktop-menu {
+        background-color: #fff;
+        border-bottom: 1px solid #eaeaea;
+        white-space: nowrap;
+        overflow: visible;
+        position: sticky;
+        top: 60px; /* Cách đỉnh màn hình đúng bằng chiều cao topbar */
+        z-index: 1020;
+      }
+      .dropdown-hover {
+        position: relative;
+        display: inline-block;
+      }
+      .menu-item {
+        color: #555;
+        text-decoration: none;
+        padding: 12px 15px;
+        font-size: 14px;
+        font-weight: 500;
+        display: inline-block;
+        transition: 0.2s;
+      }
+      .menu-item:hover {
+        color: #006864;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+      }
+
+      .dropdown-menu-custom {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        background-color: #fff;
+        min-width: 220px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+        z-index: 1050;
+        border-radius: 8px;
+        border: 1px solid #eaeaea;
+        top: 100%;
+        left: 0;
+        padding: 8px 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+      }
+      .dropdown-hover:hover .dropdown-menu-custom {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .dropdown-item-custom {
+        color: #444;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: block;
+        font-size: 13px;
+        transition: 0.2s;
+      }
+      .dropdown-item-custom:hover {
+        background-color: #f1f8f8;
+        color: #006864;
+        font-weight: 600;
+        padding-left: 25px;
+      }
     </style>
   </head>
   <body>
     <header
-      class="topbar d-flex justify-content-between align-items-center px-4 mb-4"
+      class="topbar d-flex justify-content-between align-items-center px-3"
     >
-      <div class="d-flex align-items-center gap-4">
-        <h4
-          class="fw-bold m-0"
-          style="color: #000; text-shadow: 1px 1px 2px #ccc"
+      <div class="d-flex align-items-center w-50">
+        <button
+          class="btn btn-light d-md-none me-2"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#mobileMenuSidebar"
+          aria-controls="mobileMenuSidebar"
         >
-          Xuân Công<span style="color: red"> Shop</span>
-        </h4>
-        <nav class="desktop-menu d-none d-md-flex gap-2">
-          <a href="trang-chu.html"
-            ><i class="fa-solid fa-desktop text-muted me-1"></i> Hệ thống</a
-          >
-          <a href="#"
-            ><i class="fa-brands fa-facebook text-primary me-1"></i> Facebook</a
-          >
-          <a href="#"
-            ><i class="fa-brands fa-tiktok text-dark me-1"></i> TikTok</a
-          >
-          <a href="#"
-            ><i class="fa-brands fa-instagram text-danger me-1"></i>
-            Instagram</a
-          >
-        </nav>
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        </button>
+
+        <div class="input-group">
+          <span class="input-group-text bg-transparent border-0"
+            ><i class="fa-solid fa-magnifying-glass text-muted"></i
+          ></span>
+          <input
+            type="text"
+            class="form-control search-box"
+            placeholder="Tìm dịch vụ"
+          />
+        </div>
       </div>
 
-      <div class="d-flex align-items-center gap-4 text-muted fs-5">
+      <div class="d-flex align-items-center gap-3 text-muted fs-5">
+        <i class="fa-solid fa-table-cells" style="cursor: pointer"></i>
+        <i class="fa-solid fa-expand" style="cursor: pointer"></i>
+        <i class="fa-solid fa-gear" style="cursor: pointer"></i>
+
         <div class="dropdown">
           <a
             href="#"
             class="d-flex align-items-center text-decoration-none"
             data-bs-toggle="dropdown"
+            aria-expanded="false"
           >
             <img
-              id="topAvatar"
-              src="https://ui-avatars.com/api/?name=User"
-              class="rounded-circle border"
+              id="userAvatar"
+              src="https://ui-avatars.com/api/?name=User&background=e83e8c&color=fff&bold=true"
+              class="rounded-circle"
               width="35"
               height="35"
+              alt="User"
             />
           </a>
-          <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+
+          <ul
+            class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
+            style="min-width: 260px"
+          >
+            <li class="px-3 py-2">
+              <div class="text-muted fw-semibold" style="font-size: 14px">
+                Chào mừng <span id="welcomeName">User</span>
+              </div>
+              <div class="fw-medium mt-1 text-dark fs-6">
+                <i class="fa-solid fa-dollar-sign text-secondary"></i> Số tiền
+                :<span id="userBalance" class="ms-1">0</span>
+              </div>
+            </li>
+
+            <li><hr class="dropdown-divider" /></li>
+
             <li>
               <a
-                class="dropdown-item py-2 text-danger fw-medium"
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="#"
+                ><i class="fa-regular fa-circle-user text-muted me-2 fs-6"></i>
+                Tài khoản</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="nap-tien.html"
+                ><i
+                  class="fa-solid fa-dollar-sign text-muted me-2 fs-6 px-1"
+                ></i>
+                Nạp tiền</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="#"
+                ><i class="fa-regular fa-file-lines text-muted me-2 fs-6"></i>
+                Lịch sử dòng tiền</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="#"
+                ><i class="fa-solid fa-cart-shopping text-muted me-2 fs-6"></i>
+                Đánh giá nhân viên</a
+              >
+            </li>
+
+            <li><hr class="dropdown-divider" /></li>
+
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="#"
+                ><i class="fa-solid fa-gear text-muted me-2 fs-6"></i> Cài đặt
+                giao diện</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
                 href="#"
                 id="logoutBtn"
-                ><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng
-                xuất</a
+                ><i
+                  class="fa-solid fa-arrow-right-from-bracket text-muted me-2 fs-6"
+                ></i>
+                Đăng xuất</a
               >
             </li>
           </ul>
         </div>
       </div>
     </header>
+
+    <nav class="desktop-menu d-none d-md-block px-2">
+      <div class="dropdown-hover">
+        <a
+          href="#"
+          class="menu-item text-primary"
+          style="color: #6366f1 !important"
+          ><i class="fa-solid fa-desktop"></i> Hệ thống
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i
+        ></a>
+        <div class="dropdown-menu-custom">
+          <a href="#" class="dropdown-item-custom">Trang chủ</a>
+          <a href="#" class="dropdown-item-custom">Nhật ký hoạt động</a>
+          <a href="nap-tien.html" class="dropdown-item-custom">Nạp tiền</a>
+          <a href="#" class="dropdown-item-custom">Tài khoản</a>
+          <a href="#" class="dropdown-item-custom">Thông báo</a>
+          <a href="#" class="dropdown-item-custom">Hoàn tiền</a>
+          <a href="#" class="dropdown-item-custom">Tạo web con và API</a>
+          <a href="#" class="dropdown-item-custom">Bảng giá và cấp bậc</a>
+          <a href="#" class="dropdown-item-custom">Gửi hỗ trợ</a>
+          <a href="#" class="dropdown-item-custom">Tiếp thị liên kết</a>
+        </div>
+      </div>
+      <div class="dropdown-hover">
+        <a href="#" class="menu-item text-primary"
+          ><i class="fa-brands fa-facebook"></i> Facebook
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i
+        ></a>
+        <div class="dropdown-menu-custom">
+          <a href="buff-like-fb.html" class="dropdown-item-custom"
+            >Tăng Like Bài Viết</a
+          >
+          <a href="buff-follow-fb.html" class="dropdown-item-custom"
+            >Tăng Theo Dõi</a
+          >
+        </div>
+      </div>
+      <div class="dropdown-hover">
+        <a href="#" class="menu-item text-dark"
+          ><i class="fa-brands fa-tiktok"></i> TikTok
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i
+        ></a>
+        <div class="dropdown-menu-custom">
+          <a href="buff-follow-tiktok.html" class="dropdown-item-custom"
+            >Tăng Theo Dõi</a
+          >
+          <a href="buff-tim-tiktok.html" class="dropdown-item-custom"
+            >Tăng Tim Video</a
+          >
+          <a href="buff-view-tiktok.html" class="dropdown-item-custom"
+            >Tăng Lượt Xem (View)</a
+          >
+        </div>
+      </div>
+      <div class="dropdown-hover">
+        <a href="#" class="menu-item text-danger"
+          ><i class="fa-brands fa-instagram"></i> Instagram
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i
+        ></a>
+        <div class="dropdown-menu-custom">
+          <a href="buff-like-instagram.html" class="dropdown-item-custom"
+            >Tăng Like Instagram</a
+          >
+          <a href="buff-follow-instagram.html" class="dropdown-item-custom"
+            >Tăng Follow Instagram</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenuSidebar">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold">Menu Dịch Vụ</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <div class="accordion accordion-flush" id="mobileAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed py-3 text-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#colSystem"
+              >
+                <i class="fa-solid fa-desktop me-2"></i> Hệ thống
+              </button>
+            </h2>
+            <div
+              id="colSystem"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileAccordion"
+            >
+              <div class="accordion-body bg-light py-2">
+                <a
+                  href="trang-chu.html"
+                  class="d-block py-2 text-decoration-none small"
+                  style="color: #4b55a0"
+                  >Trang chủ</a
+                >
+                <a
+                  href="nap-tien.html"
+                  class="d-block py-2 text-decoration-none small"
+                  style="color: #4b55a0"
+                  >Nạp tiền</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed py-3 text-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#colFb"
+              >
+                <i class="fa-brands fa-facebook me-2"></i> Facebook
+              </button>
+            </h2>
+            <div
+              id="colFb"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileAccordion"
+            >
+              <div class="accordion-body bg-light py-2">
+                <a
+                  href="buff-like-fb.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Like Bài Viết</a
+                >
+                <a
+                  href="buff-follow-fb.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Theo Dõi (Sub)</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed py-3 text-dark"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#colTiktok"
+              >
+                <i class="fa-brands fa-tiktok me-2"></i> TikTok
+              </button>
+            </h2>
+            <div
+              id="colTiktok"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileAccordion"
+            >
+              <div class="accordion-body bg-light py-2">
+                <a
+                  href="buff-follow-tiktok.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Theo Dõi</a
+                >
+                <a
+                  href="buff-tim-tiktok.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Tim Video</a
+                >
+                <a
+                  href="buff-view-tiktok.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Lượt Xem (View)</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed py-3 text-danger"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#colIg"
+              >
+                <i class="fa-brands fa-instagram me-2"></i> Instagram
+              </button>
+            </h2>
+            <div
+              id="colIg"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileAccordion"
+            >
+              <div class="accordion-body bg-light py-2">
+                <a
+                  href="buff-like-instagram.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Like Instagram</a
+                >
+                <a
+                  href="buff-follow-instagram.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Follow Instagram</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid py-4 px-md-4">
+      
+
 
     <div class="container-fluid px-md-5 pb-5">
       <div class="d-flex justify-content-between align-items-end mb-3">
