@@ -16,322 +16,790 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
     <style>
+      /* --- CSS GIAO DIỆN CHUNG & MENU --- */
       body {
-        background-color: #f4f6f9;
-      }
-      .sidebar {
-        background: #fff;
-        min-height: calc(100vh - 70px);
-        border-right: 1px solid #eaeaea;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.02);
-      }
-      .nav-link {
-        color: #555;
-        font-weight: 500;
-        padding: 12px 20px;
-        border-radius: 8px;
-        margin-bottom: 5px;
-        transition: all 0.3s ease;
-      }
-      .nav-link:hover,
-      .nav-link.active {
-        background-color: #e9ecef;
-        color: #0b4a4d;
-      }
-      .service-card {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-        padding: 25px;
-        border: 1px solid #eaeaea;
+        background-color: #faf8f3;
+        font-family: "Inter", sans-serif;
+        color: #333;
+        overflow-x: hidden;
       }
       .topbar {
-        height: 70px;
-        background: #fff;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+        background-color: #fff;
+        border-bottom: 1px solid #eaeaea;
+        height: 60px;
       }
-      /* Style riêng cho phần chọn Server */
-      .server-option {
-        border: 2px solid #eaeaea;
+      .search-box {
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        outline: none;
+      }
+
+      .desktop-menu {
+        background-color: #fff;
+        border-bottom: 1px solid #eaeaea;
+        white-space: nowrap;
+        overflow: visible;
+      }
+      .dropdown-hover {
+        position: relative;
+        display: inline-block;
+      }
+      .menu-item {
+        color: #555;
+        text-decoration: none;
+        padding: 12px 15px;
+        font-size: 14px;
+        font-weight: 500;
+        display: inline-block;
+        transition: 0.2s;
+      }
+      .menu-item:hover {
+        color: #006864;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+      }
+
+      .dropdown-menu-custom {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        background-color: #fff;
+        min-width: 220px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+        z-index: 1050;
         border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 10px;
+        border: 1px solid #eaeaea;
+        top: 100%;
+        left: 0;
+        padding: 8px 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+      }
+      .dropdown-hover:hover .dropdown-menu-custom {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .dropdown-item-custom {
+        color: #444;
+        padding: 10px 20px;
+        text-decoration: none;
+        display: block;
+        font-size: 13px;
+        transition: 0.2s;
+      }
+      .dropdown-item-custom:hover {
+        background-color: #f1f8f8;
+        color: #006864;
+        font-weight: 600;
+        padding-left: 25px;
+      }
+
+      /* --- CSS CLONE BAO STAR STYLE --- */
+      .page-header-title {
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #000;
+      }
+      .breadcrumb-text {
+        font-size: 13px;
+        color: #777;
+      }
+
+      .tab-card {
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        display: flex;
+        overflow: hidden;
+      }
+      .tab-item {
+        padding: 15px 20px;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        border-right: 1px solid #dee2e6;
         cursor: pointer;
         transition: 0.2s;
       }
-      .server-option:hover {
-        border-color: #0b4a4d;
-        background-color: #f8fbfa;
+      .tab-item.active {
+        color: #00bcd4;
+        border-bottom: 2px solid #00bcd4;
       }
-      .server-option.selected {
-        border-color: #00d2ff;
-        background-color: #f0fbff;
+
+      .main-card {
+        background: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 20px;
       }
-      .server-option input[type="radio"] {
-        display: none;
+
+      /* Server List */
+      .server-label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+      }
+      .server-item {
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        padding: 6px 0;
+        cursor: pointer;
+        color: #555;
+      }
+      .server-item:hover {
+        color: #000;
+      }
+      .server-item input[type="radio"] {
+        margin-right: 10px;
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+      }
+      .badge-custom {
+        font-size: 10px;
+        padding: 3px 6px;
+        border-radius: 3px;
+        margin-left: 5px;
+        color: white;
+      }
+
+      /* Note Box */
+      .server-note-box {
+        background-color: #e8f5e9;
+        border: 1px solid #c8e6c9;
+        border-radius: 8px;
+        padding: 15px;
+        font-size: 14px;
+        color: #000;
+        height: 100%;
+        line-height: 1.8;
+      }
+
+      /* Form Inputs */
+      .form-label-custom {
+        font-size: 13px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .form-control-custom {
+        border: 1px solid #ffcdd2;
+        border-radius: 4px;
+        padding: 10px 15px;
+        font-size: 13px;
+      }
+      .form-control-custom:focus {
+        border-color: #ef9a9a;
+        box-shadow: 0 0 0 0.2rem rgba(239, 154, 154, 0.25);
+      }
+
+      /* Total Box & Button */
+      .total-box {
+        background-color: #ffcdd2;
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .total-price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #000;
+      }
+      .total-text {
+        font-size: 13px;
+        color: #000;
+        font-weight: 500;
+      }
+
+      .btn-buy {
+        background-color: #5c6bc0;
+        color: white;
+        width: 100%;
+        padding: 12px;
+        border-radius: 4px;
+        font-weight: bold;
+        border: none;
+        margin-top: 15px;
+        transition: 0.2s;
+      }
+      .btn-buy:hover {
+        background-color: #3f51b5;
+        color: white;
+      }
+
+      /* Account Info Card (Right Column) */
+      .account-card {
+        background: white;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 20px;
+      }
+      .account-card-title {
+        font-size: 15px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+      .acc-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto;
+        display: block;
+        border: 3px solid #f1f1f1;
+      }
+      .acc-name {
+        text-align: center;
+        font-weight: bold;
+        font-size: 15px;
+        margin-top: 10px;
+      }
+      .acc-rank {
+        text-align: center;
+        font-size: 13px;
+        color: #777;
+        margin-bottom: 20px;
+      }
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        padding: 12px 0;
+        border-bottom: 1px dashed #eee;
+        align-items: center;
+      }
+      .stat-label {
+        color: #333;
+        font-weight: 600;
+      }
+      .stat-value {
+        color: #777;
+        text-align: right;
+      }
+      .progress-bar-container {
+        margin-top: 10px;
+      }
+      .progress-bg {
+        background-color: #e9ecef;
+        border-radius: 10px;
+        height: 8px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+      .progress-fill {
+        background-color: #5c6bc0;
+        height: 100%;
+      }
+      .progress-badge {
+        font-size: 10px;
+        background: #5c6bc0;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 10px;
+        text-align: center;
+        display: inline-block;
+        margin-top: 5px;
       }
     </style>
   </head>
   <body>
     <header
-      class="topbar d-flex justify-content-between align-items-center px-4 mb-3"
+      class="topbar d-flex justify-content-between align-items-center px-3"
     >
-      <h4 class="fw-bold m-0 text-dark-teal">Xuân Công Shop</h4>
-      <div class="d-flex align-items-center gap-3">
-        <div class="text-end d-none d-sm-block">
-          <div
-            class="fw-bold user-fullname-display text-dark"
-            style="font-size: 14px"
-          >
-            Đang tải...
-          </div>
-          <div class="text-success small fw-bold user-balance-display">
-            0 VNĐ
-          </div>
+      <div class="d-flex align-items-center w-50">
+        <button
+          class="btn btn-light d-md-none me-2"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#mobileMenuSidebar"
+        >
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+        </button>
+        <div class="input-group">
+          <span class="input-group-text bg-transparent border-0"
+            ><i class="fa-solid fa-magnifying-glass text-muted"></i
+          ></span>
+          <input
+            type="text"
+            class="form-control search-box"
+            placeholder="Tìm dịch vụ"
+          />
         </div>
-        <img
-          src="https://ui-avatars.com/api/?name=User"
-          class="rounded-circle border user-avatar-display"
-          width="40"
-          height="40"
-          alt="Avatar"
-        />
+      </div>
+
+      <div class="d-flex align-items-center gap-3 text-muted fs-5">
+        <i class="fa-solid fa-table-cells" style="cursor: pointer"></i>
+        <i class="fa-solid fa-expand" style="cursor: pointer"></i>
+        <i class="fa-solid fa-gear" style="cursor: pointer"></i>
+
+        <div class="dropdown">
+          <a
+            href="#"
+            class="d-flex align-items-center text-decoration-none"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              id="userAvatar"
+              src="https://ui-avatars.com/api/?name=User"
+              class="rounded-circle"
+              width="35"
+              height="35"
+              alt="User"
+            />
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
+            style="min-width: 260px"
+          >
+            <li class="px-3 py-2">
+              <div class="text-muted fw-semibold" style="font-size: 14px">
+                Chào mừng <span id="welcomeName">User</span>
+              </div>
+              <div class="fw-medium mt-1 text-dark fs-6">
+                <i class="fa-solid fa-dollar-sign text-secondary"></i> Số tiền:
+                <span id="userBalance" class="ms-1">0</span> VNĐ
+              </div>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="#"
+                ><i class="fa-regular fa-circle-user text-muted me-2 fs-6"></i>
+                Tài khoản</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="nap-tien.html"
+                ><i
+                  class="fa-solid fa-dollar-sign text-muted me-2 fs-6 px-1"
+                ></i>
+                Nạp tiền</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="#"
+                ><i class="fa-regular fa-file-lines text-muted me-2 fs-6"></i>
+                Lịch sử dòng tiền</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item py-2 text-dark fw-medium"
+                style="font-size: 14px"
+                href="#"
+                id="logoutBtn"
+                ><i
+                  class="fa-solid fa-arrow-right-from-bracket text-muted me-2 fs-6"
+                ></i>
+                Đăng xuất</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
     </header>
 
-    <div class="container-fluid px-0">
-      <div class="row g-0">
-        <div class="col-md-2 d-none d-md-block sidebar p-3">
-          <nav class="nav flex-column">
-            <a class="nav-link" href="trang-chu.html">
-              <i class="fa-solid fa-house me-2 w-20px"></i> Tổng Quan
-            </a>
-            <div class="text-muted small fw-bold px-3 mt-3 mb-2">
-              DỊCH VỤ FACEBOOK
-            </div>
-            <a class="nav-link active" href="buff-follow-fb.html">
-              <i class="fa-brands fa-facebook text-primary me-2 w-20px"></i>
-              Tăng Follow
-            </a>
-            <a class="nav-link" href="#">
-              <i class="fa-solid fa-thumbs-up text-primary me-2 w-20px"></i>
-              Tăng Like Bài Viết
-            </a>
-            <div class="text-muted small fw-bold px-3 mt-3 mb-2">TÀI KHOẢN</div>
-            <a class="nav-link" href="nap-tien.html">
-              <i class="fa-solid fa-wallet text-success me-2 w-20px"></i> Nạp
-              Tiền
-            </a>
-            <a
-              class="nav-link"
-              href="admin.html"
-              id="adminLink"
-              style="display: none"
-            >
-              <i class="fa-solid fa-user-shield text-danger me-2 w-20px"></i>
-              Quản Trị
-            </a>
-            <hr class="text-muted" />
-            <a
-              class="nav-link text-danger"
-              href="#"
-              onclick="window.signOutUser()"
-            >
-              <i class="fa-solid fa-right-from-bracket me-2 w-20px"></i> Đăng
-              Xuất
-            </a>
-          </nav>
+    <nav class="desktop-menu d-none d-md-block px-2">
+      <div class="dropdown-hover">
+        <a
+          href="trang-chu.html"
+          class="menu-item text-primary"
+          style="color: #6366f1 !important"
+        >
+          <i class="fa-solid fa-desktop"></i> Hệ thống
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i>
+        </a>
+        <div class="dropdown-menu-custom">
+          <a href="trang-chu.html" class="dropdown-item-custom">Trang chủ</a>
+          <a href="#" class="dropdown-item-custom">Nhật ký hoạt động</a>
+          <a href="nap-tien.html" class="dropdown-item-custom">Nạp tiền</a>
+          <a href="#" class="dropdown-item-custom">Tài khoản</a>
         </div>
+      </div>
+      <div class="dropdown-hover">
+        <a href="#" class="menu-item text-primary">
+          <i class="fa-brands fa-facebook"></i> Facebook
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i>
+        </a>
+        <div class="dropdown-menu-custom">
+          <a href="#" class="dropdown-item-custom">Tăng Like Bài Viết</a>
+          <a href="buff-follow-fb.html" class="dropdown-item-custom"
+            >Tăng Theo Dõi</a
+          >
+        </div>
+      </div>
+      <div class="dropdown-hover">
+        <a href="#" class="menu-item text-dark">
+          <i class="fa-brands fa-tiktok"></i> TikTok
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i>
+        </a>
+        <div class="dropdown-menu-custom">
+          <a href="#" class="dropdown-item-custom">Tăng Theo Dõi</a>
+          <a href="#" class="dropdown-item-custom">Tăng Tim Video</a>
+        </div>
+      </div>
+      <div class="dropdown-hover">
+        <a href="#" class="menu-item text-danger">
+          <i class="fa-brands fa-instagram"></i> Instagram
+          <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i>
+        </a>
+        <div class="dropdown-menu-custom">
+          <a href="#" class="dropdown-item-custom">Tăng Like Instagram</a>
+          <a href="#" class="dropdown-item-custom">Tăng Follow Instagram</a>
+        </div>
+      </div>
+    </nav>
 
-        <div class="col-md-10 p-4">
-          <div class="d-flex justify-content-between align-items-end mb-4">
-            <h5 class="fw-bold m-0">
-              <i class="fa-brands fa-facebook text-primary me-2"></i>TĂNG FOLLOW
-              FACEBOOK CÁ NHÂN
-            </h5>
-            <div class="text-muted small">
-              Dịch vụ Facebook &gt; Tăng Follow
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenuSidebar">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold">Menu Dịch Vụ</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+        ></button>
+      </div>
+      <div class="offcanvas-body p-0">
+        <div class="accordion accordion-flush" id="mobileAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed py-3 text-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#colSystem"
+              >
+                <i class="fa-solid fa-desktop me-2"></i> Hệ thống
+              </button>
+            </h2>
+            <div
+              id="colSystem"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileAccordion"
+            >
+              <div class="accordion-body bg-light py-2">
+                <a
+                  href="trang-chu.html"
+                  class="d-block py-2 text-decoration-none small"
+                  style="color: #4b55a0"
+                  >Trang chủ</a
+                >
+                <a
+                  href="nap-tien.html"
+                  class="d-block py-2 text-decoration-none small"
+                  style="color: #4b55a0"
+                  >Nạp tiền</a
+                >
+              </div>
             </div>
           </div>
-
-          <div class="row g-4">
-            <div class="col-lg-8">
-              <div class="service-card">
-                <form id="fbFollowForm">
-                  <div class="mb-4">
-                    <label class="form-label fw-semibold text-dark-teal"
-                      >Link Profile hoặc UID Facebook</label
-                    >
-                    <div class="input-group">
-                      <span class="input-group-text bg-light"
-                        ><i class="fa-solid fa-link text-muted"></i
-                      ></span>
-                      <input
-                        type="text"
-                        id="fbLinkInput"
-                        class="form-control"
-                        placeholder="Nhập link hoặc UID (VD: https://www.facebook.com/zuck)"
-                        required
-                      />
-                      <button
-                        class="btn btn-outline-secondary"
-                        type="button"
-                        id="getUidBtn"
-                      >
-                        Lấy UID
-                      </button>
-                    </div>
-                  </div>
-
-                  <div class="mb-4">
-                    <label class="form-label fw-semibold text-dark-teal"
-                      >Chọn Máy Chủ (Server)</label
-                    >
-
-                    <label
-                      class="server-option d-block selected"
-                      onclick="selectServer(this, 15)"
-                    >
-                      <input type="radio" name="server" value="sv1" checked />
-                      <div
-                        class="d-flex justify-content-between align-items-center"
-                      >
-                        <span class="fw-bold text-dark"
-                          >Server 1 - Follow Việt (Lên nhanh)</span
-                        >
-                        <span class="badge bg-success rounded-pill px-3 py-2"
-                          >15đ / 1 Follow</span
-                        >
-                      </div>
-                      <div class="text-muted small mt-2">
-                        Nguồn acc clone, lên nhanh 5k-10k/ngày. Bảo hành 7 ngày.
-                      </div>
-                    </label>
-
-                    <label
-                      class="server-option d-block"
-                      onclick="selectServer(this, 30)"
-                    >
-                      <input type="radio" name="server" value="sv2" />
-                      <div
-                        class="d-flex justify-content-between align-items-center"
-                      >
-                        <span class="fw-bold text-dark"
-                          >Server 2 - Follow Việt (Chất lượng cao)</span
-                        >
-                        <span class="badge bg-primary rounded-pill px-3 py-2"
-                          >30đ / 1 Follow</span
-                        >
-                      </div>
-                      <div class="text-muted small mt-2">
-                        Nguồn acc via, có avatar, bài viết. Lên từ từ an toàn.
-                        Không bảo hành.
-                      </div>
-                    </label>
-
-                    <label
-                      class="server-option d-block"
-                      onclick="selectServer(this, 10)"
-                    >
-                      <input type="radio" name="server" value="sv3" />
-                      <div
-                        class="d-flex justify-content-between align-items-center"
-                      >
-                        <span class="fw-bold text-dark"
-                          >Server 3 - Follow Tây (Ngoại)</span
-                        >
-                        <span class="badge bg-secondary rounded-pill px-3 py-2"
-                          >10đ / 1 Follow</span
-                        >
-                      </div>
-                      <div class="text-muted small mt-2">
-                        Chủ yếu để làm đẹp profile, giá siêu rẻ. Hỗ trợ tụt tối
-                        đa 10%.
-                      </div>
-                    </label>
-                  </div>
-
-                  <div class="mb-4">
-                    <label class="form-label fw-semibold text-dark-teal"
-                      >Số Lượng Cần Tăng</label
-                    >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="fbQuantity"
-                      placeholder="Tối thiểu: 100 - Tối đa: 50.000"
-                      min="100"
-                      max="50000"
-                      value="100"
-                      required
-                    />
-                  </div>
-
-                  <div
-                    class="alert alert-info border-info d-flex justify-content-between align-items-center mb-4"
-                  >
-                    <span class="fw-bold">Tổng Thanh Toán:</span>
-                    <span class="fs-4 fw-bold text-danger" id="fbTotalPrice"
-                      >1,500 VNĐ</span
-                    >
-                  </div>
-
-                  <button
-                    type="submit"
-                    class="btn btn-cyan w-100 fw-bold py-3 fs-5"
-                  >
-                    <i class="fa-solid fa-rocket me-2"></i> TẠO ĐƠN NGAY
-                  </button>
-                </form>
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed py-3 text-primary"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#colFb"
+              >
+                <i class="fa-brands fa-facebook me-2"></i> Facebook
+              </button>
+            </h2>
+            <div
+              id="colFb"
+              class="accordion-collapse collapse"
+              data-bs-parent="#mobileAccordion"
+            >
+              <div class="accordion-body bg-light py-2">
+                <a
+                  href="#"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Like Bài Viết</a
+                >
+                <a
+                  href="buff-follow-fb.html"
+                  class="d-block py-2 text-decoration-none text-muted small"
+                  >Tăng Theo Dõi (Sub)</a
+                >
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="col-lg-4">
-              <div
-                class="service-card mb-4"
-                style="
-                  background-color: #fdfaf0;
-                  border-left: 4px solid #f1c40f;
-                "
-              >
-                <h6 class="fw-bold text-dark mb-3">
-                  <i
-                    class="fa-solid fa-triangle-exclamation text-warning me-2"
-                  ></i>
-                  Nghiêm Cấm
-                </h6>
-                <p class="text-muted small mb-0">
-                  Không cài đơn cho các tài khoản có nội dung vi phạm pháp luật,
-                  chính trị, đồi trụy. Nếu cố tình buff, hệ thống sẽ
-                  <strong>khóa tài khoản vĩnh viễn</strong> và không hoàn tiền.
-                </p>
+    <div class="container-fluid py-4 px-md-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="page-header-title">TĂNG FOLLOW TRANG CÁ NHÂN</div>
+        <div class="breadcrumb-text d-none d-sm-block">
+          Facebook &gt; Tăng FOLLOW trang cá nhân
+        </div>
+      </div>
+
+      <div class="tab-card">
+        <a class="tab-item active">Tăng FOLLOW trang cá nhân</a>
+        <a class="tab-item">Nhật ký đơn hàng</a>
+        <a class="tab-item">Hỗ trợ</a>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="main-card">
+            <form id="fbFollowForm">
+              <div class="row mb-4">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <div class="server-label">Chọn Gói :</div>
+
+                  <label
+                    class="server-item"
+                    onclick="
+                      selectServer(
+                        this,
+                        13,
+                        'Follow sale độc quyền',
+                        'Tốc độ nhanh<br>Tài nguyên page Việt - Avata random<br>Bảo hành 7 ngày',
+                      )
+                    "
+                  >
+                    <input type="radio" name="server" value="sv1" checked />
+                    Follow sale độc quyền
+                    <span class="text-danger ms-1 fw-bold">13 vnđ</span>
+                    <span class="badge-custom" style="background-color: #00c853"
+                      >New-nhanh</span
+                    >
+                  </label>
+
+                  <label
+                    class="server-item"
+                    onclick="
+                      selectServer(
+                        this,
+                        13.85,
+                        'Follow clone TÂY',
+                        'Chạy All Page & Profile<br>Bảo hành 7 ngày<br>Tốt - 50k / ngày',
+                      )
+                    "
+                  >
+                    <input type="radio" name="server" value="sv2" />
+                    Follow clone TÂY - Chạy All Page...
+                    <span class="text-danger ms-1 fw-bold">13.85 vnđ</span>
+                    <span class="badge-custom" style="background-color: #00c853"
+                      >Tốt - 50k / ngày</span
+                    >
+                    <span class="badge-custom" style="background-color: #ff5252"
+                      >Lên chậm</span
+                    >
+                  </label>
+
+                  <label
+                    class="server-item"
+                    onclick="
+                      selectServer(
+                        this,
+                        20.5,
+                        'Follow clone Việt',
+                        'Người dùng thật, lên từ từ an toàn.',
+                      )
+                    "
+                  >
+                    <input type="radio" name="server" value="sv3" />
+                    Follow clone Việt
+                    <span class="text-danger ms-1 fw-bold">20.5 vnđ</span>
+                    <span class="badge-custom" style="background-color: #2962ff"
+                      >clone 100%</span
+                    >
+                  </label>
+
+                  <label
+                    class="server-item"
+                    onclick="
+                      selectServer(
+                        this,
+                        6.26,
+                        'S1 Follow profile + page',
+                        'Không bảo hành. Cực nhanh.',
+                      )
+                    "
+                  >
+                    <input type="radio" name="server" value="sv4" />
+                    S1 Follow profile + page độc quyền
+                    <span class="text-danger ms-1 fw-bold">6.26 vnđ</span>
+                    <span class="badge-custom" style="background-color: #00c853"
+                      >Cực nhanh</span
+                    >
+                  </label>
+
+                  <label
+                    class="server-item"
+                    onclick="
+                      selectServer(
+                        this,
+                        40,
+                        'Follow người dùng thật',
+                        'Bấm tay 100%. Chất lượng cực cao.',
+                      )
+                    "
+                  >
+                    <input type="radio" name="server" value="sv5" />
+                    Follow người dùng thật bấm tay
+                    <span class="text-danger ms-1 fw-bold">40 vnđ</span>
+                    <span class="badge-custom" style="background-color: #00c853"
+                      >Chất lượng-100%clone</span
+                    >
+                  </label>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="server-note-box">
+                    <div class="fw-bold mb-2 text-dark">
+                      Ghi chú gói
+                      <span class="text-danger" id="notePackageName"
+                        >Follow sale độc quyền</span
+                      >
+                      Mã gói :
+                      <span class="text-success">facebook_follow_sv436</span>
+                    </div>
+                    <div>Update 31-10-2025</div>
+                    <br />
+                    <div id="notePackageDetails">
+                      Tốc độ nhanh<br /><br />
+                      Tài nguyên page Việt - Avata random<br /><br />
+                      Bảo hành 7 ngày
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div class="service-card" style="border-left: 4px solid #00d2ff">
-                <h6 class="fw-bold text-dark-teal mb-3">
-                  <i class="fa-solid fa-clipboard-list text-info me-2"></i>
-                  Hướng Dẫn & Lưu Ý
-                </h6>
-                <ul class="text-muted small ps-3 mb-0" style="line-height: 1.8">
-                  <li>
-                    Đảm bảo đã <strong>bật nút THEO DÕI</strong> và để chế độ
-                    <strong>MỌI NGƯỜI</strong> có thể theo dõi bạn.
-                  </li>
-                  <li>
-                    Nhập đúng Link hoặc UID, nếu sai hệ thống không chịu trách
-                    nhiệm hoàn tiền.
-                  </li>
-                  <li>
-                    UID phải là dãy số (VD: 1000123456789). Dùng nút "Lấy UID"
-                    để chuyển từ link sang UID chuẩn.
-                  </li>
-                  <li>
-                    Nếu đơn bị lỗi hoặc thiếu, vui lòng liên hệ admin kèm theo
-                    mã đơn hàng để được hỗ trợ.
-                  </li>
-                </ul>
+              <div class="row mb-3">
+                <div class="col-md-8 mb-3 mb-md-0">
+                  <div class="form-label-custom">
+                    <span
+                      >Nhập ID (<a
+                        href="#"
+                        class="text-primary text-decoration-none"
+                        id="getUidBtn"
+                        >Lấy Id</a
+                      >) hoặc Link tùy theo gói:
+                      <a href="#" class="text-primary text-decoration-none ms-1"
+                        >Bạn muốn mua 1 lần nhiều ID ?</a
+                      ></span
+                    >
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control form-control-custom w-100"
+                    id="fbLinkInput"
+                    placeholder="Nhập ID (Lấy Id) hoặc Link tùy theo gói"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <div class="form-label-custom"><span>Số lượng:</span></div>
+                  <input
+                    type="number"
+                    class="form-control form-control-custom w-100"
+                    id="fbQuantity"
+                    value="500"
+                    min="100"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <div class="form-label-custom"><span>Ghi chú:</span></div>
+                <textarea
+                  class="form-control form-control-custom w-100"
+                  rows="3"
+                  placeholder="Ghi chú"
+                ></textarea>
+              </div>
+
+              <div class="total-box">
+                <div class="total-price" id="fbTotalPrice">6,500 vnđ</div>
+                <div class="total-text mb-2">Tổng tiền thanh toán</div>
+                <div class="total-text" style="color: #444" id="fbTotalDesc">
+                  Bạn sẽ tăng 500 tương tác với giá 13 vnđ / tương tác
+                </div>
+              </div>
+
+              <button type="submit" class="btn-buy">Mua dịch vụ</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="account-card">
+            <div class="account-card-title">Thông tin tài khoản</div>
+
+            <img
+              id="rightAvatar"
+              src="https://ui-avatars.com/api/?name=User"
+              class="acc-avatar"
+              alt="Avatar"
+            />
+            <div class="acc-name" id="rightName">Đang tải...</div>
+            <div class="acc-rank" id="rightRank">Thành viên</div>
+
+            <div class="stat-row mt-3">
+              <span class="stat-label">Số tiền hiện tại :</span>
+              <span class="stat-value" id="rightBalance">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Tổng nạp :</span>
+              <span class="stat-value" id="rightTotalDeposit">0 đ</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">E-mail :</span>
+              <span class="stat-value" id="rightEmail">...</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Ngày tham gia :</span>
+              <span class="stat-value" id="rightJoinDate">...</span>
+            </div>
+            <div
+              class="stat-row"
+              style="border-bottom: none; padding-bottom: 0"
+            >
+              <span class="stat-label"
+                >Cấp tiếp theo
+                <span class="text-success" id="nextRankName">Đại lý</span
+                >:</span
+              >
+              <span class="stat-value" id="rightNextRank">0/500,000</span>
+            </div>
+
+            <div class="progress-bar-container">
+              <div class="progress-badge" id="progressPercent">0%</div>
+              <div class="progress-bg mt-1">
+                <div
+                  class="progress-fill"
+                  id="progressBarFill"
+                  style="width: 0%"
+                ></div>
               </div>
             </div>
           </div>
@@ -340,47 +808,41 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="script.js"></script>
 
     <script>
-      // Biến lưu trữ giá trị server hiện tại (Mặc định Server 1 là 15đ)
-      let currentPricePerFollow = 15;
+      let currentPrice = 13;
 
-      // Hàm xử lý chọn Server và đổi giao diện
-      function selectServer(element, price) {
-        // Xóa class 'selected' ở tất cả các thẻ label
-        document.querySelectorAll(".server-option").forEach((el) => {
-          el.classList.remove("selected");
-        });
-        // Thêm class 'selected' cho thẻ vừa click
-        element.classList.add("selected");
+      function selectServer(element, price, name, details) {
+        currentPrice = price;
 
-        // Cập nhật giá và tính toán lại tổng tiền
-        currentPricePerFollow = price;
+        // Cập nhật bảng Note Xanh
+        document.getElementById("notePackageName").innerText = name;
+        document.getElementById("notePackageDetails").innerHTML = details;
+
         calculateFbTotal();
       }
 
-      // Hàm tính toán tổng tiền dựa trên số lượng và giá server
       function calculateFbTotal() {
-        const qtyInput = document.getElementById("fbQuantity").value;
-        const qty = parseInt(qtyInput) || 0;
-        const total = qty * currentPricePerFollow;
+        const qty = parseInt(document.getElementById("fbQuantity").value) || 0;
+        const total = qty * currentPrice;
 
+        // Cập nhật giá tổng
         document.getElementById("fbTotalPrice").innerText =
-          new Intl.NumberFormat("vi-VN").format(total) + " VNĐ";
+          new Intl.NumberFormat("vi-VN").format(total) + " vnđ";
+        // Cập nhật mô tả chi tiết dưới giá
+        document.getElementById("fbTotalDesc").innerText =
+          `Bạn sẽ tăng ${qty} tương tác với giá ${currentPrice} vnđ / tương tác`;
       }
 
-      // Lắng nghe sự kiện khi nhập số lượng
       document
         .getElementById("fbQuantity")
         .addEventListener("input", calculateFbTotal);
 
-      // Xử lý sự kiện Submit Form
       document
         .getElementById("fbFollowForm")
         .addEventListener("submit", (e) => {
           e.preventDefault();
-          const uid = document.querySelector('input[type="text"]').value;
+          const uid = document.getElementById("fbLinkInput").value;
           const qty = document.getElementById("fbQuantity").value;
           const total = document.getElementById("fbTotalPrice").innerText;
 
@@ -389,34 +851,167 @@
               `Xác nhận mua ${qty} Follow cho UID: ${uid} \nTổng phí: ${total} ?`,
             )
           ) {
-            alert("Đơn hàng đã được ghi nhận vào hệ thống (Demo)!");
+            alert("Đơn hàng đã được đưa vào hệ thống!");
           }
         });
+
+      // LẤY UID (Chống lỗi)
+      document
+        .getElementById("getUidBtn")
+        .addEventListener("click", async function (e) {
+          e.preventDefault();
+          const inputField = document.getElementById("fbLinkInput");
+          let link = inputField.value.trim();
+
+          if (!link) {
+            alert("Vui lòng nhập link Facebook cần lấy UID!");
+            return;
+          }
+          if (/^\d+$/.test(link)) {
+            alert("Tuyệt vời! Đây đã là định dạng UID chuẩn.");
+            return;
+          }
+
+          const originalText = this.innerHTML;
+          this.innerHTML = "Đang tải...";
+
+          try {
+            const idMatch = link.match(/(?:id=|profile\.php\?id=)(\d+)/);
+            if (idMatch && idMatch[1]) {
+              inputField.value = idMatch[1];
+              this.innerHTML = originalText;
+              return;
+            }
+
+            const apiUrl = `https://id.traodoisub.com/api.php?link=${encodeURIComponent(link)}`;
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+            const response = await fetch(proxyUrl);
+            const data = await response.json();
+
+            let foundUid = null;
+            if (data.contents) {
+              try {
+                const parsed = JSON.parse(data.contents);
+                if (parsed.id) foundUid = parsed.id;
+                if (parsed.uid) foundUid = parsed.uid;
+              } catch (e) {}
+            }
+
+            if (foundUid) {
+              inputField.value = foundUid;
+            } else {
+              alert(
+                "⚠️ TÍNH NĂNG BỊ CHẶN BỞI FACEBOOK\n\nFacebook hiện đang chặn tự động lấy UID đối với các link rút gọn (chữ).\nVui lòng tự truy cập trang web: id.traodoisub.com để lấy dãy số UID của bạn.",
+              );
+              inputField.value = "";
+            }
+          } catch (error) {
+            alert("Lỗi kết nối API. Vui lòng tự lấy UID.");
+          } finally {
+            this.innerHTML = originalText;
+          }
+        });
+
+      // Chạy tính giá lần đầu khi load web
+      calculateFbTotal();
     </script>
 
     <script type="module">
-      import { auth } from "./script.js";
-      import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
       import {
         getDatabase,
         ref,
-        get,
+        onValue,
       } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
       import { firebaseConfig } from "./firebase-config.js";
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 
       const app = initializeApp(firebaseConfig);
-      const rtdb = getDatabase(app);
+      const auth = getAuth(app);
+      const db = getDatabase(app);
 
-      onAuthStateChanged(auth, async (user) => {
+      onAuthStateChanged(auth, (user) => {
         if (user) {
-          const userRef = ref(rtdb, "users/" + user.uid);
-          const snapshot = await get(userRef);
-          if (snapshot.exists() && snapshot.val().role === "admin") {
-            document.getElementById("adminLink").style.display = "block";
-          }
+          const userRef = ref(db, "users/" + user.uid);
+
+          onValue(userRef, (snapshot) => {
+            if (snapshot.exists()) {
+              const userData = snapshot.val();
+              const displayName = userData.fullName || "User";
+              const email = userData.email || "...";
+              let joinDate = "...";
+
+              if (userData.createdAt) {
+                const d = new Date(userData.createdAt);
+                joinDate = `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")} ${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+              }
+
+              const balanceNum = parseInt(userData.balance) || 0;
+              const totalDeposit = parseInt(userData.totalDeposit) || 0;
+
+              // Logic phân cấp
+              let rank = "Thành viên";
+              let nextRankThreshold = 500000;
+              let nextRankName = "Đại lý";
+
+              if (totalDeposit >= 5000000) {
+                rank = "Nhà phân phối";
+                nextRankThreshold = 10000000;
+                nextRankName = "VIP";
+              } else if (totalDeposit >= 500000) {
+                rank = "Đại lý";
+                nextRankThreshold = 5000000;
+                nextRankName = "Nhà phân phối";
+              }
+
+              // Tính % thanh tiến trình
+              let percent = (totalDeposit / nextRankThreshold) * 100;
+              if (percent > 100) percent = 100;
+
+              // --- Đổ dữ liệu lên UI ---
+              document.getElementById("welcomeName").innerText = displayName;
+              document.getElementById("userBalance").innerText =
+                new Intl.NumberFormat("vi-VN").format(balanceNum);
+
+              const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=ffb6c1&color=fff&bold=true`;
+              document.getElementById("userAvatar").src = avatarUrl;
+              document.getElementById("rightAvatar").src = avatarUrl;
+
+              document.getElementById("rightName").innerText = displayName;
+              document.getElementById("rightRank").innerText = rank;
+              document.getElementById("rightBalance").innerText =
+                new Intl.NumberFormat("vi-VN").format(balanceNum);
+              document.getElementById("rightTotalDeposit").innerText =
+                new Intl.NumberFormat("vi-VN").format(totalDeposit) + " đ";
+              document.getElementById("rightEmail").innerText = email;
+              document.getElementById("rightJoinDate").innerText = joinDate;
+
+              document.getElementById("nextRankName").innerText = nextRankName;
+              document.getElementById("rightNextRank").innerText =
+                `${new Intl.NumberFormat("vi-VN").format(totalDeposit)}/${new Intl.NumberFormat("vi-VN").format(nextRankThreshold)}`;
+
+              document.getElementById("progressBarFill").style.width =
+                percent + "%";
+              document.getElementById("progressPercent").innerText =
+                `(${percent.toFixed(2)}%)`;
+            }
+          });
+        } else {
+          window.location.replace("index.html");
         }
       });
+
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          signOut(auth).then(() => window.location.replace("index.html"));
+        });
+      }
     </script>
   </body>
 </html>

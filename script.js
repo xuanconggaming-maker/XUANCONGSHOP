@@ -1,30 +1,21 @@
-/* script.js */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import {
   getAuth,
   onAuthStateChanged,
   signOut,
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+// Đổi sang Realtime Database để đồng bộ với toàn hệ thống
 import {
-  getFirestore,
-  doc,
-  onSnapshot,
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-
-/* script.js - Cập nhật thông số chuẩn từ ảnh image_41c760.png */
-const firebaseConfig = {
-  apiKey: "AIzaSyCL2_GUT6UpzkRKZEZBtVLSszVF-Eit70Q",
-  authDomain: "xuan-cong-shop.firebaseapp.com",
-  projectId: "xuan-cong-shop",
-  storageBucket: "xuan-cong-shop.firebasestorage.app",
-  messagingSenderId: "998898360975",
-  appId: "1:998898360975:web:f9860800aaa3dc1f5606fa", // Lấy đúng mã này từ ảnh image_41c760.png
-  measurementId: "G-W2S51NH9VM", // Lấy đúng mã này từ ảnh image_41c760.png
-};
+  getDatabase,
+  ref,
+  onValue,
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+// Nhập cấu hình chung
+import { firebaseConfig } from "./firebase-config.js";
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+export const db = getDatabase(app);
 
 window.signOutUser = () => {
   signOut(auth).then(() => {
@@ -32,7 +23,7 @@ window.signOutUser = () => {
   });
 };
 
-// HIỂN THỊ THÔNG BÁO CHÀO MỪNG (Nếu có cờ showWelcome)
+// HIỂN THỊ THÔNG BÁO CHÀO MỪNG
 if (localStorage.getItem("showWelcome") === "true") {
   const toastContainer = document.createElement("div");
   toastContainer.style.position = "fixed";
@@ -53,10 +44,10 @@ if (localStorage.getItem("showWelcome") === "true") {
   setTimeout(() => {
     if (toastContainer) toastContainer.remove();
   }, 3500);
-  localStorage.removeItem("showWelcome"); // Xóa cờ để F5 không hiện lại
+  localStorage.removeItem("showWelcome");
 }
 
-// KIỂM TRA ĐĂNG NHẬP VÀ ĐỒNG BỘ DỮ LIỆU
+// KIỂM TRA ĐĂNG NHẬP VÀ ĐỒNG BỘ DỮ LIỆU TỪ REALTIME DATABASE
 onAuthStateChanged(auth, (user) => {
   const isAuthPage =
     window.location.pathname.includes("index.html") ||
@@ -68,22 +59,24 @@ onAuthStateChanged(auth, (user) => {
       return;
     }
 
-    onSnapshot(doc(db, "users", user.uid), (docSnap) => {
-      if (docSnap.exists()) {
-        const data = docSnap.data();
+    const userRef = ref(db, "users/" + user.uid);
+    onValue(userRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
 
         document
           .querySelectorAll(".user-fullname-display")
-          .forEach((el) => (el.innerText = data.fullName));
+          .forEach((el) => (el.innerText = data.fullName || "User"));
 
-        const encodedName = encodeURIComponent(data.fullName);
+        const encodedName = encodeURIComponent(data.fullName || "User");
         document.querySelectorAll(".user-avatar-display").forEach((img) => {
           img.src = `https://ui-avatars.com/api/?name=${encodedName}&background=adc7ff&color=002e68`;
         });
 
         document.querySelectorAll(".user-balance-display").forEach((el) => {
+          const balanceNum = parseInt(data.balance) || 0;
           el.innerText =
-            new Intl.NumberFormat("vi-VN").format(data.balance) + " VNĐ";
+            new Intl.NumberFormat("vi-VN").format(balanceNum) + " VNĐ";
         });
 
         window.currentUsername = data.username;
@@ -97,7 +90,7 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// LOGIC TÍNH TIỀN
+// LOGIC TÍNH TIỀN TỰ ĐỘNG
 const qtyInput = document.getElementById("quantity");
 const priceDisplay = document.getElementById("totalPrice");
 const serviceSelect = document.getElementById("serviceType");
