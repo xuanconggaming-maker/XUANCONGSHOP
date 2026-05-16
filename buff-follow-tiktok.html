@@ -362,6 +362,62 @@
         border-radius: 12px;
         font-size: 11px;
       }
+
+      /* --- NÚT LIÊN HỆ NỔI CỦA TRANG CHỦ --- */
+      .floating-contact {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+      }
+      .floating-contact button {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: none;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .floating-contact button:hover {
+        transform: scale(1.1);
+      }
+
+      .btn-fb {
+        background-color: #1877f2;
+        font-size: 20px;
+      }
+      .btn-ig {
+        background: radial-gradient(
+          circle at 30% 107%,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        );
+        font-size: 22px;
+      }
+      .btn-tt {
+        background-color: #000000;
+        font-size: 20px;
+      }
+      .btn-tele {
+        background-color: #0088cc;
+        font-size: 22px;
+      }
+      .btn-zalo {
+        background-color: #0068ff;
+        font-size: 12px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -700,15 +756,15 @@
                     onclick="
                       selectServer(
                         this,
-                        35,
-                        'S1 Follow TikTok Việt',
+                        65,
+                        'fl tiktok',
                         'Follow từ người dùng Việt Nam<br>Lên đều, an toàn cho kênh<br>Hỗ trợ bảo hành 7 ngày',
                       )
                     "
                   >
                     <input type="radio" name="server" value="sv1" checked />
-                    S1 Follow TikTok Việt
-                    <span class="text-danger ms-1 fw-bold">35 vnđ</span>
+                    fl tiktok
+                    <span class="text-danger ms-1 fw-bold">65 vnđ</span>
                     <span class="badge-custom" style="background-color: #00c853"
                       >Chất lượng</span
                     >
@@ -719,15 +775,15 @@
                     onclick="
                       selectServer(
                         this,
-                        15,
-                        'S2 Follow TikTok Ngoại',
+                        35,
+                        'Follow tiktok việt',
                         'Follow từ tài khoản quốc tế (Tây)<br>Lên cực nhanh, giá siêu rẻ<br>Không hỗ trợ bảo hành',
                       )
                     "
                   >
                     <input type="radio" name="server" value="sv2" />
-                    S2 Follow TikTok Ngoại
-                    <span class="text-danger ms-1 fw-bold">15 vnđ</span>
+                    Follow tiktok việt
+                    <span class="text-danger ms-1 fw-bold">35 vnđ</span>
                     <span class="badge-custom" style="background-color: #ff9800"
                       >Siêu rẻ</span
                     >
@@ -738,8 +794,8 @@
                     onclick="
                       selectServer(
                         this,
-                        45,
-                        'S3 Follow TikTok Nhanh',
+                        104,
+                        'Follow TikTok Việt High',
                         'Tốc độ ưu tiên chạy nhanh nhất<br>Người dùng thật 100%<br>Tuyệt đối an toàn cho kênh',
                       )
                     "
@@ -758,7 +814,7 @@
                     <div class="fw-bold mb-2 text-dark">
                       Ghi chú gói
                       <span class="text-danger" id="notePackageName"
-                        >S1 Follow TikTok Việt</span
+                        >fl tiktok</span
                       >
                     </div>
                     <div id="notePackageDetails">
@@ -809,14 +865,14 @@
               </div>
 
               <div class="total-box">
-                <div class="total-price" id="tiktokTotalPrice">3,500 vnđ</div>
+                <div class="total-price" id="tiktokTotalPrice">6,500 vnđ</div>
                 <div class="total-text mb-2">Tổng tiền thanh toán</div>
                 <div
                   class="total-text"
                   style="color: #444"
                   id="tiktokTotalDesc"
                 >
-                  Bạn sẽ tăng 100 Follow với giá 35 vnđ / Follow
+                  Bạn sẽ tăng 100 Follow với giá 65 vnđ / Follow
                 </div>
               </div>
 
@@ -995,11 +1051,38 @@
       </div>
     </div>
 
+    <!-- BỘ NÚT LIÊN HỆ NỔI (ĐỒNG BỘ TRANG CHỦ) -->
+    <div class="floating-contact">
+      <a
+        href="https://www.facebook.com/xuancong74"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-fb"><i class="fa-brands fa-facebook-f"></i></button>
+      </a>
+
+      <a
+        href="https://t.me/+84971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-tele"><i class="fa-brands fa-telegram"></i></button>
+      </a>
+
+      <a
+        href="https://zalo.me/0971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-zalo">Zalo</button>
+      </a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-      let currentPrice = 35;
-      let currentPackageName = "S1 Follow TikTok Việt";
+      let currentPrice = 65;
+      let currentPackageName = "fl tiktok";
       let pendingOrderData = null;
 
       function switchSection(sectionId, element) {

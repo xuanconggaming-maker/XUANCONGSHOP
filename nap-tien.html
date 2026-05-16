@@ -273,23 +273,86 @@
         font-weight: 600;
         padding-left: 25px;
       }
+
+      /* --- NÚT LIÊN HỆ NỔI CỦA TRANG CHỦ --- */
+      .floating-contact {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+      }
+      .floating-contact button {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: none;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .floating-contact button:hover {
+        transform: scale(1.1);
+      }
+
+      .btn-fb {
+        background-color: #1877f2;
+        font-size: 20px;
+      }
+      .btn-ig {
+        background: radial-gradient(
+          circle at 30% 107%,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        );
+        font-size: 22px;
+      }
+      .btn-tt {
+        background-color: #000000;
+        font-size: 20px;
+      }
+      .btn-tele {
+        background-color: #0088cc;
+        font-size: 22px;
+      }
+      .btn-zalo {
+        background-color: #0068ff;
+        font-size: 12px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
+    <div
+      class="d-md-none d-flex justify-content-between align-items-center p-3 text-white shadow-sm"
+      style="background-color: #008f88; height: 60px"
+    >
+      <h5 class="m-0 fw-bold">
+        <i class="fa-solid fa-wallet text-warning me-2"></i>NẠP TIỀN
+      </h5>
+      <button
+        class="btn btn-outline-light border-0"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mobileMenuSidebar"
+      >
+        <i class="fa-solid fa-bars fs-4"></i>
+      </button>
+    </div>
+
     <header
-      class="topbar d-flex justify-content-between align-items-center px-3"
+      class="topbar d-none d-md-flex justify-content-between align-items-center px-3"
     >
       <div class="d-flex align-items-center w-50">
-        <button
-          class="btn btn-light d-md-none me-2"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#mobileMenuSidebar"
-          aria-controls="mobileMenuSidebar"
-        >
-          <i class="fa-solid fa-arrow-right-arrow-left"></i>
-        </button>
-
         <div class="input-group">
           <span class="input-group-text bg-transparent border-0"
             ><i class="fa-solid fa-magnifying-glass text-muted"></i
@@ -312,18 +375,15 @@
             href="#"
             class="d-flex align-items-center text-decoration-none"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
           >
             <img
-              id="userAvatar"
-              src="https://ui-avatars.com/api/?name=User&background=e83e8c&color=fff&bold=true"
-              class="rounded-circle"
+              id="topAvatar"
+              src="https://ui-avatars.com/api/?name=User"
+              class="rounded-circle border"
               width="35"
               height="35"
-              alt="User"
             />
           </a>
-
           <ul
             class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
             style="min-width: 260px"
@@ -333,18 +393,15 @@
                 Chào mừng <span id="welcomeName">User</span>
               </div>
               <div class="fw-medium mt-1 text-dark fs-6">
-                <i class="fa-solid fa-dollar-sign text-secondary"></i> Số tiền
-                :<span id="userBalance" class="ms-1">0</span>
+                <i class="fa-solid fa-dollar-sign text-secondary"></i> Số tiền:
+                <span id="userBalance" class="ms-1 fw-bold text-success"
+                  >0 đ</span
+                >
               </div>
             </li>
-
             <li><hr class="dropdown-divider" /></li>
-
             <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
+              <a class="dropdown-item py-2 text-dark fw-medium" href="#"
                 ><i class="fa-regular fa-circle-user text-muted me-2 fs-6"></i>
                 Tài khoản</a
               >
@@ -352,7 +409,6 @@
             <li>
               <a
                 class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
                 href="nap-tien.html"
                 ><i
                   class="fa-solid fa-dollar-sign text-muted me-2 fs-6 px-1"
@@ -360,40 +416,10 @@
                 Nạp tiền</a
               >
             </li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
-                ><i class="fa-regular fa-file-lines text-muted me-2 fs-6"></i>
-                Lịch sử dòng tiền</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
-                ><i class="fa-solid fa-cart-shopping text-muted me-2 fs-6"></i>
-                Đánh giá nhân viên</a
-              >
-            </li>
-
             <li><hr class="dropdown-divider" /></li>
-
             <li>
               <a
                 class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
-                href="#"
-                ><i class="fa-solid fa-gear text-muted me-2 fs-6"></i> Cài đặt
-                giao diện</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                style="font-size: 14px"
                 href="#"
                 id="logoutBtn"
                 ><i
@@ -407,26 +433,19 @@
       </div>
     </header>
 
-    <nav class="desktop-menu d-none d-md-block px-2">
+    <nav class="desktop-menu d-none d-md-block px-2 mb-4">
       <div class="dropdown-hover">
         <a
-          href="#"
+          href="trang-chu.html"
           class="menu-item text-primary"
           style="color: #6366f1 !important"
           ><i class="fa-solid fa-desktop"></i> Hệ thống
           <i class="fa-solid fa-chevron-down ms-1" style="font-size: 10px"></i
         ></a>
         <div class="dropdown-menu-custom">
-          <a href="#" class="dropdown-item-custom">Trang chủ</a>
+          <a href="trang-chu.html" class="dropdown-item-custom">Trang chủ</a>
           <a href="#" class="dropdown-item-custom">Nhật ký hoạt động</a>
           <a href="nap-tien.html" class="dropdown-item-custom">Nạp tiền</a>
-          <a href="#" class="dropdown-item-custom">Tài khoản</a>
-          <a href="#" class="dropdown-item-custom">Thông báo</a>
-          <a href="#" class="dropdown-item-custom">Hoàn tiền</a>
-          <a href="#" class="dropdown-item-custom">Tạo web con và API</a>
-          <a href="#" class="dropdown-item-custom">Bảng giá và cấp bậc</a>
-          <a href="#" class="dropdown-item-custom">Gửi hỗ trợ</a>
-          <a href="#" class="dropdown-item-custom">Tiếp thị liên kết</a>
         </div>
       </div>
       <div class="dropdown-hover">
@@ -519,7 +538,6 @@
               </div>
             </div>
           </div>
-
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button
@@ -550,7 +568,6 @@
               </div>
             </div>
           </div>
-
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button
@@ -586,7 +603,6 @@
               </div>
             </div>
           </div>
-
           <div class="accordion-item">
             <h2 class="accordion-header">
               <button
@@ -620,10 +636,62 @@
         </div>
       </div>
     </div>
+    <header
+      class="topbar d-flex justify-content-between align-items-center px-4 mb-4"
+    >
+      <div class="d-flex align-items-center gap-4">
+        <h4
+          class="fw-bold m-0"
+          style="color: #000; text-shadow: 1px 1px 2px #ccc"
+        >
+          Xuân Công<span style="color: red"> Shop</span>
+        </h4>
+        <nav class="desktop-menu d-none d-md-flex gap-2">
+          <a href="trang-chu.html"
+            ><i class="fa-solid fa-desktop text-muted me-1"></i> Hệ thống</a
+          >
+          <a href="#"
+            ><i class="fa-brands fa-facebook text-primary me-1"></i> Facebook</a
+          >
+          <a href="#"
+            ><i class="fa-brands fa-tiktok text-dark me-1"></i> TikTok</a
+          >
+          <a href="#"
+            ><i class="fa-brands fa-instagram text-danger me-1"></i>
+            Instagram</a
+          >
+        </nav>
+      </div>
 
-    <div class="container-fluid py-4 px-md-4">
-      
-
+      <div class="d-flex align-items-center gap-4 text-muted fs-5">
+        <div class="dropdown">
+          <a
+            href="#"
+            class="d-flex align-items-center text-decoration-none"
+            data-bs-toggle="dropdown"
+          >
+            <img
+              id="topAvatar"
+              src="https://ui-avatars.com/api/?name=User"
+              class="rounded-circle border"
+              width="35"
+              height="35"
+            />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+            <li>
+              <a
+                class="dropdown-item py-2 text-danger fw-medium"
+                href="#"
+                id="logoutBtn"
+                ><i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Đăng
+                xuất</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
 
     <div class="container-fluid px-md-5 pb-5">
       <div class="d-flex justify-content-between align-items-end mb-3">
@@ -819,6 +887,33 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- BỘ NÚT LIÊN HỆ NỔI (ĐỒNG BỘ TRANG CHỦ) -->
+    <div class="floating-contact">
+      <a
+        href="https://www.facebook.com/xuancong74"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-fb"><i class="fa-brands fa-facebook-f"></i></button>
+      </a>
+
+      <a
+        href="https://t.me/+84971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-tele"><i class="fa-brands fa-telegram"></i></button>
+      </a>
+
+      <a
+        href="https://zalo.me/0971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-zalo">Zalo</button>
+      </a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

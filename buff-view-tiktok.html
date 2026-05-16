@@ -361,6 +361,62 @@
         border-radius: 12px;
         font-size: 11px;
       }
+
+      /* --- NÚT LIÊN HỆ NỔI CỦA TRANG CHỦ --- */
+      .floating-contact {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+      }
+      .floating-contact button {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: none;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .floating-contact button:hover {
+        transform: scale(1.1);
+      }
+
+      .btn-fb {
+        background-color: #1877f2;
+        font-size: 20px;
+      }
+      .btn-ig {
+        background: radial-gradient(
+          circle at 30% 107%,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        );
+        font-size: 22px;
+      }
+      .btn-tt {
+        background-color: #000000;
+        font-size: 20px;
+      }
+      .btn-tele {
+        background-color: #0088cc;
+        font-size: 22px;
+      }
+      .btn-zalo {
+        background-color: #0068ff;
+        font-size: 12px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -704,7 +760,7 @@
                     onclick="
                       selectServer(
                         this,
-                        1,
+                        2,
                         'S1 View TikTok Nhanh',
                         'Lượt xem lên nhanh thần tốc<br>An toàn cho kênh 100%<br>Không bảo hành',
                       )
@@ -712,47 +768,9 @@
                   >
                     <input type="radio" name="server" value="sv1" checked />
                     S1 View TikTok Nhanh
-                    <span class="text-danger ms-1 fw-bold">1 vnđ</span>
+                    <span class="text-danger ms-1 fw-bold">2 vnđ</span>
                     <span class="badge-custom" style="background-color: #2962ff"
                       >Tốc độ cao</span
-                    >
-                  </label>
-
-                  <label
-                    class="server-item"
-                    onclick="
-                      selectServer(
-                        this,
-                        0.5,
-                        'S2 View TikTok Ngoại',
-                        'View tài khoản quốc tế (Tây)<br>Giá siêu rẻ, phù hợp buff số lượng lớn<br>Lên chậm hơn S1',
-                      )
-                    "
-                  >
-                    <input type="radio" name="server" value="sv2" />
-                    S2 View TikTok Ngoại
-                    <span class="text-danger ms-1 fw-bold">0.5 vnđ</span>
-                    <span class="badge-custom" style="background-color: #ff9800"
-                      >Rẻ nhất</span
-                    >
-                  </label>
-
-                  <label
-                    class="server-item"
-                    onclick="
-                      selectServer(
-                        this,
-                        3,
-                        'S3 View TikTok Xu Hướng',
-                        'View thật từ người dùng Việt Nam<br>Có tỉ lệ giúp video cắn đề xuất<br>Hỗ trợ bảo hành 30 ngày',
-                      )
-                    "
-                  >
-                    <input type="radio" name="server" value="sv3" />
-                    S3 View TikTok Xu Hướng
-                    <span class="text-danger ms-1 fw-bold">3 vnđ</span>
-                    <span class="badge-custom" style="background-color: #00c853"
-                      >Chất lượng cao</span
                     >
                   </label>
                 </div>
@@ -812,14 +830,14 @@
               </div>
 
               <div class="total-box">
-                <div class="total-price" id="tiktokTotalPrice">1,000 vnđ</div>
+                <div class="total-price" id="tiktokTotalPrice">2,000 vnđ</div>
                 <div class="total-text mb-2">Tổng tiền thanh toán</div>
                 <div
                   class="total-text"
                   style="color: #444"
                   id="tiktokTotalDesc"
                 >
-                  Bạn sẽ tăng 1000 View với giá 1 vnđ / View
+                  Bạn sẽ tăng 1000 View với giá 2 vnđ / View
                 </div>
               </div>
 
@@ -1000,10 +1018,37 @@
       </div>
     </div>
 
+    <!-- BỘ NÚT LIÊN HỆ NỔI (ĐỒNG BỘ TRANG CHỦ) -->
+    <div class="floating-contact">
+      <a
+        href="https://www.facebook.com/xuancong74"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-fb"><i class="fa-brands fa-facebook-f"></i></button>
+      </a>
+
+      <a
+        href="https://t.me/+84971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-tele"><i class="fa-brands fa-telegram"></i></button>
+      </a>
+
+      <a
+        href="https://zalo.me/0971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-zalo">Zalo</button>
+      </a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-      let currentPrice = 1;
+      let currentPrice = 2;
       let currentPackageName = "S1 View TikTok Nhanh";
       let pendingOrderData = null;
 

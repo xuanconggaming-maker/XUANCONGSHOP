@@ -394,6 +394,62 @@
         border-radius: 12px;
         font-size: 11px;
       }
+
+      /* --- NÚT LIÊN HỆ NỔI CỦA TRANG CHỦ --- */
+      .floating-contact {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+      }
+      .floating-contact button {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        border: none;
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+      .floating-contact button:hover {
+        transform: scale(1.1);
+      }
+
+      .btn-fb {
+        background-color: #1877f2;
+        font-size: 20px;
+      }
+      .btn-ig {
+        background: radial-gradient(
+          circle at 30% 107%,
+          #fdf497 0%,
+          #fdf497 5%,
+          #fd5949 45%,
+          #d6249f 60%,
+          #285aeb 90%
+        );
+        font-size: 22px;
+      }
+      .btn-tt {
+        background-color: #000000;
+        font-size: 20px;
+      }
+      .btn-tele {
+        background-color: #0088cc;
+        font-size: 22px;
+      }
+      .btn-zalo {
+        background-color: #0068ff;
+        font-size: 12px;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -724,16 +780,16 @@
                     onclick="
                       selectServer(
                         this,
-                        31,
+                        45,
                         'S1 Like clone xịn',
-                        'Tốc độ cực nhanh<br>100% tài khoản clone xịn<br>Phù hợp cho bài viết, ảnh đại diện',
+                        'Chất lượng cao - Tốc độ ổn định<br>100% Tài nguyên Facebook Clone <br>Không bảo hành - Vui lòng mua dư 10% số lượng mua cần để tránh tụt giảm',
                         false,
                       )
                     "
                   >
                     <input type="radio" name="server" value="sv1" />
                     S1 Like clone xịn
-                    <span class="text-danger ms-1 fw-bold">31 vnđ</span>
+                    <span class="text-danger ms-1 fw-bold">45 vnđ</span>
                     <span class="badge-custom" style="background-color: #2962ff"
                       >New-Tốt</span
                     >
@@ -744,7 +800,7 @@
                     onclick="
                       selectServer(
                         this,
-                        10.5,
+                        17.3,
                         'S2 Like clone nhanh',
                         'Lên nhanh<br>Tuyệt đối 100% tài khoản Clone',
                         false,
@@ -753,7 +809,7 @@
                   >
                     <input type="radio" name="server" value="sv2" />
                     S2 Like clone nhanh
-                    <span class="text-danger ms-1 fw-bold">10.5 vnđ</span>
+                    <span class="text-danger ms-1 fw-bold">17.3 vnđ</span>
                     <span class="badge-custom" style="background-color: #ff5252"
                       >Hay quá tải-100% Clone</span
                     >
@@ -764,16 +820,16 @@
                     onclick="
                       selectServer(
                         this,
-                        20.5,
-                        'S2 Like siêu nhanh',
+                        37,
+                        'S3 Like siêu nhanh',
                         'Rất nhanh - Đang HĐ<br>Lên từ từ tự nhiên<br>Tuyệt đối an toàn',
                         true,
                       )
                     "
                   >
                     <input type="radio" name="server" value="sv4" checked />
-                    S2 Like siêu nhanh
-                    <span class="text-danger ms-1 fw-bold">20.5 vnđ</span>
+                    S3 Like siêu nhanh
+                    <span class="text-danger ms-1 fw-bold">37 vnđ</span>
                     <span class="badge-custom" style="background-color: #2962ff"
                       >Rất nhanh-Đang HĐ</span
                     >
@@ -785,14 +841,14 @@
                     <div class="fw-bold mb-2 text-dark">
                       Ghi chú gói
                       <span class="text-success" id="notePackageName"
-                        >S2 Like siêu nhanh</span
+                        >S3 Like siêu nhanh</span
                       >
                       mã gói :
                       <span class="text-success">facebook_like_v7</span>
                     </div>
                     <div id="notePackageDetails">
-                      Tốc độ 10k->50k/1 ngày<br /><br />Nhập id bài viết<br /><br />Chất
-                      lượng cao<br /><br />Không bảo hành
+                      Rất nhanh - Đang HĐ<br />Lên từ từ tự nhiên<br />Tuyệt đối
+                      an toàn
                     </div>
                   </div>
                 </div>
@@ -906,10 +962,10 @@
               </div>
 
               <div class="total-box">
-                <div class="total-price" id="likeTotalPrice">2,050 vnđ</div>
+                <div class="total-price" id="likeTotalPrice">3,700 vnđ</div>
                 <div class="total-text mb-2">Tổng tiền thanh toán</div>
                 <div class="total-text" style="color: #444" id="likeTotalDesc">
-                  Bạn sẽ tăng 100 tương tác với giá 20.5 vnđ / tương tác
+                  Bạn sẽ tăng 100 tương tác với giá 37 vnđ / tương tác
                 </div>
               </div>
 
@@ -1052,7 +1108,7 @@
                 <li>
                   Gói: <span id="modalPackage" class="text-primary">...</span>
                 </li>
-                <li>
+                <li id="modalReactionRow">
                   Cảm xúc:
                   <span id="modalReaction" class="text-warning fw-bold fs-5"
                     >...</span
@@ -1090,11 +1146,38 @@
       </div>
     </div>
 
+    <!-- BỘ NÚT LIÊN HỆ NỔI (ĐỒNG BỘ TRANG CHỦ) -->
+    <div class="floating-contact">
+      <a
+        href="https://www.facebook.com/xuancong74"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-fb"><i class="fa-brands fa-facebook-f"></i></button>
+      </a>
+
+      <a
+        href="https://t.me/+84971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-tele"><i class="fa-brands fa-telegram"></i></button>
+      </a>
+
+      <a
+        href="https://zalo.me/0971714681"
+        target="_blank"
+        style="text-decoration: none"
+      >
+        <button class="btn-zalo">Zalo</button>
+      </a>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-      let currentPrice = 20.5;
-      let currentPackageName = "S2 Like siêu nhanh";
+      let currentPrice = 37;
+      let currentPackageName = "S3 Like siêu nhanh";
       let pendingOrderData = null;
 
       function switchSection(sectionId, element) {
@@ -1137,6 +1220,11 @@
         document.getElementById("likeTotalDesc").innerText =
           `Bạn sẽ tăng ${qty} tương tác với giá ${currentPrice} vnđ / tương tác`;
       }
+
+      // Thêm sự kiện lắng nghe khi người dùng nhập số lượng
+      document
+        .getElementById("likeQuantity")
+        .addEventListener("input", calculateTotal);
 
       // 3. Click Đặt đơn -> Bật Modal
       document.getElementById("fbLikeForm").addEventListener("submit", (e) => {
@@ -1322,57 +1410,6 @@
         }
       });
 
-      // 3. Click Đặt đơn -> Bật Modal
-      document.getElementById("fbLikeForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const uid = document.getElementById("likeLinkInput").value.trim();
-        const qty = parseInt(document.getElementById("likeQuantity").value);
-        const reaction = document.querySelector(
-          'input[name="reaction"]:checked',
-        ).value; // Lấy giá trị cảm xúc
-
-        if (qty < 100) {
-          alert("Lỗi: Số lượng mua tối thiểu là 100 Tương tác!");
-          return;
-        }
-
-        const totalText = document
-          .getElementById("likeTotalPrice")
-          .innerText.replace(/\./g, "")
-          .replace(" vnđ", "");
-        const total = parseInt(totalText);
-
-        document.getElementById("modalPackage").innerText = currentPackageName;
-        document.getElementById("modalUid").innerText = uid;
-        document.getElementById("modalQty").innerText = new Intl.NumberFormat(
-          "vi-VN",
-        ).format(qty);
-        document.getElementById("modalTotal").innerText =
-          new Intl.NumberFormat("vi-VN").format(total) + " đ";
-
-        // Render Tên cảm xúc hoặc Icon vào modal
-        const reactionDisplay = {
-          Like: "👍 Thích",
-          Love: "❤️ Yêu thích",
-          Care: "🥰 Thương thương",
-          Haha: "😆 Haha",
-          Wow: "😮 Wow",
-          Sad: "😢 Buồn",
-          Angry: "😡 Phẫn nộ",
-        };
-        document.getElementById("modalReaction").innerText =
-          reactionDisplay[reaction];
-
-        pendingOrderData = {
-          uid,
-          qty,
-          total,
-          packageName: `${currentPackageName} (${reaction})`,
-          reaction,
-        };
-        new bootstrap.Modal(document.getElementById("confirmBuyModal")).show();
-      });
-
       // 4. Xác nhận thanh toán -> Trừ tiền
       document
         .getElementById("btnConfirmPay")
@@ -1432,7 +1469,10 @@
               document.getElementById("confirmBuyModal"),
             ).hide();
             alert(
-              `✅ MUA THÀNH CÔNG!\n\nMã đơn: ${randomOrderId}\nĐã trừ: ${new Intl.NumberFormat("vi-VN").format(total)} đ`,
+              `✅ MUA THÀNH CÔNG!
+
+Mã đơn: ${randomOrderId}
+Đã trừ: ${new Intl.NumberFormat("vi-VN").format(total)} đ`,
             );
             document.getElementById("likeLinkInput").value = "";
           } catch (err) {
