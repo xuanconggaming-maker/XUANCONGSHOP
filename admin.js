@@ -209,7 +209,7 @@ document.getElementById("adminLogout").addEventListener("click", () => {
   signOut(auth).then(() => window.location.replace("index.html"));
 });
 
-// 5. CẬP NHẬT SỐ DƯ (Đã sửa lỗi bug)
+// 5. CẬP NHẬT SỐ DƯ (Tính năng cộng luôn vào Tổng nạp)
 document.getElementById("saveMoneyBtn").addEventListener("click", async () => {
   const newBal = parseInt(document.getElementById("newBalanceInput").value);
   if (isNaN(newBal)) return;
@@ -227,12 +227,17 @@ document.getElementById("saveMoneyBtn").addEventListener("click", async () => {
       const currentBal = parseInt(uData.balance) || 0;
       const currentTotalDeposit = parseInt(uData.totalDeposit) || 0;
 
+      // Xử lý Tổng nạp: Nếu admin cộng thêm tiền thì Tổng nạp mới tăng
       let newTotalDeposit = currentTotalDeposit;
       if (newBal > currentBal) {
-        newTotalDeposit += newBal - currentBal; // Cộng phần nạp thêm vào Tổng Nạp
+        newTotalDeposit += newBal - currentBal; // Chỉ cộng phần nạp thêm vào Tổng Nạp
       }
 
-      await update(userRef, { balance: newBal, totalDeposit: newTotalDeposit });
+      // Cập nhật cả Balance và TotalDeposit lên Firebase
+      await update(userRef, {
+        balance: newBal,
+        totalDeposit: newTotalDeposit,
+      });
 
       const now = new Date();
       const timeStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")} ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
@@ -240,7 +245,7 @@ document.getElementById("saveMoneyBtn").addEventListener("click", async () => {
       // Ghi Log giao dịch
       await push(ref(db, "users/" + currentEditingUid + "/transactions"), {
         time: timeStr,
-        amount: newBal - currentBal, // Có thể cộng hoặc trừ
+        amount: newBal - currentBal,
         type: "admin",
         status: "THÀNH CÔNG",
         syntax: "Admin điều chỉnh số dư",
@@ -249,7 +254,7 @@ document.getElementById("saveMoneyBtn").addEventListener("click", async () => {
       bootstrap.Modal.getInstance(
         document.getElementById("editMoneyModal"),
       ).hide();
-      alert("Đã cập nhật số dư thành công!");
+      alert("✅ Đã cập nhật số dư và tự động tính Tổng nạp thành công!");
     }
   } catch (e) {
     alert("Có lỗi xảy ra, vui lòng thử lại!");
