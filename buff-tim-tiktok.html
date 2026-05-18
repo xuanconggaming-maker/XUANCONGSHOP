@@ -1351,6 +1351,35 @@
 Mã đơn: ${randomOrderId}
 Đã trừ: ${new Intl.NumberFormat("vi-VN").format(total)} đ`);
             document.getElementById("tiktokLinkInput").value = "";
+            // =========================================================
+            // BỘ NÃO BẮN ĐƠN SANG SERVER RENDER (BAOSTAR)
+            // =========================================================
+            fetch("https://xuancong-backend.onrender.com/api/bom-don", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                link: uid, // Nhớ check xem biến link trong file này có phải là uid không nhé
+                soLuong: qty, // Biến số lượng
+                tenGoi: packageName, // Biến tên gói
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  console.log(
+                    "✅ Server xác nhận: Đã bơm đơn sang Baostar thành công! Mã đơn:",
+                    data.orderId,
+                  );
+                } else {
+                  console.error("❌ Lỗi từ Server Baostar trả về:", data.error);
+                }
+              })
+              .catch((error) => {
+                console.error("❌ Lỗi mạng:", error);
+              });
+            // =========================================================
           } catch (err) {
             alert("Lỗi kết nối máy chủ. Vui lòng thử lại!");
           } finally {
