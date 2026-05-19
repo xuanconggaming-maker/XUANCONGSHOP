@@ -12,6 +12,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -349,90 +350,6 @@
       </button>
     </div>
 
-    <header
-      class="topbar d-none d-md-flex justify-content-between align-items-center px-3"
-    >
-      <div class="d-flex align-items-center w-50">
-        <div class="input-group">
-          <span class="input-group-text bg-transparent border-0"
-            ><i class="fa-solid fa-magnifying-glass text-muted"></i
-          ></span>
-          <input
-            type="text"
-            class="form-control search-box"
-            placeholder="Tìm dịch vụ"
-          />
-        </div>
-      </div>
-
-      <div class="d-flex align-items-center gap-3 text-muted fs-5">
-        <i class="fa-solid fa-table-cells" style="cursor: pointer"></i>
-        <i class="fa-solid fa-expand" style="cursor: pointer"></i>
-        <i class="fa-solid fa-gear" style="cursor: pointer"></i>
-
-        <div class="dropdown">
-          <a
-            href="#"
-            class="d-flex align-items-center text-decoration-none"
-            data-bs-toggle="dropdown"
-          >
-            <img
-              id="topAvatar"
-              src="https://ui-avatars.com/api/?name=User"
-              class="rounded-circle border"
-              width="35"
-              height="35"
-            />
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end shadow border-0 mt-2"
-            style="min-width: 260px"
-          >
-            <li class="px-3 py-2">
-              <div class="text-muted fw-semibold" style="font-size: 14px">
-                Chào mừng <span id="welcomeName">User</span>
-              </div>
-              <div class="fw-medium mt-1 text-dark fs-6">
-                <i class="fa-solid fa-dollar-sign text-secondary"></i> Số tiền:
-                <span id="userBalance" class="ms-1 fw-bold text-success"
-                  >0 đ</span
-                >
-              </div>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item py-2 text-dark fw-medium" href="#"
-                ><i class="fa-regular fa-circle-user text-muted me-2 fs-6"></i>
-                Tài khoản</a
-              >
-            </li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                href="nap-tien.html"
-                ><i
-                  class="fa-solid fa-dollar-sign text-muted me-2 fs-6 px-1"
-                ></i>
-                Nạp tiền</a
-              >
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a
-                class="dropdown-item py-2 text-dark fw-medium"
-                href="#"
-                id="logoutBtn"
-                ><i
-                  class="fa-solid fa-arrow-right-from-bracket text-muted me-2 fs-6"
-                ></i>
-                Đăng xuất</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </header>
-
     <nav class="desktop-menu d-none d-md-block px-2 mb-4">
       <div class="dropdown-hover">
         <a
@@ -496,14 +413,13 @@
     </nav>
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenuSidebar">
-      <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title fw-bold">Menu Dịch Vụ</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="offcanvas"
-        ></button>
-      </div>
+      <a href="trang-chu.html" class="text-decoration-none">
+        <img
+          src="IMAGE/logo-ngang.png"
+          alt="Xuân Công Shop"
+          style="height: 45px; object-fit: contain"
+        />
+      </a>
       <div class="offcanvas-body p-0">
         <div class="accordion accordion-flush" id="mobileAccordion">
           <div class="accordion-item">
@@ -640,12 +556,13 @@
       class="topbar d-flex justify-content-between align-items-center px-4 mb-4"
     >
       <div class="d-flex align-items-center gap-4">
-        <h4
-          class="fw-bold m-0"
-          style="color: #000; text-shadow: 1px 1px 2px #ccc"
-        >
-          Xuân Công<span style="color: red"> Shop</span>
-        </h4>
+        <a href="trang-chu.html" class="text-decoration-none">
+          <img
+            src="IMAGE/logo-ngang.png"
+            alt="Xuân Công Shop"
+            style="height: 45px; object-fit: contain"
+          />
+        </a>
         <nav class="desktop-menu d-none d-md-flex gap-2">
           <a href="trang-chu.html"
             ><i class="fa-solid fa-desktop text-muted me-1"></i> Hệ thống</a
@@ -696,7 +613,7 @@
     <div class="container-fluid px-md-5 pb-5">
       <div class="d-flex justify-content-between align-items-end mb-3">
         <h5 class="fw-bold m-0">NẠP TIỀN</h5>
-        <div class="text-muted small">Hệ thống &gt; Nạp tiền</div>
+        <div class="text-muted small">Hệ thống &gt; Nạp tiền Tự Động</div>
       </div>
 
       <div class="row g-4">

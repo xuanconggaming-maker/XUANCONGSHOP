@@ -29,6 +29,8 @@
         background-color: #fff;
         border-bottom: 1px solid #eaeaea;
         height: 60px;
+        position: relative; /* THÊM DÒNG NÀY */
+        z-index: 1030; /* THÊM DÒNG NÀY ĐỂ ĐÈ LÊN THANH MENU DƯỚI */
       }
       .search-box {
         background-color: transparent;
@@ -37,65 +39,149 @@
         outline: none;
       }
 
+      /* --- HIỆU ỨNG LOGO MENU MOBILE --- */
+      .logo-animate {
+        animation: popInLeft 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+          forwards;
+        opacity: 0;
+      }
+      @keyframes popInLeft {
+        0% {
+          opacity: 0;
+          transform: translateX(-30px) scale(0.8);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0) scale(1);
+        }
+      }
+
+      /* --- MENU DESKTOP (CHUYÊN NGHIỆP HIỆN ĐẠI) --- */
       .desktop-menu {
-        background-color: #fff;
-        border-bottom: 1px solid #eaeaea;
+        background-color: #ffffff;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03); /* Đổ bóng nhẹ sang trọng */
+        border-bottom: none;
+        padding: 5px 20px;
         white-space: nowrap;
-        overflow: visible;
+        position: sticky;
+        top: 60px;
+        z-index: 1020;
       }
       .dropdown-hover {
         position: relative;
         display: inline-block;
       }
       .menu-item {
-        color: #555;
+        color: #4b5563; /* Màu xám đen thanh lịch */
         text-decoration: none;
-        padding: 12px 15px;
+        padding: 10px 18px;
+        margin: 0 5px;
         font-size: 14px;
-        font-weight: 500;
+        font-weight: 600; /* Chữ đậm hơn chút */
         display: inline-block;
-        transition: 0.2s;
+        border-radius: 8px;
+        transition: all 0.3s ease;
       }
+      /* Hiệu ứng rê chuột menu chính */
       .menu-item:hover {
-        color: #006864;
-        background-color: #f1f1f1;
-        border-radius: 5px;
+        background-color: #f0fdfa; /* Nền xanh mint nhạt */
+        color: #0d9488 !important; /* Chữ xanh teal */
+        transform: translateY(-2px); /* Nảy lên nhẹ */
       }
 
+      /* Khung menu con xổ xuống */
       .dropdown-menu-custom {
         visibility: hidden;
         opacity: 0;
         position: absolute;
         background-color: #fff;
-        min-width: 220px;
-        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.08);
+        min-width: 240px;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08); /* Đổ bóng to hơn */
         z-index: 1050;
-        border-radius: 8px;
-        border: 1px solid #eaeaea;
-        top: 100%;
+        border-radius: 12px; /* Bo góc mềm mại */
+        border: 1px solid #f1f5f9;
+        top: 110%;
         left: 0;
-        padding: 8px 0;
-        transform: translateY(10px);
-        transition: all 0.3s ease;
+        padding: 10px 0;
+        transform: translateY(15px);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
       .dropdown-hover:hover .dropdown-menu-custom {
         visibility: visible;
         opacity: 1;
         transform: translateY(0);
+        top: 100%;
       }
+
+      /* Các mục trong menu con */
       .dropdown-item-custom {
-        color: #444;
+        color: #4b5563;
         padding: 10px 20px;
         text-decoration: none;
         display: block;
-        font-size: 13px;
-        transition: 0.2s;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        position: relative;
       }
+      /* Hiệu ứng rê chuột menu con: Dịch chữ sang phải + hiện chấm tròn */
       .dropdown-item-custom:hover {
-        background-color: #f1f8f8;
-        color: #006864;
+        background-color: transparent;
+        color: #0d9488;
+        padding-left: 32px;
+      }
+      .dropdown-item-custom:hover::before {
+        content: "";
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        background-color: #0d9488;
+        border-radius: 50%;
+      }
+
+      /* --- MENU MOBILE (OFFCANVAS - LÀM SẠCH VÀ ĐẸP HƠN) --- */
+      .offcanvas-header {
+        background-color: #f8fafc;
+        border-bottom: 1px solid #e2e8f0 !important;
+      }
+      .accordion-item {
+        border: none;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .accordion-button {
         font-weight: 600;
-        padding-left: 25px;
+        font-size: 15px;
+        box-shadow: none !important;
+        padding: 15px 20px;
+        color: #334155;
+      }
+      /* Khi mở tab menu mobile ra */
+      .accordion-button:not(.collapsed) {
+        background-color: #f0fdfa;
+        color: #0d9488 !important;
+      }
+      .accordion-body {
+        background-color: #ffffff !important;
+        padding: 5px 20px 15px 20px;
+      }
+      /* Các link bên trong menu mobile */
+      .accordion-body a {
+        color: #64748b !important;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 10px 0;
+        border-bottom: 1px dashed #f1f5f9;
+        transition: all 0.2s ease;
+      }
+      .accordion-body a:hover {
+        color: #0d9488 !important;
+        padding-left: 10px; /* Dịch nhẹ chữ sang phải */
+      }
+      .accordion-body a:last-child {
+        border-bottom: none;
       }
 
       .custom-card {
@@ -438,13 +524,18 @@
       id="mobileMenuSidebar"
       aria-labelledby="mobileMenuLabel"
     >
-      <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title fw-bold" id="mobileMenuLabel">
-          Menu Dịch Vụ
-        </h5>
+      <div class="offcanvas-header pb-2 pt-3">
+        <a href="trang-chu.html" class="text-decoration-none">
+          <img
+            src="IMAGE/logo-ngang.png"
+            alt="Xuân Công Shop"
+            class="logo-animate"
+            style="height: 40px; object-fit: contain"
+          />
+        </a>
         <button
           type="button"
-          class="btn-close"
+          class="btn-close shadow-none"
           data-bs-dismiss="offcanvas"
           aria-label="Close"
         ></button>
@@ -621,7 +712,7 @@
                 <i class="fa-solid fa-cart-plus stat-icon text-primary"></i>
                 <div>
                   <div class="stat-title">Tạo đơn</div>
-                  <div class="stat-value">0k</div>
+                  <div class="stat-value" id="statTaoDon">0</div>
                 </div>
               </div>
             </div>
@@ -630,7 +721,13 @@
                 <i class="fa-solid fa-dollar-sign stat-icon text-success"></i>
                 <div>
                   <div class="stat-title">Nạp tiền</div>
-                  <div class="stat-value">0k</div>
+                  <div
+                    class="stat-value text-success"
+                    id="statNapTien"
+                    style="font-size: 15px"
+                  >
+                    0 đ
+                  </div>
                 </div>
               </div>
             </div>
@@ -641,7 +738,7 @@
                 ></i>
                 <div>
                   <div class="stat-title">Tạo đơn lỗi</div>
-                  <div class="stat-value">0k</div>
+                  <div class="stat-value" id="statTaoDonLoi">0</div>
                 </div>
               </div>
             </div>
@@ -652,7 +749,13 @@
                 ></i>
                 <div>
                   <div class="stat-title">Hoàn tiền</div>
-                  <div class="stat-value">0k</div>
+                  <div
+                    class="stat-value text-danger"
+                    id="statHoanTien"
+                    style="font-size: 15px"
+                  >
+                    0 đ
+                  </div>
                 </div>
               </div>
             </div>
@@ -735,21 +838,42 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getDatabase(app);
-
-      // 1. Lấy Avatar từ Firebase
+      // 1. Lấy dữ liệu người dùng & Cập nhật thông số Realtime
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const userRef = ref(db, "users/" + user.uid);
-          get(userRef).then((snapshot) => {
+
+          // Dùng onValue để dữ liệu tự động nhảy số (Realtime) khi có thay đổi
+          onValue(userRef, (snapshot) => {
             if (snapshot.exists()) {
               const userData = snapshot.val();
               const displayName =
                 userData.fullName || userData.username || "User";
+
+              // Cập nhật Avatar và Tên
               const avatarElement = document.getElementById("userAvatar");
               avatarElement.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=e83e8c&color=fff&bold=true`;
               document.getElementById("welcomeName").innerText = displayName;
+
+              // Cập nhật Số dư góc phải trên cùng
+              const balance = parseInt(userData.balance) || 0;
               document.getElementById("userBalance").innerText =
-                userData.balance || "0";
+                new Intl.NumberFormat("vi-VN").format(balance) + " đ";
+
+              // Cập nhật 4 ô Thống kê (Lấy từ Firebase)
+              const totalDeposit = parseInt(userData.totalDeposit) || 0;
+              const totalOrders = parseInt(userData.totalOrders) || 0;
+              const totalError = parseInt(userData.totalError) || 0;
+              const totalRefund = parseInt(userData.totalRefund) || 0;
+
+              document.getElementById("statNapTien").innerText =
+                new Intl.NumberFormat("vi-VN").format(totalDeposit) + " đ";
+              document.getElementById("statHoanTien").innerText =
+                new Intl.NumberFormat("vi-VN").format(totalRefund) + " đ";
+              document.getElementById("statTaoDon").innerText =
+                new Intl.NumberFormat("vi-VN").format(totalOrders);
+              document.getElementById("statTaoDonLoi").innerText =
+                new Intl.NumberFormat("vi-VN").format(totalError);
             }
           });
         } else {

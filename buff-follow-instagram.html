@@ -12,6 +12,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+    <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -568,14 +569,13 @@
 
     <!-- MOBILE MENU -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenuSidebar">
-      <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title fw-bold">Menu Dịch Vụ</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="offcanvas"
-        ></button>
-      </div>
+      <a href="trang-chu.html" class="text-decoration-none">
+        <img
+          src="IMAGE/logo-ngang.png"
+          alt="Xuân Công Shop"
+          style="height: 45px; object-fit: contain"
+        />
+      </a>
       <div class="offcanvas-body p-0">
         <div class="accordion accordion-flush" id="mobileAccordion">
           <div class="accordion-item">
@@ -1324,15 +1324,18 @@
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                link: uid, 
-                soLuong: qty, 
-                tenGoi: packageName, 
+                link: uid,
+                soLuong: qty,
+                tenGoi: packageName,
               }),
             })
               .then((response) => response.json())
               .then((data) => {
                 if (data.success) {
-                  console.log("✅ Server xác nhận: Đã bơm đơn sang Baostar thành công! Mã đơn:", data.orderId);
+                  console.log(
+                    "✅ Server xác nhận: Đã bơm đơn sang Baostar thành công! Mã đơn:",
+                    data.orderId,
+                  );
                 } else {
                   console.error("❌ Lỗi từ Server Baostar trả về:", data.error);
                 }
