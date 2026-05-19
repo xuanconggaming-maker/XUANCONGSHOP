@@ -2,19 +2,30 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebas
 import {
   getAuth,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-// Thêm các hàm để truy vấn Database
 import {
   getDatabase,
   ref,
-  query,
-  orderByChild,
-  equalTo,
   get,
+  set,
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-import { firebaseConfig } from "./firebase-config.js";
 
-// Khởi tạo Firebase
+// Thông tin API chuẩn dự án xuancongmxh
+const firebaseConfig = {
+  apiKey: "AIzaSyCMKM_e3j3z-q3fV7IFYRCtuoCBURwSKXE",
+  authDomain: "xuancongmxh.firebaseapp.com",
+  databaseURL:
+    "https://xuancongmxh-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "xuancongmxh",
+  storageBucket: "xuancongmxh.firebasestorage.app",
+  messagingSenderId: "417606278037",
+  appId: "1:417606278037:web:7c4af2096fe8a0af92749c",
+  measurementId: "G-YC876C90Y3",
+};
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
@@ -25,10 +36,10 @@ const alertBox = document.getElementById("alertBox");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 
-// Chức năng Hiện/Ẩn mật khẩu
-document
-  .getElementById("togglePassword")
-  .addEventListener("click", function () {
+// Hiện/Ẩn mật khẩu
+const togglePassword = document.getElementById("togglePassword");
+if (togglePassword) {
+  togglePassword.addEventListener("click", function () {
     const icon = this.querySelector("i");
     if (passwordInput.type === "password") {
       passwordInput.type = "text";
@@ -38,39 +49,90 @@ document
       icon.classList.replace("fa-eye", "fa-eye-slash");
     }
   });
+}
 
-// Xử lý Đăng nhập
+// =================================================================
+// 0. XỬ LÝ NÚT QUÊN MẬT KHẨU TRONG MODAL
+// =================================================================
+const btnSendReset = document.getElementById("btnSendReset");
+if (btnSendReset) {
+  btnSendReset.addEventListener("click", async () => {
+    const resetEmail = document.getElementById("resetEmailInput").value.trim();
+    const resetAlert = document.getElementById("resetAlert");
+
+    if (!resetEmail || !resetEmail.includes("@")) {
+      resetAlert.className = "alert alert-warning small py-2";
+      resetAlert.innerHTML = "⚠️ Vui lòng nhập đúng định dạng Email!";
+      resetAlert.classList.remove("d-none");
+      return;
+    }
+
+    try {
+      btnSendReset.innerHTML =
+        '<span class="spinner-border spinner-border-sm"></span> Đang gửi...';
+      btnSendReset.disabled = true;
+
+      await sendPasswordResetEmail(auth, resetEmail);
+
+      resetAlert.className = "alert alert-success small py-2";
+      resetAlert.innerHTML =
+        "✅ Đã gửi link khôi phục! Vui lòng kiểm tra hộp thư (cả mục Spam/Thư rác).";
+      resetAlert.classList.remove("d-none");
+    } catch (error) {
+      resetAlert.className = "alert alert-danger small py-2";
+      resetAlert.classList.remove("d-none");
+      if (error.code === "auth/user-not-found") {
+        resetAlert.innerHTML = "❌ Email này chưa đăng ký tài khoản!";
+      } else {
+        resetAlert.innerHTML = "❌ Lỗi: " + error.message;
+      }
+    } finally {
+      btnSendReset.innerHTML = "Gửi Email Khôi Phục";
+      btnSendReset.disabled = false;
+    }
+  });
+}
+
+// =================================================================
+// 1. ĐĂNG NHẬP THỦ CÔNG (EMAIL / USERNAME)
+// =================================================================
 loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  // Lấy giá trị người dùng nhập (xóa khoảng trắng 2 đầu)
-  const inputValue = emailInput.value.trim();
+  const inputValue = emailInput.value.trim().toLowerCase();
   const password = passwordInput.value;
 
-  // Hiển thị nút "Đang xử lý"
   loginBtn.innerHTML =
     '<span class="spinner-border spinner-border-sm"></span> Đang xử lý...';
   loginBtn.disabled = true;
+  alertBox.classList.add("d-none");
 
   try {
     let loginEmail = inputValue;
 
-    // 1. Dò tìm Email nếu nhập bằng Username
     if (!inputValue.includes("@")) {
       const usersRef = ref(db, "users");
-      const q = query(usersRef, orderByChild("username"), equalTo(inputValue));
-      const snapshot = await get(q);
+      const snapshot = await get(usersRef);
 
       if (snapshot.exists()) {
-        const userData = snapshot.val();
-        const userId = Object.keys(userData)[0];
-        loginEmail = userData[userId].email;
+        const usersData = snapshot.val();
+        let foundEmail = null;
+
+        for (let uid in usersData) {
+          if (
+            usersData[uid].username &&
+            usersData[uid].username.toLowerCase().trim() === inputValue
+          ) {
+            foundEmail = usersData[uid].email;
+            break;
+          }
+        }
+        if (foundEmail) loginEmail = foundEmail;
+        else throw new Error("user-not-found");
       } else {
         throw new Error("user-not-found");
       }
     }
 
-    // 2. Đăng nhập vào Firebase
     const userCredential = await signInWithEmailAndPassword(
       auth,
       loginEmail,
@@ -78,47 +140,105 @@ loginForm.addEventListener("submit", async (e) => {
     );
     const user = userCredential.user;
 
-    // 3. KIỂM TRA QUYỀN TÀI KHOẢN ĐỂ CHUYỂN TRANG
-    const userRef = ref(db, "users/" + user.uid);
-    const userSnapshot = await get(userRef);
-
-    let redirectUrl = "trang-chu.html"; // Mặc định là khách sẽ vào trang chủ
-
-    if (userSnapshot.exists()) {
-      const userData = userSnapshot.val();
-      // Nếu tài khoản có cấp quyền role là admin -> Đổi link sang trang admin
-      if (userData.role === "admin") {
-        redirectUrl = "admin.html";
-      }
+    const userSnapshot = await get(ref(db, "users/" + user.uid));
+    let redirectUrl = "trang-chu.html";
+    if (userSnapshot.exists() && userSnapshot.val().role === "admin") {
+      redirectUrl = "admin.html";
     }
 
-    // --- ĐĂNG NHẬP THÀNH CÔNG ---
-    alertBox.className = "alert alert-success";
-    alertBox.innerHTML = "Đăng nhập thành công! Đang vào hệ thống...";
+    alertBox.className = "alert alert-success text-center fw-bold";
+    alertBox.innerHTML = "🎉 Đăng nhập thành công! Đang chuyển hướng...";
     alertBox.classList.remove("d-none");
-
-    // Chuyển hướng sang trang tương ứng (Admin hoặc Trang chủ) sau 1.5 giây
     setTimeout(() => {
       window.location.href = redirectUrl;
-    }, 1500);
+    }, 1200);
   } catch (error) {
-    // --- ĐĂNG NHẬP THẤT BẠI ---
     loginBtn.innerHTML =
       'Đăng Nhập <i class="fa-solid fa-arrow-right ms-2 small"></i>';
     loginBtn.disabled = false;
-    alertBox.className = "alert alert-danger";
+    alertBox.className = "alert alert-danger text-center fw-bold";
     alertBox.classList.remove("d-none");
-
-    // Thông báo lỗi chuẩn
     if (
       error.message === "user-not-found" ||
       error.code === "auth/invalid-credential"
     ) {
-      alertBox.innerHTML = "Tên đăng nhập, email hoặc mật khẩu không đúng!";
-    } else if (error.code === "auth/too-many-requests") {
-      alertBox.innerHTML = "Nhập sai quá nhiều lần. Tài khoản bị tạm khóa!";
+      alertBox.innerHTML = "❌ Tên đăng nhập hoặc mật khẩu chưa đúng!";
     } else {
-      alertBox.innerHTML = "Lỗi: " + error.message;
+      alertBox.innerHTML = "❌ Lỗi: " + error.message;
     }
   }
 });
+
+// =================================================================
+// 2. ĐĂNG NHẬP BẰNG GOOGLE
+// =================================================================
+const googleImg = document.querySelector("button img[alt='Google']");
+if (googleImg) {
+  const googleBtn = googleImg.closest("button");
+  if (googleBtn) {
+    googleBtn.addEventListener("click", async () => {
+      alertBox.classList.add("d-none");
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: "select_account" });
+
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        const userRef = ref(db, "users/" + user.uid);
+        const userSnapshot = await get(userRef);
+
+        if (!userSnapshot.exists()) {
+          const autoUsername =
+            user.email.split("@")[0] + Math.floor(100 + Math.random() * 900);
+          await set(userRef, {
+            uid: user.uid,
+            fullName: user.displayName || "Khách Google",
+            username: autoUsername,
+            email: user.email,
+            balance: 0,
+            totalDeposit: 0,
+            role: "member",
+          });
+        }
+
+        const checkSnapshot = await get(userRef);
+        let redirectUrl = "trang-chu.html";
+        if (checkSnapshot.exists() && checkSnapshot.val().role === "admin") {
+          redirectUrl = "admin.html";
+        }
+
+        alertBox.className = "alert alert-success text-center fw-bold";
+        alertBox.innerHTML = "🎉 Đăng nhập thành công! Đang tiến vào shop...";
+        alertBox.classList.remove("d-none");
+        setTimeout(() => {
+          window.location.href = redirectUrl;
+        }, 1200);
+      } catch (error) {
+        alertBox.className = "alert alert-danger text-center fw-bold";
+        alertBox.classList.remove("d-none");
+        if (error.code === "auth/popup-closed-by-user") {
+          alertBox.innerHTML = "⚠️ Bạn đã đóng cửa sổ đăng nhập.";
+        } else if (error.code === "auth/unauthorized-domain") {
+          alertBox.innerHTML =
+            "❌ Miền này chưa được ủy quyền trong Firebase Console!";
+        } else {
+          alertBox.innerHTML = "❌ Lỗi: " + error.message;
+        }
+      }
+    });
+  }
+}
+
+// Báo bảo trì nút Apple
+const appleIcon = document.querySelector("button i.fa-apple");
+if (appleIcon) {
+  const appleBtn = appleIcon.closest("button");
+  if (appleBtn) {
+    appleBtn.addEventListener("click", () => {
+      alert(
+        "🍎 Tính năng đăng nhập bằng Apple ID đang bảo trì. Vui lòng sử dụng Google!",
+      );
+    });
+  }
+}

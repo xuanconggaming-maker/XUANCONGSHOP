@@ -18,15 +18,37 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <header class="d-flex justify-content-center align-items-center p-4">
-      <h3 class="logo fw-bold text-teal m-0">Xuân Công Shop</h3>
+  <body class="bg-cream">
+    <header class="d-flex justify-content-between align-items-center p-4">
+      <h4 class="fw-bold m-0 text-dark">Xuân Công Shop</h4>
+      <i
+        class="fa-regular fa-circle-question fs-5 text-muted"
+        style="cursor: pointer"
+        data-bs-toggle="modal"
+        data-bs-target="#contactModal"
+      ></i>
     </header>
 
     <main class="login-wrapper">
       <div class="login-card">
-        <h2 class="text-center fw-bold text-dark-teal">Tạo Tài Khoản</h2>
-        <p class="text-center text-muted mb-4">
+        <div class="text-center mb-2">
+          <img
+            src="IMAGE/logo-xuan-cong-shop.jpg"
+            alt="Xuân Công Shop Logo"
+            class="img-fluid rounded-circle shadow-sm"
+            style="
+              width: 90px;
+              height: 90px;
+              border: 3px solid #1d976c;
+              object-fit: cover;
+              padding: 2px;
+              background: white;
+            "
+          />
+        </div>
+
+        <h2 class="text-center fw-bold text-dark mb-3">Tạo Tài Khoản</h2>
+        <p class="text-center text-muted mb-4 small">
           Tham gia hệ thống của chúng tôi ngay hôm nay.
         </p>
 
@@ -34,7 +56,7 @@
 
         <form id="registerForm">
           <div class="mb-3">
-            <label class="form-label fw-semibold text-dark-teal"
+            <label class="form-label fw-semibold text-muted small"
               >Họ và Tên</label
             >
             <div class="input-group">
@@ -44,7 +66,7 @@
               <input
                 type="text"
                 id="fullName"
-                class="form-control border-start-0"
+                class="form-control border-start-0 ps-0"
                 placeholder="Nhập họ và tên của bạn"
                 required
               />
@@ -52,7 +74,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold text-dark-teal"
+            <label class="form-label fw-semibold text-muted small"
               >Tên đăng nhập</label
             >
             <div class="input-group">
@@ -62,7 +84,7 @@
               <input
                 type="text"
                 id="username"
-                class="form-control border-start-0"
+                class="form-control border-start-0 ps-0"
                 placeholder="Nhập tên đăng nhập (VD: xuancong123)"
                 required
                 minlength="3"
@@ -71,7 +93,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold text-dark-teal"
+            <label class="form-label fw-semibold text-muted small"
               >Địa chỉ Email</label
             >
             <div class="input-group">
@@ -81,7 +103,7 @@
               <input
                 type="email"
                 id="email"
-                class="form-control border-start-0"
+                class="form-control border-start-0 ps-0"
                 placeholder="Nhập email của bạn"
                 required
               />
@@ -89,7 +111,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold text-dark-teal"
+            <label class="form-label fw-semibold text-muted small"
               >Mật khẩu</label
             >
             <div class="input-group">
@@ -99,7 +121,7 @@
               <input
                 type="password"
                 id="password"
-                class="form-control border-start-0 border-end-0"
+                class="form-control border-start-0 border-end-0 ps-0"
                 placeholder="Tạo mật khẩu (Ít nhất 6 ký tự)"
                 required
                 minlength="6"
@@ -114,7 +136,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label fw-semibold text-dark-teal"
+            <label class="form-label fw-semibold text-muted small"
               >Xác nhận Mật khẩu</label
             >
             <div class="input-group">
@@ -124,7 +146,7 @@
               <input
                 type="password"
                 id="confirmPassword"
-                class="form-control border-start-0"
+                class="form-control border-start-0 ps-0"
                 placeholder="Nhập lại mật khẩu"
                 required
                 minlength="6"
@@ -135,32 +157,40 @@
           <div class="mb-4 form-check">
             <input
               type="checkbox"
-              class="form-check-input"
+              class="form-check-input custom-checkbox"
               id="terms"
               required
             />
             <label class="form-check-label small text-muted" for="terms">
               Tôi đồng ý với
-              <a href="#" class="text-teal fw-semibold text-decoration-none"
-                >Điều khoản Dịch vụ</a
+              <a
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#termsModal"
+                class="text-dark-teal fw-semibold text-decoration-none"
+                >Điều khoản</a
               >
               và
-              <a href="#" class="text-teal fw-semibold text-decoration-none"
-                >Chính sách Bảo mật</a
+              <a
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#policyModal"
+                class="text-dark-teal fw-semibold text-decoration-none"
+                >Chính sách</a
               >.
             </label>
           </div>
 
           <button
             type="submit"
-            class="btn btn-cyan w-100 mb-4"
+            class="btn btn-dark-teal w-100 mb-4 d-flex justify-content-center align-items-center"
             id="registerBtn"
           >
-            Đăng Ký
+            Đăng Ký <i class="fa-solid fa-arrow-right ms-2 small"></i>
           </button>
         </form>
 
-        <p class="text-center mt-4 small text-muted">
+        <p class="text-center mt-2 small text-muted">
           Đã có tài khoản?
           <a
             href="index.html"
@@ -171,6 +201,235 @@
       </div>
     </main>
 
+    <footer class="footer p-4 mt-auto">
+      <div
+        class="container-fluid d-flex justify-content-between align-items-center text-muted"
+        style="font-size: 11px"
+      >
+        <div class="fw-semibold">© 2026 XUÂN CÔNG SHOP.</div>
+        <div>
+          <a
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#policyModal"
+            class="text-muted text-decoration-none fw-semibold me-3"
+            >Chính sách bảo mật</a
+          >
+          <a
+            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#termsModal"
+            class="text-muted text-decoration-none fw-semibold"
+            >Điều khoản dịch vụ</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="policyModal" tabindex="-1" aria-hidden="true">
+      <div
+        class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+      >
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title fw-bold text-dark-teal">
+              Chính Sách Bảo Mật
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div
+            class="modal-body small text-muted"
+            style="line-height: 1.7; text-align: justify"
+          >
+            <h6 class="fw-bold text-dark">1. Mục đích thu thập thông tin</h6>
+            <p>
+              Xuân Công Shop chỉ thu thập các thông tin cơ bản bao gồm Email,
+              Tên Đăng Nhập và Mật Khẩu (đã được mã hóa một chiều) nhằm mục
+              đích: định danh tài khoản, quản lý bảo vệ số dư tiền nạp, và hỗ
+              trợ khôi phục mật khẩu cho khách hàng khi cần thiết. Chúng tôi
+              không thu thập thông tin nhạy cảm nào khác.
+            </p>
+
+            <h6 class="fw-bold text-dark mt-3">2. Cam kết bảo mật dữ liệu</h6>
+            <p>
+              Toàn bộ cơ sở dữ liệu của hệ thống được lưu trữ trên hạ tầng máy
+              chủ bảo mật cấp độ cao của Google (Firebase). Đường truyền dữ liệu
+              được mã hóa SSL/HTTPS an toàn tuyệt đối. Chúng tôi cam kết
+              <strong>KHÔNG</strong> bán, trao đổi hay chia sẻ thông tin cá nhân
+              của bạn cho bất kỳ bên thứ ba nào dưới mọi hình thức để trục lợi.
+            </p>
+
+            <h6 class="fw-bold text-dark mt-3">
+              3. Chính sách lưu trữ và xóa dữ liệu
+            </h6>
+            <p>
+              Dữ liệu tài khoản và lịch sử giao dịch sẽ được lưu trữ an toàn
+              trong suốt thời gian hệ thống hoạt động để đảm bảo quyền lợi đối
+              soát cho khách hàng. Nếu bạn muốn xóa toàn bộ dữ liệu tài khoản và
+              lịch sử của mình, vui lòng liên hệ trực tiếp Admin để được hỗ trợ
+              xóa vĩnh viễn khỏi hệ thống (Lưu ý: Số dư trong tài khoản bị xóa
+              sẽ không được hoàn lại).
+            </p>
+
+            <h6 class="fw-bold text-dark mt-3">
+              4. Trách nhiệm của người dùng
+            </h6>
+            <p>
+              Khách hàng có trách nhiệm tự bảo quản thông tin đăng nhập của
+              mình. Không chia sẻ tài khoản cho người khác dùng chung để tránh
+              rủi ro thất thoát số dư. Xuân Công Shop xin phép từ chối chịu
+              trách nhiệm hoặc bồi thường nếu tài khoản bị xâm nhập, trừ tiền do
+              lỗi lộ mật khẩu từ phía người dùng.
+            </p>
+
+            <div class="mt-4 p-3 bg-light rounded text-center border">
+              <p class="mb-0 text-dark">
+                Mọi vấn đề thắc mắc về bảo mật tài khoản, vui lòng liên hệ trực
+                tiếp Admin qua Zalo:
+                <strong class="text-primary fs-6">0971714681</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+      <div
+        class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+      >
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header bg-light">
+            <h5 class="modal-title fw-bold text-dark-teal">
+              Điều Khoản Dịch Vụ
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div
+            class="modal-body small text-muted"
+            style="line-height: 1.7; text-align: justify"
+          >
+            <p class="fst-italic text-center">
+              Khi đăng ký tài khoản và sử dụng dịch vụ tại Xuân Công Shop, đồng
+              nghĩa với việc bạn đã đọc, hiểu và đồng ý hoàn toàn với các điều
+              khoản dưới đây.
+            </p>
+
+            <h6 class="fw-bold text-dark mt-3">
+              1. Quy định về Nạp tiền & Số dư
+            </h6>
+            <ul class="ps-3 mb-3">
+              <li>
+                Hệ thống sử dụng cổng thanh toán tự động qua SePay. Tiền sẽ được
+                xử lý và cộng vào tài khoản trong vòng 1 đến 3 phút sau khi
+                chuyển khoản thành công với đúng cú pháp.
+              </li>
+              <li>
+                Số dư trong tài khoản
+                <strong>chỉ có giá trị sử dụng để mua các dịch vụ</strong> trên
+                hệ thống (Buff Like, Follow, View...).
+              </li>
+              <li>
+                Xuân Công Shop <strong>TỪ CHỐI</strong> hỗ trợ rút tiền, hoàn
+                tiền hay quy đổi số dư tài khoản ngược lại thành tiền mặt dưới
+                mọi hình thức, ngoại trừ trường hợp lỗi nạp tiền nghiêm trọng
+                phát sinh từ hệ thống của chúng tôi.
+              </li>
+            </ul>
+
+            <h6 class="fw-bold text-dark mt-3">
+              2. Quy định đặt đơn & Bảo hành
+            </h6>
+            <ul class="ps-3 mb-3">
+              <li>
+                Khách hàng phải
+                <strong>tự kiểm tra kỹ định dạng Link</strong> và đảm bảo tài
+                khoản/bài viết đang ở chế độ công khai (Public) trước khi bấm
+                tạo đơn.
+              </li>
+              <li>
+                Hệ thống
+                <strong
+                  >không hỗ trợ hủy đơn, không sửa link hoặc hoàn tiền</strong
+                >
+                nếu khách hàng tự nhập sai link, nhập nhầm số lượng, hoặc cài
+                đặt tài khoản ở chế độ riêng tư (Private).
+              </li>
+              <li>
+                Thời gian hoàn thành đơn hàng phụ thuộc vào tốc độ của server
+                đại lý tại từng thời điểm cụ thể. Đơn hàng có thể hoàn thành từ
+                vài phút đến vài ngày. Các lỗi kẹt đơn lâu ngày sẽ được Admin hỗ
+                trợ kiểm tra và hủy hoàn tiền (nếu hệ thống đại lý cho phép).
+              </li>
+            </ul>
+
+            <h6 class="fw-bold text-danger mt-3">
+              3. Nghiêm cấm vi phạm (Khóa Vĩnh Viễn)
+            </h6>
+            <p>
+              Nghiêm cấm tuyệt đối việc sử dụng dịch vụ của hệ thống để tăng
+              tương tác (Buff) cho các nội dung sau:
+            </p>
+            <ul class="ps-3 mb-3 text-danger fw-semibold">
+              <li>
+                Các bài viết, video chống phá Nhà nước, vi phạm pháp luật nước
+                CHXHCN Việt Nam.
+              </li>
+              <li>Các nội dung đồi trụy, phản cảm, bạo lực, cờ bạc.</li>
+              <li>Các bài viết bôi nhọ, xúc phạm danh dự cá nhân, tổ chức.</li>
+              <li>Các bài viết lừa đảo, chiếm đoạt tài sản.</li>
+            </ul>
+            <p>
+              Nếu hệ thống quét được hoặc phát hiện vi phạm, chúng tôi có toàn
+              quyền
+              <strong
+                >khóa vĩnh viễn tài khoản và đóng băng số dư ngay lập
+                tức</strong
+              >
+              mà không cần báo trước, đồng thời từ chối mọi yêu cầu hỗ trợ.
+            </p>
+
+            <div class="mt-4 p-3 bg-light rounded text-center border">
+              <p class="mb-0 text-dark">
+                Khiếu nại, hỗ trợ đơn hàng lỗi & Kỹ thuật qua Zalo Admin:
+                <strong class="text-primary fs-6">0971714681</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content border-0 shadow text-center p-4">
+          <i class="fa-solid fa-headset fs-1 text-dark-teal mb-3"></i>
+          <h5 class="fw-bold mb-2">Hỗ Trợ Nhanh</h5>
+          <p class="small text-muted mb-3">
+            Admin Xuân Công luôn sẵn sàng hỗ trợ bạn mọi vấn đề về đơn hàng và
+            nạp tiền.
+          </p>
+          <a
+            href="https://zalo.me/0971714681"
+            target="_blank"
+            class="btn btn-primary w-100 fw-semibold"
+            style="background-color: #0068ff; border: none"
+          >
+            <i class="fa-solid fa-comment-dots me-2"></i> Chat Zalo: 0971714681
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="register.js"></script>
   </body>
 </html>
